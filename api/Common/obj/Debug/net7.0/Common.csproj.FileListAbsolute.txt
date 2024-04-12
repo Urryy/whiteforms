@@ -1,0 +1,12 @@
+E:\ReactExamples\Forms\api\Common\bin\Debug\net7.0\Common.deps.json
+E:\ReactExamples\Forms\api\Common\bin\Debug\net7.0\Common.dll
+E:\ReactExamples\Forms\api\Common\bin\Debug\net7.0\Common.pdb
+E:\ReactExamples\Forms\api\Common\obj\Debug\net7.0\Common.csproj.AssemblyReference.cache
+E:\ReactExamples\Forms\api\Common\obj\Debug\net7.0\Common.GeneratedMSBuildEditorConfig.editorconfig
+E:\ReactExamples\Forms\api\Common\obj\Debug\net7.0\Common.AssemblyInfoInputs.cache
+E:\ReactExamples\Forms\api\Common\obj\Debug\net7.0\Common.AssemblyInfo.cs
+E:\ReactExamples\Forms\api\Common\obj\Debug\net7.0\Common.csproj.CoreCompileInputs.cache
+E:\ReactExamples\Forms\api\Common\obj\Debug\net7.0\Common.dll
+E:\ReactExamples\Forms\api\Common\obj\Debug\net7.0\refint\Common.dll
+E:\ReactExamples\Forms\api\Common\obj\Debug\net7.0\Common.pdb
+E:\ReactExamples\Forms\api\Common\obj\Debug\net7.0\ref\Common.dll
