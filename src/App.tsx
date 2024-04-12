@@ -1,24 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Header } from './components/header/header';
+import { Template } from './components/template/template';
+import { MainBody } from './components/mainbody/mainbody';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { FormHeader } from './components/formheader/formheader';
+import { CenteredTabs } from './components/tabs/tabs';
+import { QuestionForm } from './components/questionform/questionform';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={(<>
+            <Header />
+            <Template />
+            <MainBody />
+          </>)}/>
+          <Route path='form/:id' element={(<>
+            <FormHeader/>
+            <CenteredTabs />
+            <QuestionForm />
+          </>)}/>
+        </Routes>
+      </BrowserRouter>
+
     </div>
   );
 }

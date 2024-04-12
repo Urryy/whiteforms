@@ -1,0 +1,46 @@
+.header_icon_img{
+    height: 55px;
+    width: 55px;
+}
+
+.form_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 180px;
+    background-color: #fff;
+}
+
+.form_header_left{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.form_name{
+    border: none;
+    outline: none;
+    font-family: 'Google Sans', Roboto, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 24px;
+    margin-left: 15px;
+    color: #202124;
+    width: 200px;
+}
+
+.form_name:focus{
+    border-bottom: 1px solid black;
+}
+
+.form_header_icon{
+    margin-left: 2px;
+    color: #202124;
+    font-size: 20px;
+}
+
+.form_header_right{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
