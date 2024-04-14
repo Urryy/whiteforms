@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace Common.Entities;
 
-public class Question
+public class Question : Entity<Question>
 {
     [Key]
-    public Guid Id { get; set; } = Guid.NewGuid();
+    public Guid Id { get; protected set; } = Guid.NewGuid();
     public Guid FormId { get; set; }
     public string Text { get; set; }
     public QuestionType Type { get; set; }
@@ -36,5 +36,11 @@ public class Question
         Points = points;
         AnswerKey = answerKey;
         Answer = answer;
+    }
+
+    public override Question SetEntityId(Guid id)
+    {
+        this.Id = id;
+        return this;
     }
 }

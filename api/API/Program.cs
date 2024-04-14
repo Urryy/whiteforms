@@ -1,7 +1,12 @@
-var builder = WebApplication.CreateBuilder(args);
+using API.Extension;
+using CrossCutting.IoC.ConfigureApp;
+using CrossCutting.IoC.InversionOfControl;
 
-var app = builder.Build();
-
-app.UseHttpsRedirection();
-
-app.Run();
+WebApplication.CreateBuilder(args)
+        .ConnectDataAccessLayer()
+        .ConnectAuthorization()
+        .ConnectBusiness()
+        .Build()
+        .RegisterEndpoints()
+        .ConfigureWebApplication()
+        .Run();

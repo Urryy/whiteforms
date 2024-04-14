@@ -71,3 +71,8 @@ E:\ReactExamples\Forms\API\API\obj\Debug\net7.0\refint\API.dll
 E:\ReactExamples\Forms\API\API\obj\Debug\net7.0\API.pdb
 E:\ReactExamples\Forms\API\API\obj\Debug\net7.0\API.genruntimeconfig.cache
 E:\ReactExamples\Forms\API\API\obj\Debug\net7.0\ref\API.dll
+E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\AutoMapper.dll
+E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\FluentValidation.dll
+E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\FluentValidation.DependencyInjectionExtensions.dll
+E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+E:\ReactExamples\Forms\API\API\obj\Debug\net7.0\API.MvcApplicationPartsAssemblyInfo.cs
