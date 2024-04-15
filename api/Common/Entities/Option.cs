@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Common.Entities;
 
@@ -20,7 +15,7 @@ public class Option : Entity<Option>
 
     public Option(Guid questionId, string text) : this()
     {
-        QuestionId = questionId; 
+        QuestionId = questionId;
         Text = text;
     }
 

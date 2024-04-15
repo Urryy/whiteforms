@@ -11,13 +11,13 @@ public class ValidationAttribute<T> : IEndpointFilter where T : class
         _validator = validator;
     }
 
-    public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, 
+    public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context,
         EndpointFilterDelegate next)
     {
         var model = context.Arguments.FirstOrDefault(i => i.GetType() == typeof(T)) as T;
         var resultValidation = await _validator.ValidateAsync(model!);
 
-        if(!resultValidation.IsValid)
+        if (!resultValidation.IsValid)
         {
             return Results.Json(resultValidation.Errors, statusCode: 400);
         }

@@ -20,7 +20,7 @@ public class PermissionRequirementFilter : IAuthorizationFilter
     private readonly ILogger<PermissionRequirementFilter> _logger;
 
     public PermissionRequirementFilter(SystemRoleType[] roles, ICurrentUserAccessor userAccessor
-        ,ILogger<PermissionRequirementFilter> logger)
+        , ILogger<PermissionRequirementFilter> logger)
     {
         _roles = roles.ToList();
         _userAccessor = userAccessor;

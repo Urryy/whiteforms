@@ -13,8 +13,8 @@ namespace DataAccess.Mapping;
 
 public class MappingProfile : Profile
 {
-	public MappingProfile()
-	{
+    public MappingProfile()
+    {
         #region Form
         CreateMap<Form, FormDto>().ReverseMap();
         CreateMap<Form, FormModel>().ReverseMap();

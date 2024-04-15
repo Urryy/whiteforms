@@ -1,12 +1,5 @@
 ﻿using Common.DataTranserObjects.Form;
 using Common.DataTranserObjects.Option;
-using Common.Entities;
-using Common.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Common.DataTranserObjects.Question;
 

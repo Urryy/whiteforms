@@ -1,10 +1,5 @@
 ﻿using Common.Enums;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Common.Entities;
 
@@ -21,7 +16,7 @@ public class Question : Entity<Question>
     public string AnswerKey { get; set; }
     public bool Answer { get; set; }
     public Form Form { get; set; }
-    public ICollection<Option> Options{ get; set; }
+    public ICollection<Option> Options { get; set; }
 
     protected Question()
     { }
