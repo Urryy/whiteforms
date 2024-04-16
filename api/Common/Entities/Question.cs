@@ -8,8 +8,8 @@ public class Question : Entity<Question>
     [Key]
     public Guid Id { get; protected set; } = Guid.NewGuid();
     public Guid FormId { get; set; }
-    public string Text { get; set; }
-    public QuestionType Type { get; set; }
+    public string QuestionText { get; set; }
+    public QuestionType QuestionType { get; set; }
     public bool Open { get; set; }
     public bool Required { get; set; }
     public int Points { get; set; }
@@ -24,8 +24,8 @@ public class Question : Entity<Question>
     public Question(Guid formId, string text, QuestionType type, bool open, bool required, int points, string answerKey, bool answer) : this()
     {
         FormId = formId;
-        Text = text;
-        Type = type;
+        QuestionText = text;
+        QuestionType = type;
         Open = open;
         Required = required;
         Points = points;

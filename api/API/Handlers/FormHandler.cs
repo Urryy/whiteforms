@@ -1,5 +1,6 @@
 ﻿using Business.Service.Interfaces.Form;
 using Common.Models.Form;
+using DataAccess.Fetch.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Handlers;
@@ -12,9 +13,9 @@ public class FormHandler
         return Results.Ok();
     }
 
-    public static async Task<IResult> GetForms(IFormService srvcForm)
+    public static async Task<IResult> GetForms(IFormService srvcForm, IFetchForm fetchForm)
     {
-        var forms = await srvcForm.GetAllAsync();
+        var forms = await srvcForm.GetAllAsync(fetchForm);
         return Results.Json(forms);
     }
 

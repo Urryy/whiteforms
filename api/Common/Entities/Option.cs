@@ -7,7 +7,7 @@ public class Option : Entity<Option>
     [Key]
     public Guid Id { get; protected set; }
     public Guid QuestionId { get; set; }
-    public string Text { get; set; }
+    public string OptionText { get; set; }
     public Question Question { get; set; }
 
     protected Option()
@@ -16,7 +16,7 @@ public class Option : Entity<Option>
     public Option(Guid questionId, string text) : this()
     {
         QuestionId = questionId;
-        Text = text;
+        OptionText = text;
     }
 
     public override Option SetEntityId(Guid id)

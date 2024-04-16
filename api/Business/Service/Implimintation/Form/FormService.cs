@@ -2,9 +2,11 @@
 using Business.Service.Interfaces.Form;
 using Business.Service.Interfaces.Option;
 using Business.Service.Interfaces.Question;
+using Common.Enums;
 using Common.Models.Form;
 using Common.Models.Option;
 using Common.Models.Question;
+using DataAccess.Extension;
 using DataAccess.Repository.Interfaces;
 
 namespace Business.Service.Implimintation.Form;
@@ -30,16 +32,20 @@ public class FormService : GenericServiceAsync<Form>, IFormService
     public async Task CreateForm(FormModel model)
     {
         var form = new Form(model.Name, model.Description);
+        await AddAsync(form);
 
         foreach (var question in model.Questions)
         {
+            var newQuestion = new Question(form.Id, question.QuestionText, question.QuestionType.ToEnum<QuestionType>(), 
+                question.Open, question.Required, question.Points, question.AnswerKey, question.Answer);
+            await _srvcQuestion.AddAsync(newQuestion);
+
             foreach (var option in question.Options)
             {
-                await _srvcOption.AddAsync(_mapper.Map<OptionModel, Option>(option));
-            }
-            await _srvcQuestion.AddAsync(_mapper.Map<QuestionModel, Question>(question));
+                var newOption = new Option(newQuestion.Id, option.OptionText);
+                await _srvcOption.AddAsync(newOption);
+            }  
         }
-        await AddAsync(form);
     }
 
     public async Task UpdateForm(FormUpdateModel model)

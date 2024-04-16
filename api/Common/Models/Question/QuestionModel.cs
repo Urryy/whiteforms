@@ -4,7 +4,7 @@ namespace Common.Models.Question;
 
 public class QuestionModel
 {
-    public string Text { get; set; } = default!;
+    public string QuestionText { get; set; } = default!;
     public string QuestionType { get; set; } = default!;
     public bool Open { get; set; }
     public bool Required { get; set; } = false;

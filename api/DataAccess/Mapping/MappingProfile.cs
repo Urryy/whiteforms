@@ -22,14 +22,14 @@ public class MappingProfile : Profile
 
         #region Question
         CreateMap<Question, QuestionDto>()
-            .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToString()));
+            .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.QuestionType.ToString()));
         CreateMap<QuestionDto, Question>()
-            .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.Type.ToEnum<QuestionType>()));
+            .ForMember(dest => dest.QuestionType, opt => opt.MapFrom(src => src.Type.ToEnum<QuestionType>()));
 
         CreateMap<Question, QuestionModel>()
-            .ForMember(dest => dest.QuestionType, opt => opt.MapFrom(src => src.Type.ToString()));
+            .ForMember(dest => dest.QuestionType, opt => opt.MapFrom(src => src.QuestionType.ToString()));
         CreateMap<QuestionModel, Question>()
-            .ForMember(dest => dest.Type, opt => opt.MapFrom(src => src.QuestionType.ToEnum<QuestionType>()));
+            .ForMember(dest => dest.QuestionType, opt => opt.MapFrom(src => src.QuestionType.ToEnum<QuestionType>()));
         #endregion
 
         #region Option

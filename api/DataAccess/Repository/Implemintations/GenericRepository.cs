@@ -1,7 +1,10 @@
 ﻿using Common.Context;
+using DataAccess.Fetch;
 using DataAccess.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Linq.Expressions;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace DataAccess.Repository.Implemintations;
 
@@ -24,27 +27,36 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         _set.Remove(entity);
     }
 
-    public async Task<List<T?>> GetAllAsync(bool isTracked = true)
+    public async Task<List<T?>> GetAllAsync(IFetch<T> fetch = null, bool isTracked = true)
     {
         IQueryable<T> query = _set;
         if (isTracked)
             query = query.AsNoTracking();
+        if (fetch != null)
+            query = fetch.AcceptQuery(query);
 
         return await query.ToListAsync();
     }
 
-    public async Task<List<T?>> GetAllByExpressionAsync(Expression<Func<T, bool>> expression, bool isTracked = true)
+    public async Task<List<T?>> GetAllByExpressionAsync(Expression<Func<T, bool>> expression, IFetch<T> fetch = null, bool isTracked = true)
     {
         IQueryable<T> query = _set;
         if (isTracked)
             query = query.AsNoTracking();
+        if (fetch != null)
+            query = fetch.AcceptQuery(query);
 
         return await query.Where(expression).ToListAsync();
     }
 
-    public async Task<T?> GetByExpressionAsync(Expression<Func<T, bool>> expression)
+    public async Task<T?> GetByExpressionAsync(Expression<Func<T, bool>> expression, IFetch<T> fetch = null)
     {
-        var entity = await _set.FirstOrDefaultAsync(expression);
+        IQueryable<T> query = _set;
+
+        if (fetch != null)
+            query = fetch.AcceptQuery(query);
+
+        var entity = await query.FirstOrDefaultAsync(expression);
         return entity;
     }
 

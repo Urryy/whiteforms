@@ -2,5 +2,5 @@
 
 public class OptionModel
 {
-    public string Text { get; set; } = default!;
+    public string OptionText { get; set; } = default!;
 }

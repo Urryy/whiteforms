@@ -7,6 +7,6 @@ public class OptionValiadator : AbstractValidator<OptionModel>
 {
     public OptionValiadator()
     {
-        RuleFor(c => c.Text).NotEmpty();
+        RuleFor(c => c.OptionText).NotEmpty();
     }
 }

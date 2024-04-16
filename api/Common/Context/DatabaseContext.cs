@@ -11,6 +11,7 @@ public class DatabaseContext : DbContext
     public DbSet<Option> Options { get; set; }
     public DatabaseContext(DbContextOptions<DatabaseContext> opt) : base(opt)
     {
+        //Database.EnsureDeleted();
         Database.EnsureCreated();
     }
 
