@@ -4,8 +4,6 @@ using Business.Service.Interfaces.Option;
 using Business.Service.Interfaces.Question;
 using Common.Enums;
 using Common.Models.Form;
-using Common.Models.Option;
-using Common.Models.Question;
 using DataAccess.Extension;
 using DataAccess.Repository.Interfaces;
 
@@ -36,7 +34,7 @@ public class FormService : GenericServiceAsync<Form>, IFormService
 
         foreach (var question in model.Questions)
         {
-            var newQuestion = new Question(form.Id, question.QuestionText, question.QuestionType.ToEnum<QuestionType>(), 
+            var newQuestion = new Question(form.Id, question.QuestionText, question.QuestionType.ToEnum<QuestionType>(),
                 question.Open, question.Required, question.Points, question.AnswerKey, question.Answer);
             await _srvcQuestion.AddAsync(newQuestion);
 
@@ -44,7 +42,7 @@ public class FormService : GenericServiceAsync<Form>, IFormService
             {
                 var newOption = new Option(newQuestion.Id, option.OptionText);
                 await _srvcOption.AddAsync(newOption);
-            }  
+            }
         }
     }
 
