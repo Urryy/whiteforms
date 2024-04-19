@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Fetch;
 
-public interface IFetch<TEntity> where TEntity : class
+public interface IFetch<TEntity> where TEntity : Entity<TEntity>
 {
     IQueryable<TEntity> AcceptQuery(IQueryable<TEntity> query);
 }

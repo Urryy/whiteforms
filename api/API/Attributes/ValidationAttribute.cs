@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Common.Entities;
+using FluentValidation;
 
 namespace API.Attributes;
 

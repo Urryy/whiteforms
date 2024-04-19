@@ -5,7 +5,7 @@ namespace Common.Entities;
 public class Form : Entity<Form>
 {
     [Key]
-    public Guid Id { get; protected set; } = Guid.NewGuid();
+    public override Guid Id { get; protected set; } = Guid.NewGuid();
     public string Name { get; set; }
     public string Description { get; set; }
     public ICollection<Question> Questions { get; set; }

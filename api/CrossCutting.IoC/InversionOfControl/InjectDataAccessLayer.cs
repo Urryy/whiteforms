@@ -41,6 +41,7 @@ public static class InjectDataAccessLayer
     {
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork));
+        services.AddScoped(typeof(ICacheRepository<>), typeof(GenericCacheRepository<>));
     }
 
     private static void InjectValidators(this IServiceCollection services)

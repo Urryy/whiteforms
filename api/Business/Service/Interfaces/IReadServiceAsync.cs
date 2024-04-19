@@ -1,10 +1,11 @@
-﻿using DataAccess.Fetch;
+﻿using Common.Entities;
+using DataAccess.Fetch;
 using System.Linq.Expressions;
 
 namespace Business.Service.Interfaces;
 
 public interface IReadServiceAsync<TEntity>
-    where TEntity : class
+    where TEntity : Entity<TEntity>
 {
     Task<IEnumerable<TEntity>> GetAllAsync(IFetch<TEntity> fetch = null, bool isTracked = false);
     Task<IEnumerable<TEntity>> GetAllByExpressionAsync(Expression<Func<TEntity, bool>> expression, IFetch<TEntity> fetch = null, bool isTracked = false);

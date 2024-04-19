@@ -1,4 +1,5 @@
 ﻿using Business.Service.Interfaces;
+using Common.Entities;
 using DataAccess.Fetch;
 using DataAccess.Repository.Interfaces;
 using System.Linq.Expressions;
@@ -6,7 +7,7 @@ using System.Linq.Expressions;
 namespace Business.Service.Implimintation;
 
 public class ReadServiceAsync<TEntity> : IReadServiceAsync<TEntity>
-    where TEntity : class
+    where TEntity : Entity<TEntity>
 {
     protected readonly IUnitOfWork _uoW;
     public ReadServiceAsync(IUnitOfWork uoW)
@@ -16,13 +17,13 @@ public class ReadServiceAsync<TEntity> : IReadServiceAsync<TEntity>
 
     public async Task<int> CountAsync()
     {
-        var entities = await _uoW.Repository<TEntity>().GetAllAsync();
+        var entities = await _uoW.Repository<TEntity>().GetAllFromCacheAsync();
         return entities.Count;
     }
 
     public async Task<IEnumerable<TEntity>> GetAllAsync(IFetch<TEntity> fetch = null, bool isTracked = false)
     {
-        return await _uoW.Repository<TEntity>().GetAllAsync(fetch, isTracked);
+        return await _uoW.Repository<TEntity>().GetAllFromCacheAsync(fetch, isTracked);
     }
 
     public async Task<IEnumerable<TEntity>> GetAllByExpressionAsync(Expression<Func<TEntity, bool>> expression, IFetch<TEntity> fetch = null, bool isTracked = false)
@@ -37,6 +38,6 @@ public class ReadServiceAsync<TEntity> : IReadServiceAsync<TEntity>
 
     public async Task<TEntity?> GetByIdAsync(Guid id)
     {
-        return await _uoW.Repository<TEntity>().GetByIdAsync(id);
+        return await _uoW.Repository<TEntity>().GetByIdFromCacheAsync(id);
     }
 }

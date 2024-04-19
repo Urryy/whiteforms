@@ -1,7 +1,9 @@
-﻿namespace Business.Service.Interfaces;
+﻿using Common.Entities;
+
+namespace Business.Service.Interfaces;
 
 public interface IGenericServiceAsync<TEntity> : IReadServiceAsync<TEntity>
-    where TEntity : class
+    where TEntity : Entity<TEntity>
 {
     Task AddAsync(TEntity entity);
     Task UpdateAsync(TEntity entity);

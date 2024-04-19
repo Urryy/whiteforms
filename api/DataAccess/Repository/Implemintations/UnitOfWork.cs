@@ -1,4 +1,5 @@
 ﻿using Common.Context;
+using Common.Entities;
 using DataAccess.Repository.Interfaces;
 
 namespace DataAccess.Repository.Implemintations;
@@ -29,9 +30,9 @@ public class UnitOfWork : IUnitOfWork, IDisposable
         GC.SuppressFinalize(this);
     }
 
-    public IGenericRepository<TEntity> Repository<TEntity>() where TEntity : class
+    public GenericCacheRepository<TEntity> Repository<TEntity>() where TEntity : Entity<TEntity>
     {
-        return new GenericRepository<TEntity>(_context);
+        return new GenericCacheRepository<TEntity>(_context);
     }
 
     public async Task SaveChangesAsync()

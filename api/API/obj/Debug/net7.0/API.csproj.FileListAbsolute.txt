@@ -37,12 +37,6 @@ E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\runtimes\win-arm\native\Microsof
 E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
 E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
 E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
-E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
-E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
-E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
-E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
-E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
-E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\Business.dll
 E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\Common.dll
 E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\CrossCutting.IoC.dll
@@ -75,3 +69,8 @@ E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\AutoMapper.dll
 E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\FluentValidation.dll
 E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\FluentValidation.DependencyInjectionExtensions.dll
 E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\runtimes\win\lib\net7.0\Microsoft.Win32.SystemEvents.dll
+E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
+E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Runtime.Caching.dll
+E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.ProtectedData.dll
+E:\ReactExamples\Forms\API\API\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Windows.Extensions.dll

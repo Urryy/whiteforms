@@ -1,7 +1,10 @@
-﻿namespace DataAccess.Repository.Interfaces;
+﻿using Common.Entities;
+using DataAccess.Repository.Implemintations;
+
+namespace DataAccess.Repository.Interfaces;
 
 public interface IUnitOfWork
 {
     Task SaveChangesAsync();
-    IGenericRepository<TEntity> Repository<TEntity>() where TEntity : class;
+    GenericCacheRepository<TEntity> Repository<TEntity>() where TEntity : Entity<TEntity>;
 }
