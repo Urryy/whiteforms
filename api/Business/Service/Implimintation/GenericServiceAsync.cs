@@ -7,7 +7,7 @@ namespace Business.Service.Implimintation;
 public class GenericServiceAsync<TEntity> : ReadServiceAsync<TEntity>, IGenericServiceAsync<TEntity>
     where TEntity : Entity<TEntity>
 {
-    public GenericServiceAsync(IUnitOfWork uoW) : base(uoW)
+    public GenericServiceAsync(IUnitOfWork uoW, IServiceProvider srvcProvider) : base(uoW, srvcProvider)
     {
     }
 

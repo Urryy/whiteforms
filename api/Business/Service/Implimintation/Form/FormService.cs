@@ -20,7 +20,8 @@ public class FormService : GenericServiceAsync<Form>, IFormService
     private readonly IMapper _mapper;
 
     public FormService(IUnitOfWork uoW, IQuestionService srvcQuestion,
-        IOptionService srvcOption, IMapper mapper) : base(uoW)
+        IOptionService srvcOption, IMapper mapper,
+        IServiceProvider srvcProvder) : base(uoW, srvcProvder)
     {
         _srvcQuestion = srvcQuestion;
         _srvcOption = srvcOption;

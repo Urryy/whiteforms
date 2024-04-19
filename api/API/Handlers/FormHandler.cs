@@ -13,9 +13,9 @@ public class FormHandler
         return Results.Ok();
     }
 
-    public static async Task<IResult> GetForms(IFormService srvcForm, IFetchForm fetchForm)
+    public static async Task<IResult> GetForms(IFormService srvcForm)
     {
-        var forms = await srvcForm.GetAllAsync(fetchForm);
+        var forms = await srvcForm.GetAllAsync(srvcForm.GetFetch<IFetchForm>());
         return Results.Json(forms);
     }
 

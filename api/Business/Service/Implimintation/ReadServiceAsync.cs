@@ -2,6 +2,7 @@
 using Common.Entities;
 using DataAccess.Fetch;
 using DataAccess.Repository.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 using System.Linq.Expressions;
 
 namespace Business.Service.Implimintation;
@@ -10,9 +11,11 @@ public class ReadServiceAsync<TEntity> : IReadServiceAsync<TEntity>
     where TEntity : Entity<TEntity>
 {
     protected readonly IUnitOfWork _uoW;
-    public ReadServiceAsync(IUnitOfWork uoW)
+    protected IServiceProvider _srvcProvider;
+    public ReadServiceAsync(IUnitOfWork uoW, IServiceProvider srvcProvider)
     {
         _uoW = uoW;
+        _srvcProvider = srvcProvider;
     }
 
     public async Task<int> CountAsync()
@@ -39,5 +42,11 @@ public class ReadServiceAsync<TEntity> : IReadServiceAsync<TEntity>
     public async Task<TEntity?> GetByIdAsync(Guid id)
     {
         return await _uoW.Repository<TEntity>().GetByIdFromCacheAsync(id);
+    }
+
+    public TFetch GetFetch<TFetch>() where TFetch : IFetch<TEntity>
+    {
+        var fetch = _srvcProvider.GetRequiredService<TFetch>();
+        return fetch;
     }
 }

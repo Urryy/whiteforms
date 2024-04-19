@@ -7,7 +7,7 @@ using Question = Common.Entities.Question;
 
 public class QuestionService : GenericServiceAsync<Question>, IQuestionService
 {
-    public QuestionService(IUnitOfWork uoW) : base(uoW)
+    public QuestionService(IUnitOfWork uoW, IServiceProvider srvcProvider) : base(uoW, srvcProvider)
     {
     }
 }

@@ -7,7 +7,7 @@ using Option = Common.Entities.Option;
 
 public class OptionService : GenericServiceAsync<Option>, IOptionService
 {
-    public OptionService(IUnitOfWork uoW) : base(uoW)
+    public OptionService(IUnitOfWork uoW, IServiceProvider srvcProvider) : base(uoW, srvcProvider)
     {
     }
 }

@@ -12,4 +12,5 @@ public interface IReadServiceAsync<TEntity>
     Task<TEntity?> GetByIdAsync(Guid id);
     Task<TEntity?> GetByExpressionAsync(Expression<Func<TEntity, bool>> expression, IFetch<TEntity> fetch = null);
     Task<int> CountAsync();
+    TFetch GetFetch<TFetch>() where TFetch : IFetch<TEntity>;
 }
