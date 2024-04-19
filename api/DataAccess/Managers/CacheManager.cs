@@ -12,9 +12,9 @@ public static class CacheManager
     public static string KEY_ALL_ENTITIES = "ALLENTITY";
     public static string KEY_ENTITY = "ENTITY{0}";
 
-    public const int EXPIRES_CACHE = 10;
+    private static DateTimeOffset EXPIRES_CACHE = DateTimeOffset.UtcNow.AddMinutes(10);
 
-    private static async Task UpdateAllEntities<T>(T? previousEntity, T? currentEntity)
+    private static void UpdateAllEntities<T>(T? previousEntity, T? currentEntity)
     {
         if (_cache.Contains(KEY_ALL_ENTITIES))
         {
@@ -34,13 +34,13 @@ public static class CacheManager
                         items.Add(currentEntity);
                     }
 
-                    _cache.Set(KEY_ALL_ENTITIES, items, DateTimeOffset.UtcNow.AddMinutes(EXPIRES_CACHE));
+                    _cache.Set(KEY_ALL_ENTITIES, items, EXPIRES_CACHE);
                 }
             }
         }
     }
 
-    public static async Task<T> GetOrSet<T>(string key, Func<Task<T>> getItemCallback, DateTimeOffset absoluteExpiration)
+    public static async Task<T> GetOrSet<T>(string key, Func<Task<T>> getItemCallback)
     {
         if (!_cache.Contains(key))
         {
@@ -49,7 +49,7 @@ public static class CacheManager
                 if (!_cache.Contains(key))
                 {
                     T item = getItemCallback().Result;
-                    _cache.Set(key, item, absoluteExpiration);
+                    _cache.Set(key, item, EXPIRES_CACHE);
                 }
             }
         }
@@ -61,12 +61,12 @@ public static class CacheManager
         await removeItemCallback();
         if (_cache.Contains(key))
         {
-            await UpdateAllEntities(_cache.Get(key), default(T));
+            UpdateAllEntities(_cache.Get(key), default(T));
             _cache.Remove(key);
         }  
     }
 
-    public static async Task Update<T>(string key, Func<Task> updateItemCallback, T entity, DateTimeOffset absoluteExpiration)
+    public static async Task Update<T>(string key, Func<Task> updateItemCallback, T entity)
     {
         T previousEntity = default;
 
@@ -78,15 +78,15 @@ public static class CacheManager
             _cache.Remove(key);
         }
 
-        _cache.Set(key, entity, absoluteExpiration);
+        _cache.Set(key, entity, EXPIRES_CACHE);
 
-        await UpdateAllEntities<T>(previousEntity, entity);
+        UpdateAllEntities<T>(previousEntity, entity);
     }
 
-    public static async Task Create<T>(string key, Func<Task> updateItemCallback, T entity, DateTimeOffset absoluteExpiration)
+    public static async Task Create<T>(string key, Func<Task> updateItemCallback, T entity)
     {
         await updateItemCallback();
-        _cache.Set(key, entity, absoluteExpiration);
-        await UpdateAllEntities<T>(default(T), entity);
+        _cache.Set(key, entity, EXPIRES_CACHE);
+        UpdateAllEntities<T>(default(T), entity);
     }
 }
