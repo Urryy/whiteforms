@@ -63,6 +63,14 @@
     box-sizing: border-box;
     width: 200px;
     margin-right: 20px;
+    border: 1px solid rgb(202, 202, 202);
+}
+
+.doc_card_title{
+    overflow: ellipsis;
+    padding: 2px 5px;
+    font-size: 16px;
+    font-weight: 500;
 }
 
 .content_left{

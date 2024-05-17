@@ -1,0 +1,46 @@
+.add_image_right{
+    margin-top: 12px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: 15px;
+}
+
+.add_image{
+    background-color: white;
+    border-radius: 8px;
+    padding: 25px 22px;
+    text-transform: capitalize;
+    display: flex;
+    flex-direction: column;
+    padding-top: 0px;
+    width: 95%;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-right: 30px !important;
+}
+
+.add_image_top{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.add_image_body{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top:10px;
+}
+
+.body_image{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.image_input{
+    width: 100%;
+}

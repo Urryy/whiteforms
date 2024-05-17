@@ -1,4 +1,4 @@
-import { ActionTypesProps, StateProps } from "../interfaces/interfaces";
+import { ActionTypesProps, StateProps, initialStateProps } from "../interfaces/interfaces";
 
 export const initialState: StateProps = {
     questions: [{
@@ -11,7 +11,12 @@ export const initialState: StateProps = {
         answerKey: '',
         answer: false,
         open: true,
-        required: false
+        required: false,
+        startScaleValue: null,
+        descStartScaleValue: null,
+        endScaleValue: null,
+        descEndScaleValue: null,
+        classNames: []
     }],
     questionType: 'radio',
     doc_name: 'Название формы',
@@ -25,23 +30,23 @@ export const actionTypes: ActionTypesProps = {
     CHANGE_TYPE: 'CHANGE_TYPE'
 }
 
-const reducer = (state: StateProps = initialState, action: any): StateProps => {
+const reducer = (state: StateProps = initialState, action: initialStateProps): StateProps => {
     switch(action.type){
         case actionTypes.SET_QUESTIONS:
             return {
-                ...state, questions: action.questions
+                ...state, questions: action.state.questions
             };
         case actionTypes.CHANGE_TYPE:
             return {
-                ...state, questionType: action.questions
+                ...state, questionType: action.state.questionType
             };
         case actionTypes.SET_DOC_NAME:
             return {
-                ...state, doc_name: action.doc_name
+                ...state, doc_name: action.state.doc_name
             };
         case actionTypes.SET_DOC_DESC:
             return {
-                ...state, doc_desc: action.doc_desc
+                ...state, doc_desc: action.state.doc_desc
             };
         default: 
             return state;
@@ -49,4 +54,3 @@ const reducer = (state: StateProps = initialState, action: any): StateProps => {
 }
 
 export default reducer;
-

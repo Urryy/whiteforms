@@ -20,12 +20,10 @@
 .form_name{
     border: none;
     outline: none;
-    font-family: 'Google Sans', Roboto, Arial, sans-serif;
     font-size: 18px;
     font-weight: 400;
     line-height: 24px;
     margin-left: 15px;
-    color: #202124;
     width: 200px;
 }
 
@@ -35,8 +33,9 @@
 
 .form_header_icon{
     margin-left: 2px;
-    color: #202124;
+    color: #8f8f8f;
     font-size: 20px;
+    margin-right: 5px;
 }
 
 .form_header_right{
