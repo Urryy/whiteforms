@@ -8,9 +8,31 @@
     border-radius: 20px;
 }
 
+.modal_image_insert{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: whitesmoke;
+    overflow: auto;
+    box-shadow: rgba(0, 0, 0, .2) 0 4px 16px;
+    border: 1px solid #ACACAC;
+}
+
 header{
     padding: 25px;
     font-size: 12pt;
+}
+
+.header_modal{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.image_insert_modal_close{
+    cursor: pointer;
 }
 
 footer{
@@ -28,6 +50,13 @@ footer{
     flex-direction: column;
 }
 
+.image_insert_modal_body{
+    display: flex;
+/*     padding: 5px 25px 30px 25px; */
+    align-items: center;
+    flex-direction: column;
+}
+
 .link_input{
     width: 100%;
     padding: 5px 0;
@@ -36,4 +65,83 @@ footer{
 
 .Mui-focused{
     color: gray !important;
+}
+
+.drop-container {
+    position: relative;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    padding: 20px;
+    border-radius: 10px;
+    color: #444;
+    cursor: pointer;
+    transition: background .2s ease-in-out, border .2s ease-in-out;
+}
+
+.modal_image_insert:hover {
+    background: #eee;
+    border-color: #111;
+}
+
+.drop-container:hover .drop-title {
+    color: #222;
+}
+
+.drop-title {
+    color: #444;
+    font-size: 18px;
+    text-align: center;
+    transition: color .2s ease-in-out;
+}
+
+input[type=file]::file-selector-button {
+    margin-right: 20px;
+    border: none;
+    background: #084cdf;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    transition: background .2s ease-in-out;
+}
+  
+input[type=file]::file-selector-button:hover {
+background: #0d45a5;
+}
+
+.resizable {
+    position: relative;
+}
+.resizer {
+    background: transparent;
+    position: absolute;
+}
+.resizable:hover .resizer {
+    background: rgb(99 102 241);
+}
+
+.resizer--r {
+    cursor: col-resize;
+
+    right: 0;
+    top: 50%;
+    transform: translate(50%, -50%);
+
+    height: 2rem;
+    width: 0.25rem;
+}
+
+.resizer--b {
+    cursor: row-resize;
+
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
+
+    height: 0.25rem;
+    width: 2rem;
 }

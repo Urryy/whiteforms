@@ -65,6 +65,12 @@ export const QuestionPanel: FC<QuestionPanelProps> = ({question, index}) => {
                 </p>
             </>
             )
+        else if(question.questionType === QuestionTypeConst.IMAGE)
+            return(
+            <>
+                <img alt="image1" src={question.options[0].optionText} width={400} height={400}/>
+            </>
+            )
         else
             return (<FormControlLabel style={{marginLeft: '5px', marginBottom: '5px'}} disabled
                 control={<input type={question.questionType} color="primary" required={question.required} style={{marginRight: '5px'}}/>}

@@ -7,6 +7,8 @@ import { LinkModalModelQuestionProps, LinkModalWindow } from '../../modal/LinkMo
 import { Delete, FilterNone, FormatBoldOutlined, FormatItalic, FormatUnderlined, Link } from '@mui/icons-material';
 import img from './qweasd.jpg';
 import ReactDOM from 'react-dom';
+import React from 'react';
+import { useResizable } from '../../../hooks/useResizable';
 
 interface QuestionImageProps{
     question: QuestionProps,
@@ -15,7 +17,13 @@ interface QuestionImageProps{
     setQuestions: (value: QuestionProps[]) => void
 }
 
+enum Direction {
+    Horizontal = 'Horizontal',
+    Vertical = 'Vertical',
+}
+
 export const QuestionImage: FC<QuestionImageProps> = ({question, index, questions, setQuestions}) => {
+    const [ref] = useResizable();
     const textContext = useTextContext();
     
     const [isOpenLinkModel, setIsOpenLinkModal] = useState(false);
@@ -141,6 +149,14 @@ export const QuestionImage: FC<QuestionImageProps> = ({question, index, question
         setQuestions(ques);
     }
 
+    function getValue(value: string | null | undefined){
+        if(value){
+            return value;
+        }
+        return "";
+    }
+    
+
     return (
         <>
         <AccordionDetails className='add_image'>
@@ -160,10 +176,13 @@ export const QuestionImage: FC<QuestionImageProps> = ({question, index, question
                     </IconButton>
                 </div>
             </div>
+
             <div className="add_image_body">
                 <div className="body_image">
-                    <div className="input_image_wrapper">
-                        <img alt='imgasd' src={img} width={400} height={400}/>
+                    <div className="input_image_wrapper resizable" ref={ref}>
+                        <img alt='imgasd' src={getValue(question.options[0].optionText)} width={400} height={400}/>
+                        <div className="resizer resizer--r"/>
+                        <div className="resizer resizer--b"/>
                     </div>
                 </div>
             </div>
