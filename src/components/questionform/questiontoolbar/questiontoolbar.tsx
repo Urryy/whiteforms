@@ -16,7 +16,7 @@ export const QuestionToolbar: FC<QuestionToolbarProps> = ({question, questions, 
     function addQuestion(){
         expandeCloseAll();
         setQuestions([...questions, 
-            {questionText: 'Вопрос без заголовка', questionType: 'radio', options: [{optionText: "Вариант 1"}], answerKey: '', points: 0, answer: false, open: true, required: false, classNames: []}]);
+            {questionText: 'Вопрос без заголовка', questionType: 'radio', options: [{optionText: "Вариант 1"}], answerKey: '', points: 0, answer: false, open: true, required: false, classNames: [],startScaleValue: 1, endScaleValue: 5}]);
     }
 
     function addDescription(){

@@ -18,7 +18,13 @@ export interface QuestionProps{
 export interface OptionsProps{
     id?: string,
     optionText: string,
-    isAnother?: boolean
+    isAnother?: boolean,
+    imageWrapper?: ImageWrapperProps
+}
+
+export interface ImageWrapperProps{
+    width: string,
+    height: string
 }
 
 export interface FormProps{

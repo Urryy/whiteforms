@@ -1,5 +1,5 @@
-import { FC, useState } from 'react';
-import { QuestionProps } from '../../../interfaces/interfaces';
+import { FC, useCallback, useEffect, useState } from 'react';
+import { ImageWrapperProps, QuestionProps } from '../../../interfaces/interfaces';
 import './questionimage.css';
 import { AccordionDetails, IconButton } from '@material-ui/core';
 import { useTextContext } from '../../../contexts/TextContext';
@@ -17,17 +17,24 @@ interface QuestionImageProps{
     setQuestions: (value: QuestionProps[]) => void
 }
 
-enum Direction {
-    Horizontal = 'Horizontal',
-    Vertical = 'Vertical',
-}
-
 export const QuestionImage: FC<QuestionImageProps> = ({question, index, questions, setQuestions}) => {
     const [ref] = useResizable();
     const textContext = useTextContext();
     
     const [isOpenLinkModel, setIsOpenLinkModal] = useState(false);
     const [elementLink, setElementLink] = useState<LinkModalModelQuestionProps | null>(null);
+
+   /*  useEffect(() => {
+        if(typeof wrapperImage === 'object'){
+             const interval = setInterval(() => {
+                let newQues = [...questions];
+                newQues[index].options[0].imageWrapper = wrapperImage;
+                //console.log(newQues[index].options[0].imageWrapper); 
+                setQuestions(newQues);
+              }, 10);
+              return () => clearInterval(interval); 
+        }
+    }, [wrapperImage]) */
 
     function onChange(target: string, index: number){
         let newQues = [...questions];
@@ -156,6 +163,12 @@ export const QuestionImage: FC<QuestionImageProps> = ({question, index, question
         return "";
     }
     
+    function setValue(imageWrapper: ImageWrapperProps){
+        console.log(imageWrapper);
+        let newQues = [...questions];
+        newQues[index].options[0].imageWrapper = imageWrapper; 
+        setQuestions(newQues);
+    }
 
     return (
         <>
@@ -177,15 +190,17 @@ export const QuestionImage: FC<QuestionImageProps> = ({question, index, question
                 </div>
             </div>
 
-            <div className="add_image_body">
-                <div className="body_image">
-                    <div className="input_image_wrapper resizable" ref={ref}>
-                        <img alt='imgasd' src={getValue(question.options[0].optionText)} width={400} height={400}/>
-                        <div className="resizer resizer--r"/>
-                        <div className="resizer resizer--b"/>
+            {typeof ref === 'function' 
+                ? <div className="add_image_body">
+                        <div className="body_image">
+                            <div className="input_image_wrapper resizable" ref={(el) => ref(el, setValue)} id='image_wrapper'>
+                                <img alt='imgasd' src={getValue(question.options[0].optionText)} />
+                                <div className="resizer resizer--r"/>
+                                <div className="resizer resizer--b"/>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
+                : <></>}
         </AccordionDetails>
         <LinkModalWindow isOpen={isOpenLinkModel} setIsOpen={setIsOpenLinkModal} linkModalModel={elementLink}/>
         </>

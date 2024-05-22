@@ -121,7 +121,7 @@ background: #0d45a5;
     position: absolute;
 }
 .resizable:hover .resizer {
-    background: rgb(99 102 241);
+    background: rgb(76, 79, 255);
 }
 
 .resizer--r {
@@ -132,7 +132,7 @@ background: #0d45a5;
     transform: translate(50%, -50%);
 
     height: 2rem;
-    width: 0.25rem;
+    width: 0.75rem;
 }
 
 .resizer--b {
@@ -142,6 +142,6 @@ background: #0d45a5;
     left: 50%;
     transform: translate(-50%, 50%);
 
-    height: 0.25rem;
+    height: 0.75rem;
     width: 2rem;
 }

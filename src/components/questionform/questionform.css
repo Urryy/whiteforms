@@ -333,7 +333,21 @@ input[type=radio], input[type=checkbox] {
 
 [contentEditable=true]:empty:not(:focus):before {
     content: attr(data-text)
-  }
+}
+
+.image_wrapper{
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image_wrapper img{
+    height: 100%;
+    width: 100%;
+    flex: 1;
+    object-fit: cover;
+}
 
  
  

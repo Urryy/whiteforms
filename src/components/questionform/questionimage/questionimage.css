@@ -39,8 +39,23 @@
     align-items: center;
     width: 100%;
     margin-top: 10px;
+    height: 100%;
 }
 
 .image_input{
     width: 100%;
+}
+
+.input_image_wrapper{
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input_image_wrapper img{
+    height: 100%;
+    width: 100%;
+    flex: 1;
+    object-fit: cover;
 }

@@ -15,7 +15,6 @@ interface QuestionPanelProps{
 export const QuestionPanel: FC<QuestionPanelProps> = ({question, index}) => {
     const titleQuestion = question.questionText.length === 0 ? 'Вопрос' : `${question.questionText}`
     const textContext = useTextContext();
-
     const getScaleMarks = () => {
         let marks: ScaleValueProps[] = []
         for (let index = question.startScaleValue!; index <= question.endScaleValue!; index++) {
@@ -67,9 +66,9 @@ export const QuestionPanel: FC<QuestionPanelProps> = ({question, index}) => {
             )
         else if(question.questionType === QuestionTypeConst.IMAGE)
             return(
-            <>
-                <img alt="image1" src={question.options[0].optionText} width={400} height={400}/>
-            </>
+            <div className="image_wrapper god" style={{height: `${question.options[0].imageWrapper?.height}px`, width: `${question.options[0].imageWrapper?.width}px`}}>
+                <img alt="image1" src={question.options[0].optionText}/>
+            </div>
             )
         else
             return (<FormControlLabel style={{marginLeft: '5px', marginBottom: '5px'}} disabled
