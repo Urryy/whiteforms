@@ -4,11 +4,12 @@ import './questionimage.css';
 import { AccordionDetails, IconButton } from '@material-ui/core';
 import { useTextContext } from '../../../contexts/TextContext';
 import { LinkModalModelQuestionProps, LinkModalWindow } from '../../modal/LinkModalWindow';
-import { Delete, FilterNone, FormatBoldOutlined, FormatItalic, FormatUnderlined, Link } from '@mui/icons-material';
+import { Delete, FilterNone, FormatBoldOutlined, FormatItalic, FormatUnderlined, Link, MoreVert } from '@mui/icons-material';
 import img from './qweasd.jpg';
 import ReactDOM from 'react-dom';
 import React from 'react';
 import { useResizable } from '../../../hooks/useResizable';
+import { ImageEditorModalWindow } from '../../modal/ImageEditorModalWindow';
 
 interface QuestionImageProps{
     question: QuestionProps,
@@ -23,18 +24,7 @@ export const QuestionImage: FC<QuestionImageProps> = ({question, index, question
     
     const [isOpenLinkModel, setIsOpenLinkModal] = useState(false);
     const [elementLink, setElementLink] = useState<LinkModalModelQuestionProps | null>(null);
-
-   /*  useEffect(() => {
-        if(typeof wrapperImage === 'object'){
-             const interval = setInterval(() => {
-                let newQues = [...questions];
-                newQues[index].options[0].imageWrapper = wrapperImage;
-                //console.log(newQues[index].options[0].imageWrapper); 
-                setQuestions(newQues);
-              }, 10);
-              return () => clearInterval(interval); 
-        }
-    }, [wrapperImage]) */
+    const [isOpenEditor, setIsOpenEditor] = useState(false);
 
     function onChange(target: string, index: number){
         let newQues = [...questions];
@@ -170,6 +160,10 @@ export const QuestionImage: FC<QuestionImageProps> = ({question, index, question
         setQuestions(newQues);
     }
 
+    function styledImage(value: string){
+
+    }
+
     return (
         <>
         <AccordionDetails className='add_image'>
@@ -191,12 +185,19 @@ export const QuestionImage: FC<QuestionImageProps> = ({question, index, question
             </div>
 
             {typeof ref === 'function' 
-                ? <div className="add_image_body">
+                ? <div className="add_image_body"> 
                         <div className="body_image">
                             <div className="input_image_wrapper resizable" ref={(el) => ref(el, setValue)} id='image_wrapper'>
-                                <img alt='imgasd' src={getValue(question.options[0].optionText)} />
+                                <div className='image_tools'>
+                                    <IconButton onClick={() => setIsOpenEditor(!isOpenEditor)}>
+                                        <MoreVert />
+                                    </IconButton>
+                                    
+                                </div>
+                                <img alt='no_image' src={getValue(question.options[0].optionText)} />
                                 <div className="resizer resizer--r"/>
                                 <div className="resizer resizer--b"/>
+                                <ImageEditorModalWindow isOpen={isOpenEditor} setIsOpen={setIsOpenEditor} setValue={styledImage}/>
                             </div>
                         </div>
                     </div>
