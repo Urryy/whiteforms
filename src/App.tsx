@@ -18,7 +18,7 @@ function App() {
         questionText: "Вопрос без заголовка",
         questionType: "radio",
         options: [
-            {optionText: "Вариант 1"},
+            {optionText: "Вариант 1", elementStyle: {fontSize: '11', fontFamily: 'Roboto, Arial, sans-serif'}}
         ],
         points: 0,
         answerKey: '',
@@ -29,7 +29,8 @@ function App() {
         descStartScaleValue: null,
         endScaleValue: 5,
         classNames: [],
-        descEndScaleValue: null
+        descEndScaleValue: null,
+        elementStyle: {fontSize: '12', fontFamily: 'Roboto, Arial, sans-serif'}
     }
   ]);
 

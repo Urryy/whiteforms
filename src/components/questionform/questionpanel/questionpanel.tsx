@@ -66,7 +66,7 @@ export const QuestionPanel: FC<QuestionPanelProps> = ({question, index}) => {
             )
         else if(question.questionType === QuestionTypeConst.IMAGE)
             return(
-            <div className="image_wrapper god" style={{height: `${question.options[0].imageWrapper?.height}px`, width: `${question.options[0].imageWrapper?.width}px`}}>
+            <div className="image_wrapper" style={{height: `${question.options[0].imageWrapper?.height}`, width: `${question.options[0].imageWrapper?.width}`}}>
                 <img alt="image1" src={question.options[0].optionText}/>
             </div>
             )

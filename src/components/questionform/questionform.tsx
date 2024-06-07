@@ -3,7 +3,7 @@ import './questionform.css';
 import { Accordion, Button, IconButton, TextField } from "@material-ui/core";
 import { DragIndicator, FormatBoldOutlined, FormatItalic, FormatUnderlined, Link } from "@mui/icons-material";
 import { DragDropContext, Draggable, DropResult, Droppable } from "react-beautiful-dnd";
-import { QuestionProps, StateProps } from "../../interfaces/interfaces";
+import { ElementStyleProps, QuestionProps, StateProps } from "../../interfaces/interfaces";
 import { QuestionPanel } from "./questionpanel/questionpanel";
 import { QuestionEditor } from "./questioneditor/questioneditor";
 import { QuestionToolbar } from "./questiontoolbar/questiontoolbar";
@@ -26,34 +26,50 @@ export const QuestionForm: FC<QuestionFormsProps> = ({questions, setQuestions, i
     const [{}, dispatch] = useStateValue();
     
     const [formId, setFormId] = useState();
-
     const [documentName, setDocumentName] = useState<string>("Новая форма");
     const [documentDesc, setDocumentDesc] = useState<string>("Описание формы");
-    
+
+    const [documentNameElementStyle, setDocumentNameElementStyle] = useState<ElementStyleProps>();
+    const [documentDescElementStyle, setDocumentDescElementStyle] = useState<ElementStyleProps>();
+
+    const [documentNameClassNames, setDocumentNameClassNames] = useState<string[]>([]);
+    const [documentDescClassNames, setDocumentDescClassNames] = useState<string[]>([]);
+
     const [isOpenLinkModel, setIsOpenLinkModal] = useState(false);
     const [elementLink, setElementLink] = useState<LinkModalModelProps | null>(null);
 
     const textContext = useTextContext();
 
     useEffect(() => {
-        let srvcApi = createAPIEndpointService(`form`)
-        srvcApi.fetchById(id!)
+        if(id){
+            let srvcApi = createAPIEndpointService(`form`)
+            srvcApi.fetchById(id!)
             .then(res => {
                 if(res.data){
                     setDocumentName(res.data.name);
                     setDocumentDesc(res.data.description);
+                    setDocumentNameElementStyle(res.data.documentNameElementStyle);
+                    setDocumentDescElementStyle(res.data.DocumentDescElementStyle)
                     setFormId(res.data.id);
                     setQuestions(res.data.questions);
+                    setDocumentNameClassNames(res.data.documentNameClassNames);
+                    setDocumentDescClassNames(res.data.documentDescClassNames);
                 }
             })
             .catch(err => {
                 console.log(err);
             })
+        }  
 
-        let initialState: StateProps = { questions: questions, doc_name: documentName, doc_desc: documentDesc }
+        let initialState: StateProps = { questions: questions, doc_name: documentName, doc_desc: documentDesc, doc_name_element_style: documentNameElementStyle, 
+            doc_desc_element_style: documentDescElementStyle, doc_name_classNames: documentNameClassNames, doc_desc_classNames: documentDescClassNames}
+
         dispatch({ type: actionTypes.SET_DOC_NAME, state: initialState});
         dispatch({ type: actionTypes.SET_DOC_DESC, state: initialState});
-        dispatch({ type: actionTypes.SET_DOC_NAME, state: initialState});
+        dispatch({ type: actionTypes.SET_QUESTIONS, state: initialState});
+        dispatch({ type: actionTypes.SET_STYLE_DOC_NAME, state: initialState});
+        dispatch({ type: actionTypes.SET_DOC_NAME_CLASSNAMES, state: initialState});
+        dispatch({ type: actionTypes.SET_DOC_DESC_CLASSNAMES, state: initialState});
     }, [])
 
     function onDragEndResult(result: DropResult){
@@ -85,15 +101,42 @@ export const QuestionForm: FC<QuestionFormsProps> = ({questions, setQuestions, i
     }
 
     function saveForm(){
-        let srvcApi = createAPIEndpointService('form');
+        let initialState: StateProps = { 
+            questions: questions, 
+            doc_name: documentName, 
+            doc_desc: documentDesc, 
+            doc_name_classNames: documentNameClassNames,
+            doc_desc_classNames: documentDescClassNames,
+            doc_name_element_style: { fontFamily: textContext.fontKolontitul, fontSize: textContext.sizeKolontitul },
+            doc_desc_element_style: { fontFamily: textContext.fontOptionText, fontSize: textContext.sizeOptionText }
+        };
+        dispatch({ type: actionTypes.SET_DOC_NAME, state: initialState});
+        dispatch({ type: actionTypes.SET_DOC_DESC, state: initialState});
+        dispatch({ type: actionTypes.SET_QUESTIONS, state: initialState});
+        dispatch({ type: actionTypes.SET_STYLE_DOC_NAME, state: initialState});
+        dispatch({ type: actionTypes.SET_STYLE_DOC_DESC, state: initialState});
+        dispatch({ type: actionTypes.SET_DOC_NAME_CLASSNAMES, state: initialState});
+        dispatch({ type: actionTypes.SET_DOC_DESC_CLASSNAMES, state: initialState});
+        console.log(initialState);
+        /* let srvcApi = createAPIEndpointService('form');
         srvcApi.post({name: documentName, description: documentDesc, questions: questions})
             .then(res => {
-                let initialState: StateProps = { questions: questions, doc_name: documentName, doc_desc: documentDesc };
-                dispatch({type: actionTypes.SET_QUESTIONS, state: initialState})
+                let initialState: StateProps = { 
+                    questions: questions, 
+                    doc_name: documentName, 
+                    doc_desc: documentDesc, 
+                    classNames: documentClassNames,
+                    elementStyle: {fontFamily: textContext.fontKolontitul, fontSize: textContext.sizeKolontitul}
+                };
+                dispatch({ type: actionTypes.SET_DOC_NAME, state: initialState});
+                dispatch({ type: actionTypes.SET_DOC_DESC, state: initialState});
+                dispatch({ type: actionTypes.SET_QUESTIONS, state: initialState});
+                dispatch({ type: actionTypes.SET_STYLE, state: initialState});
+                dispatch({ type: actionTypes.SET_CLASSNAMES, state: initialState});
             })
             .catch(err => {
                 console.log(err);
-            });
+            }); */
     }
 
     function showQuestions(question: QuestionProps, index: number){
@@ -101,8 +144,7 @@ export const QuestionForm: FC<QuestionFormsProps> = ({questions, setQuestions, i
             return <QuestionDescription question={question} index={index} questions={questions} setQuestions={setQuestions}/>
         }else if(question.questionType === QuestionTypeConst.IMAGE){
             return <QuestionImage question={question} index={index} questions={questions} setQuestions={setQuestions}/>
-        }
-        else{
+        }else{
             return !question.answer ?
                 (<QuestionEditor question={question} index={index} questions={questions} setQuestions={setQuestions}/>)
                 :(<QuestionAnswerKey question={question} index={index} questions={questions} setQuestions={setQuestions}/>)
@@ -117,8 +159,20 @@ export const QuestionForm: FC<QuestionFormsProps> = ({questions, setQuestions, i
             let input = parentNodeTool.firstChild as HTMLElement;
             if(input.classList.contains(className)){
                 input.classList.remove(className);
+                if(input.id === 'DocumentName'){
+                    setDocumentNameClassNames(documentNameClassNames.filter(i => i !== className));
+                }
+                if(input.id === 'DocumentDesc'){
+                    setDocumentDescClassNames(documentDescClassNames.filter(i => i !== className));
+                }
             }else{
                 input.classList.add(className);
+                if(input.id === 'DocumentName'){
+                    setDocumentNameClassNames([...documentNameClassNames, className])
+                }
+                if(input.id === 'DocumentDesc'){
+                    setDocumentDescClassNames([...documentDescClassNames, className]);
+                }
             }
         }
     }
@@ -218,7 +272,6 @@ export const QuestionForm: FC<QuestionFormsProps> = ({questions, setQuestions, i
                             </div>
 
                             <div>
-
                                 <Accordion expanded={ques.open} onChange={() => handleExpand(i)} className={ques.open ? 'add_border' : ''}>
                                     <QuestionPanel question={ques} index={i}/>
                                     <div className="question_box">

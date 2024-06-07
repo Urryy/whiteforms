@@ -16,19 +16,48 @@ export const QuestionToolbar: FC<QuestionToolbarProps> = ({question, questions, 
     function addQuestion(){
         expandeCloseAll();
         setQuestions([...questions, 
-            {questionText: 'Вопрос без заголовка', questionType: 'radio', options: [{optionText: "Вариант 1"}], answerKey: '', points: 0, answer: false, open: true, required: false, classNames: [],startScaleValue: 1, endScaleValue: 5}]);
+            {questionText: 'Вопрос без заголовка', 
+             questionType: 'radio', 
+             options: [{optionText: "Вариант 1", elementStyle: {fontSize: '11', fontFamily: 'Roboto, Arial, sans-serif'}}],
+             answerKey: '', 
+             points: 0, 
+             answer: false, 
+             open: true, 
+             required: false, 
+             classNames: [],
+             startScaleValue: 1, 
+             endScaleValue: 5,
+             elementStyle: {fontSize: '12', fontFamily: 'Roboto, Arial, sans-serif'}}]);
     }
 
     function addDescription(){
         expandeCloseAll();
         setQuestions([...questions,
-            {questionText: 'Без названия', questionType: 'description', options: [{optionText: ''}], answerKey: '', points: 0, answer: false, open: true, required: false, classNames: []}])
+            {questionText: 'Без названия', 
+             questionType: 'description', 
+             options: [{optionText: '', elementStyle: {fontSize: '11', fontFamily: 'Roboto, Arial, sans-serif'}}], 
+             answerKey: '', 
+             points: 0, 
+             answer: false, 
+             open: true, 
+             required: false, 
+             classNames: [], 
+             elementStyle: {fontSize: '12', fontFamily: 'Roboto, Arial, sans-serif'}}])
     }
 
     function addImage(value: string){
         expandeCloseAll();
         setQuestions([...questions,
-            {questionText: 'Без названия', questionType: 'image', options: [{optionText: value}], answerKey: '', points: 0, answer: false, open: true, required: false, classNames: []}])
+            {questionText: 'Без названия', 
+             questionType: 'image', 
+             options: [{optionText: value, elementStyle: {fontSize: '11', fontFamily: 'Roboto, Arial, sans-serif'}}], 
+             answerKey: '', 
+             points: 0, 
+             answer: false, 
+             open: true, 
+             required: false, 
+             classNames: [], 
+             elementStyle: {fontSize: '12', fontFamily: 'Roboto, Arial, sans-serif'}}])
     }
 
     function expandeCloseAll(){

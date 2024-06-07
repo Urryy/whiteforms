@@ -5,9 +5,11 @@ import { Button, Typography } from "@material-ui/core";
 import { useStateValue } from "../../reduce/stateprovider";
 import { AnswerProps } from "../../interfaces/interfaces";
 import { useNavigate } from "react-router-dom";
+import { Option } from "./optionsform/option";
 
 export const AnswerForm = () => {
-    const [{ questions, doc_name, doc_desc }, dispatch] = useStateValue()
+    const [{ questions, doc_name, doc_desc, doc_name_classNames, doc_name_element_style, doc_desc_classNames, doc_desc_element_style }, dispatch] = useStateValue()
+
     const [answer,setAnswer] = useState<AnswerProps[]>([])
     const quest = [];
 
@@ -73,42 +75,26 @@ export const AnswerForm = () => {
             <div className="user_form">
                 <div className="user_form_section">
                     <div className="user_title_section">
-                        <Typography style={{fontSize:"26px"}} >{doc_name}</Typography>
-                        <Typography style={{fontSize:"15px"}} >{doc_desc}</Typography>
+                        <p className={"answer_form_name" + doc_name_classNames?.join(' ')} dangerouslySetInnerHTML={{__html: doc_name!}}
+                            style={{fontSize: `${doc_name_element_style?.fontSize}pt`, fontFamily: `${doc_name_element_style?.fontFamily}` }}>
+                        </p>
+                        <p className={"answer_form_desc" + doc_desc_classNames?.join(' ')} dangerouslySetInnerHTML={{__html: doc_desc!}}
+                            style={{fontSize: `${doc_desc_element_style?.fontSize}pt`, fontFamily: `${doc_desc_element_style?.fontFamily}`}}>
+                        </p>
                     </div>
-                    {questions!.map((question,qindex)=>(
+
+                    {questions!.map((question, qindex)=>(
                         <div className="user_form_questions">
-                            <Typography className="use_form_title">{qindex+1}. {question.questionText}</Typography>
-                            {question.options.map((ques,index)=>(
-                                <div key={index} style={{marginBottom:"5px"}}>
-                                    <div style={{display: 'flex'}}>
-                                        <div className="form-check">
-                                            {question.questionType !== "radio" 
-                                            ? (question.questionType !== 'text' 
-                                                ? (<label>
-                                                        <input type={question.questionType} value= {ques.optionText} className="form-check-input"
-                                                            required={question.required} onChange={(e)=>{selectcheck(e.target.checked,question.questionText,ques.optionText)}}/> 
-                                                            {ques.optionText}
-                                                    </label>)
-                                                : ( <label>
-                                                        <input type={question.questionType} value= {ques.optionText} className="form-check-input" 
-                                                            required={question.required} onChange={(e)=>{selectinput(question.questionText,e.target.value)}}/> 
-                                                            {ques.optionText}
-                                                    </label>))   
-                                            :(<label>
-                                                <input type={question.questionType} value= {ques.optionText} className="form-check-input"
-                                                    required={question.required} onChange={()=>{select(question.questionText,ques.optionText)}}/>
-                                                {ques.optionText}
-                                             </label>)}
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
+                            <p className={"use_form_title " + question.classNames.join(" ")}
+                                        style={{fontSize: `${question.elementStyle.fontSize}pt`, fontFamily: question.elementStyle.fontFamily}}>
+                                {qindex+1}. {question.questionText} {question.required ? <span className="required">*</span> : <></>}
+                            </p>
+                            <Option question={question}/>
                         </div>
                     ))}         
                     
                     <div className="user_form_submit">
-                        <Button  variant="contained" color="primary" onClick={handleSubmit} style={{fontSize:"14px"}}>Заверщить</Button>
+                        <Button  variant="contained" color="primary" onClick={handleSubmit} style={{fontSize:"14px"}}>Завершить</Button>
                     </div>
                     <div className="user_footer">
                         WHITE FORMS

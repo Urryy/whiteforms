@@ -5,13 +5,16 @@ import React, { FC } from 'react';
 import { ColorLens, ImageOutlined } from '@mui/icons-material';
 import { SelectFontFamilyToolbar, SelectFontSizeToolbar } from './components/selecttoolbar';
 import { useTextContext } from '../../contexts/TextContext';
+import { QuestionProps } from '../../interfaces/interfaces';
 
 interface FormToolbarProps{
     isOpen: boolean,
-    setIsOpen: (value: boolean) => void
+    setIsOpen: (value: boolean) => void,
+    questionsForm: QuestionProps[],
+    setQuestionsForm: (value: QuestionProps[]) => void
 }
 
-export const FormToolbar: FC<FormToolbarProps> = ({isOpen, setIsOpen}) => {
+export const FormToolbar: FC<FormToolbarProps> = ({isOpen, setIsOpen, questionsForm, setQuestionsForm}) => {
     const textContext = useTextContext();
 
     const toggleDrawer = (open: boolean) => 
@@ -41,6 +44,7 @@ export const FormToolbar: FC<FormToolbarProps> = ({isOpen, setIsOpen}) => {
                 const element = questions[index] as HTMLElement;
                 element.setAttribute('style', `font-family: ${event.target.value as string}`);
             }
+            setQuestionStyle("fontFamily", event.target.value as string);
         }
 
         if(type === 'option_text'){
@@ -50,7 +54,7 @@ export const FormToolbar: FC<FormToolbarProps> = ({isOpen, setIsOpen}) => {
                 const element = options[index] as HTMLElement;
                 element.setAttribute('style', `font-family: ${event.target.value as string}`);
             }
-
+            setOptionStyle("fontFamily", event.target.value as string);
             documentDesc?.setAttribute('style', `font-family: ${event.target.value as string}`);
         }
     }
@@ -71,6 +75,7 @@ export const FormToolbar: FC<FormToolbarProps> = ({isOpen, setIsOpen}) => {
                 const element = questions[index] as HTMLElement;
                 element.setAttribute('style', `font-size: ${event.target.value as string}pt`);
             }
+            setQuestionStyle("fontSize", event.target.value as string);
         }
 
         if(type === 'option_text'){
@@ -80,9 +85,47 @@ export const FormToolbar: FC<FormToolbarProps> = ({isOpen, setIsOpen}) => {
                 const element = options[index] as HTMLElement;
                 element.setAttribute('style', `font-size: ${event.target.value as string}pt`);
             }
-
-            documentDesc?.setAttribute('style', `ffont-size: ${event.target.value as string}pt`);
+            documentDesc?.setAttribute('style', `font-size: ${event.target.value as string}pt`);
+            setOptionStyle('fontSize', event.target.value as string);
         }
+    }
+
+    function setOptionStyle(type: string, value: string){
+        let newQuestions = [...questionsForm];
+        if(type === 'fontSize'){
+            for (let index = 0; index < newQuestions.length; index++) {
+                const options = newQuestions[index].options;
+                for (let indexOpt = 0; indexOpt < options.length; indexOpt++) {
+                    options[indexOpt].elementStyle = {...options[indexOpt].elementStyle, fontSize: `${value}pt`};
+                }
+            }
+        }
+
+        if(type === 'fontFamily'){
+            for (let index = 0; index < newQuestions.length; index++) {
+                const options = newQuestions[index].options;
+                for (let indexOpt = 0; indexOpt < options.length; indexOpt++) {
+                    options[indexOpt].elementStyle = {...options[indexOpt].elementStyle, fontFamily: `${value}`};
+                }
+            }
+        }
+        setQuestionsForm(newQuestions);
+    }
+
+    function setQuestionStyle(type: string, value: string){
+        let newQuestions = [...questionsForm];
+        if(type === 'fontSize'){
+            for (let index = 0; index < newQuestions.length; index++) {
+                newQuestions[index].elementStyle = {...newQuestions[index].elementStyle, fontSize: `${value}pt`};
+            }
+        }
+
+        if(type === 'fontFamily'){
+            for (let index = 0; index < newQuestions.length; index++) {
+                newQuestions[index].elementStyle = {...newQuestions[index].elementStyle, fontFamily: `${value}`};
+            }
+        }
+        setQuestionsForm(newQuestions);
     }
 
     function drawerUI(){

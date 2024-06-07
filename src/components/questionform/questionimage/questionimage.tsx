@@ -18,23 +18,11 @@ interface QuestionImageProps{
 }
 
 export const QuestionImage: FC<QuestionImageProps> = ({question, index, questions, setQuestions}) => {
-    const [ref] = useResizable();
     const textContext = useTextContext();
-    
+    const [ref] = useResizable({setValue});
+
     const [isOpenLinkModel, setIsOpenLinkModal] = useState(false);
     const [elementLink, setElementLink] = useState<LinkModalModelQuestionProps | null>(null);
-
-   /*  useEffect(() => {
-        if(typeof wrapperImage === 'object'){
-             const interval = setInterval(() => {
-                let newQues = [...questions];
-                newQues[index].options[0].imageWrapper = wrapperImage;
-                //console.log(newQues[index].options[0].imageWrapper); 
-                setQuestions(newQues);
-              }, 10);
-              return () => clearInterval(interval); 
-        }
-    }, [wrapperImage]) */
 
     function onChange(target: string, index: number){
         let newQues = [...questions];
@@ -164,7 +152,6 @@ export const QuestionImage: FC<QuestionImageProps> = ({question, index, question
     }
     
     function setValue(imageWrapper: ImageWrapperProps){
-        console.log(imageWrapper);
         let newQues = [...questions];
         newQues[index].options[0].imageWrapper = imageWrapper; 
         setQuestions(newQues);
@@ -193,7 +180,7 @@ export const QuestionImage: FC<QuestionImageProps> = ({question, index, question
             {typeof ref === 'function' 
                 ? <div className="add_image_body">
                         <div className="body_image">
-                            <div className="input_image_wrapper resizable" ref={(el) => ref(el, setValue)} id='image_wrapper'>
+                            <div className="input_image_wrapper resizable" ref={ref} id='image_wrapper'>
                                 <img alt='imgasd' src={getValue(question.options[0].optionText)} />
                                 <div className="resizer resizer--r"/>
                                 <div className="resizer resizer--b"/>

@@ -81,9 +81,9 @@ export const QuestionEditor: FC<QuestionEditorProps> = ({question, index, setQue
         let ques = [...questions];
         if(ques[indexQues].options.length < 5){   
             if(ques[index].options.find(item => item.isAnother)){
-                ques[index].options.splice(ques[index].options.length - 1, 0, {optionText: `Вариант ${ques[indexQues].options.length}` })
+                ques[index].options.splice(ques[index].options.length - 1, 0, {optionText: `Вариант ${ques[indexQues].options.length}`, elementStyle: {fontSize: '11', fontFamily: 'Roboto, Arial, sans-serif'} })
             }else{
-                ques[index].options.push({optionText: `Вариант ${ques[indexQues].options.length + 1}` })
+                ques[index].options.push({optionText: `Вариант ${ques[indexQues].options.length + 1}`, elementStyle: {fontSize: '11', fontFamily: 'Roboto, Arial, sans-serif'} })
             }
         }   
         setQuestions(ques);
@@ -94,9 +94,9 @@ export const QuestionEditor: FC<QuestionEditorProps> = ({question, index, setQue
         let ques = [...questions];
         if(ques[index].options.length < 5){
             if(ques[index].options.find(item => item.isAnother)){
-                ques[index].options.splice(ques[index].options.length - 1, 0, {optionText: ''})
+                ques[index].options.splice(ques[index].options.length - 1, 0, {optionText: '', elementStyle: {fontSize: '11', fontFamily: 'Roboto, Arial, sans-serif'}})
             }else{
-                ques[index].options.push({optionText: ``, isAnother: true})
+                ques[index].options.push({optionText: ``, isAnother: true, elementStyle: {fontSize: '11', fontFamily: 'Roboto, Arial, sans-serif'}})
             }
         }  
         setQuestions(ques);

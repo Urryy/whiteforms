@@ -8,14 +8,15 @@ enum Direction {
     Vertical = 'Vertical',
 }
 
-export const useResizable = () => {
-    const [node, setNode] = React.useState<HTMLElement | null>(null);
-    const [wrapperImage, setWrapperImage] = React.useState<ImageWrapperProps>({ height: '', width: ''})
-    const [callback, setCallback] = React.useState<(value: any) => void>();
+interface ResizableProps{
+    setValue: (value: ImageWrapperProps) => void
+}
 
-    const ref = React.useCallback((nodeEle, outsideCallback) => {
+export const useResizable = ({setValue} : ResizableProps) => {
+    const [node, setNode] = React.useState<HTMLElement | null>(null);
+
+    const ref = React.useCallback((nodeEle) => {
         setNode(nodeEle);
-        /* setCallback(outsideCallback); */
     }, []);
 
     const handleMouseDown = React.useCallback((e: MouseEvent) => {
@@ -48,7 +49,7 @@ export const useResizable = () => {
             direction === Direction.Horizontal
                 ? node.style.width = `${newWidth}px`
                 : node.style.height = `${newHeight}`;
-            //if(callback) callback({ height: node.style.height, width: node.style.width });
+            setValue({ height: node.style.height, width: node.style.width });
             updateCursor(direction);
         };
 
@@ -96,7 +97,7 @@ export const useResizable = () => {
             direction === Direction.Horizontal
                 ? node.style.width = `${newWidth}px`
                 : node.style.height = `${newHeight}`;
-            //if(callback) callback({ height: node.style.height, width: node.style.width });
+            setValue({ height: node.style.height, width: node.style.width });
             updateCursor(direction);
         };
 
