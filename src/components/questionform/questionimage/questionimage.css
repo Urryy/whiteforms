@@ -29,7 +29,7 @@
 
 .add_image_body{
     display: flex;
-    align-items: center;
+    align-items: flex-start; /* Поменял на flex-start, было center. */
     justify-content: space-between;
     margin-top:10px;
 }
@@ -47,10 +47,10 @@
 }
 
 .input_image_wrapper{
-    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .input_image_wrapper img{
@@ -58,4 +58,12 @@
     width: 100%;
     flex: 1;
     object-fit: cover;
+}
+
+.image_tools{
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    background-color: #e0e0e0;
+    border-radius: 50%;
 }

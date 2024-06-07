@@ -88,9 +88,10 @@ export const QuestionPanel: FC<QuestionPanelProps> = ({question, index}) => {
             ?  
             <AccordionSummary id="panel1a-header" style={{width: '100%'}}>
                 <div className="common_question">
-                    <Typography className={"saved_questions_title " + question.classNames.join(' ')} id='input_question' style={{fontFamily: textContext.fontQuestionText, fontSize: `${textContext.sizeQuestionText}pt`}}>
-                        {titleQuestion}
-                    </Typography>
+                    <p className={"saved_questions_title " + question.classNames.join(' ')} id='input_question'
+                        style={{fontFamily: textContext.fontQuestionText, fontSize: `${textContext.sizeQuestionText}pt`}} 
+                        dangerouslySetInnerHTML={{__html: titleQuestion}}>
+                    </p>
                     {question.options.map((opt, j) => (
                         <div key={j}>
                             <div style={{display:"flex", paddingRight: '35px'}}>
