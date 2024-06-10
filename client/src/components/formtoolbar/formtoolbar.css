@@ -1,0 +1,166 @@
+.toolbar_icon{
+    color: #8f8f8f;
+    font-size: 24px;
+    margin: 0 15px 0 0;
+}
+
+.box_form_toolbar{
+    width: 350px;
+}
+
+.toolbar_header{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 20px 20px;
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.toolbar_body_tool{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 20px 20px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.toolbar_image_tool{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 20px 20px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.toolbar_color_tool{
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 20px 20px;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.toolbar_body_tool_item{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.toolbar_body_select{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.select-fontfamily{
+    flex: 1 1 70%;
+    margin-right: 10px !important;
+}
+
+.select-fontsize{
+    flex: 1 1 30%;
+}
+
+.toolbar_item_title{
+    margin-bottom: 5px !important;
+}
+
+.toolbar_item_image{
+    color: #1a73e8 !important;
+    font-weight: 600 !important;
+    display: flex;
+    align-items: center;
+}
+
+
+
+.toolbar_item_pallete_color{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 220px;
+}
+
+.pallete_color{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 2px;
+    cursor: pointer;
+}
+#colordb4437{
+    background-color: #db4437;
+}
+#color673ab7{
+   background-color: #673ab7; 
+}
+
+#color3f51b5{
+    background-color: #3f51b5;
+}
+#color4285f4{
+    background-color: #4285f4;
+}
+#color03a9f4{
+    background-color: #03a9f4;
+}
+#color00bcd4{
+    background-color: #00bcd4;
+}
+#colorff5722{
+    background-color: #ff5722;
+}
+#colorff9800{
+    background-color: #ff9800;
+}
+#color009688{
+    background-color: #009688;
+}
+#color4caf50{
+    background-color: #4caf50;
+}
+#color607d8b{
+    background-color: #607d8b;
+}
+#color9e9e9e{
+    background-color: #9e9e9e;
+}
+.button_color{
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    background-color: transparent;
+    cursor: pointer;
+}
+.image_download{
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.image_download_wrapper{
+    color: red;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+}
+
+.image_undownload_wrapper{
+    display: flex;
+    font-size: 12px;
+    align-items: center;
+}

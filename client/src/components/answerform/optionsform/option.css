@@ -1,0 +1,21 @@
+.slider_flex{
+    display: flex;
+}
+
+.image_wrapper{
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image_wrapper img{
+    height: 100%;
+    width: 100%;
+    flex: 1;
+    object-fit: cover;
+}
+
+.css-cp2j25-MuiSlider-thumb{
+    top: 60% !important;
+}

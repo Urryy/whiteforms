@@ -1,0 +1,63 @@
+*{
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, Arial, sans-serif;
+}
+
+body{
+  height: 100%;
+}
+
+.App{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.MuiButton-containedPrimary {
+  background-image: linear-gradient(to right, #49464f 0%, #E7E9BB  51%, gold  100%) !important;
+  margin: 10px !important;
+  padding: 5px 15px !important;
+  text-align: center !important;
+  text-transform: uppercase !important;
+  transition: 0.5s !important;
+  background-size: 200% auto !important;
+  color: white !important;            
+  box-shadow: 0 0 20px #eee !important;
+  border-radius: 5px !important;
+  display: block !important;
+}
+
+.MuiButton-containedPrimary:hover {
+  background-position: right center !important; /* change the direction of the change here */
+  color: #fff !important;
+  text-decoration: none !important;
+}
+
+.whitesmoke{
+  color: #4d4d4ea6 !important;
+}
+
+.default_input{
+  background-color: whitesmoke;
+}
+
+div[role=tabpanel]{
+  height: 100%;
+  max-height: 100%;
+}
+.icon_formatted:hover{
+  color: black !important;
+}
+
+.underline_text{
+  text-decoration: underline !important;
+}
+
+.bold_text{
+  font-weight: 700 !important;
+}
+
+.italic_text{
+  font-style: italic !important;
+}
