@@ -2,20 +2,25 @@ import { Box, Button, Divider, SwipeableDrawer, Typography  } from '@material-ui
 import './formtoolbar.css';
 
 import React, { FC } from 'react';
-import { ColorLens, ImageOutlined } from '@mui/icons-material';
+import { Clear, ColorLens, ImageOutlined } from '@mui/icons-material';
 import { SelectFontFamilyToolbar, SelectFontSizeToolbar } from './components/selecttoolbar';
 import { useTextContext } from '../../contexts/TextContext';
 import { QuestionProps } from '../../interfaces/interfaces';
+import { ImageInsertModalWindow } from '../modal/ImageInsertModalWindow';
+import { IconButton } from '@mui/material';
 
 interface FormToolbarProps{
     isOpen: boolean,
     setIsOpen: (value: boolean) => void,
     questionsForm: QuestionProps[],
-    setQuestionsForm: (value: QuestionProps[]) => void
+    setQuestionsForm: (value: QuestionProps[]) => void,
+    setHeaderImage: (value: string) => void,
+    headerImage: string
 }
 
-export const FormToolbar: FC<FormToolbarProps> = ({isOpen, setIsOpen, questionsForm, setQuestionsForm}) => {
+export const FormToolbar: FC<FormToolbarProps> = ({isOpen, setIsOpen, questionsForm, setQuestionsForm, setHeaderImage, headerImage}) => {
     const textContext = useTextContext();
+    const [isOpenImageInsert, setIsOpenImageInsert] = React.useState(false);
 
     const toggleDrawer = (open: boolean) => 
         (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -163,7 +168,18 @@ export const FormToolbar: FC<FormToolbarProps> = ({isOpen, setIsOpen, questionsF
                 <Divider />
                 <div className='toolbar_image_tool'>
                     <Typography className='toolbar_item_title' style={{fontWeight: 600}}>Верхний колонтитул</Typography>
-                    <Button variant="outlined" className='toolbar_item_image'><ImageOutlined style={{marginRight: '15px'}}/> Выберите изображение</Button>
+                    <Button variant="outlined" className='toolbar_item_image' onClick={() => setIsOpenImageInsert(!isOpenImageInsert)}>
+                        {(headerImage !== '' && headerImage)
+                        ? <div className='image_download_wrapper'>
+                            <ImageOutlined style={{marginRight: '5px'}}/>
+                            <span className='image_download'>Изображение загружено</span>
+                            <IconButton size='small' onClick={() => setHeaderImage('')}><Clear/></IconButton>
+                          </div> 
+                        : <div className='image_undownload_wrapper'>
+                            <ImageOutlined style={{marginRight: '5px'}}/>
+                            <span>Выберите изображение</span>
+                          </div>}
+                    </Button>
                 </div>
                 <Divider />
                 <div className='toolbar_color_tool'>
@@ -196,6 +212,7 @@ export const FormToolbar: FC<FormToolbarProps> = ({isOpen, setIsOpen, questionsF
                 onOpen={toggleDrawer(true)}>
                 {drawerUI()}
           </SwipeableDrawer>
+          <ImageInsertModalWindow isOpen={isOpenImageInsert} setIsOpen={setIsOpenImageInsert} addImage={setHeaderImage}/>
         </>
     );
 }

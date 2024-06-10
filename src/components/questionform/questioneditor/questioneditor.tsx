@@ -81,9 +81,11 @@ export const QuestionEditor: FC<QuestionEditorProps> = ({question, index, setQue
         let ques = [...questions];
         if(ques[indexQues].options.length < 5){   
             if(ques[index].options.find(item => item.isAnother)){
-                ques[index].options.splice(ques[index].options.length - 1, 0, {optionText: `Вариант ${ques[indexQues].options.length}`, elementStyle: {fontSize: '11', fontFamily: 'Roboto, Arial, sans-serif'} })
+                ques[index].options.splice(ques[index].options.length - 1, 0, {optionText: `Вариант ${ques[indexQues].options.length}`, 
+                elementStyle: {fontSize: textContext.sizeOptionText, fontFamily: textContext.fontOptionText} })
             }else{
-                ques[index].options.push({optionText: `Вариант ${ques[indexQues].options.length + 1}`, elementStyle: {fontSize: '11', fontFamily: 'Roboto, Arial, sans-serif'} })
+                ques[index].options.push({optionText: `Вариант ${ques[indexQues].options.length + 1}`, 
+                elementStyle: {fontSize: textContext.sizeOptionText, fontFamily: textContext.fontOptionText} })
             }
         }   
         setQuestions(ques);
@@ -94,9 +96,9 @@ export const QuestionEditor: FC<QuestionEditorProps> = ({question, index, setQue
         let ques = [...questions];
         if(ques[index].options.length < 5){
             if(ques[index].options.find(item => item.isAnother)){
-                ques[index].options.splice(ques[index].options.length - 1, 0, {optionText: '', elementStyle: {fontSize: '11', fontFamily: 'Roboto, Arial, sans-serif'}})
+                ques[index].options.splice(ques[index].options.length - 1, 0, {optionText: '', elementStyle: {fontSize: textContext.sizeOptionText, fontFamily: textContext.fontOptionText}})
             }else{
-                ques[index].options.push({optionText: ``, isAnother: true, elementStyle: {fontSize: '11', fontFamily: 'Roboto, Arial, sans-serif'}})
+                ques[index].options.push({optionText: ``, isAnother: true, elementStyle: {fontSize: textContext.sizeOptionText, fontFamily: textContext.fontOptionText}})
             }
         }  
         setQuestions(ques);

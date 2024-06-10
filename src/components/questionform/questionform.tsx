@@ -19,12 +19,14 @@ import { LinkModalModelProps, LinkModalWindow } from "../modal/LinkModalWindow";
 import { QuestionTypeConst } from "../../interfaces/consts";
 import { QuestionDescription } from "./questiondescription/QuestionDescription";
 import { QuestionImage } from "./questionimage/questionimage";
+import { FormToolbar } from "../formtoolbar/formtoolbar";
+import { QuestionHeaderImage } from "./questionheaderimage/questionheaderimage";
 
 
 export const QuestionForm: FC<QuestionFormsProps> = ({questions, setQuestions, isOpenToolbar, setIsOpenToolbar}) => {
     const {id} = useParams();
     const [{}, dispatch] = useStateValue();
-    
+
     const [formId, setFormId] = useState();
     const [documentName, setDocumentName] = useState<string>("Новая форма");
     const [documentDesc, setDocumentDesc] = useState<string>("Описание формы");
@@ -34,6 +36,8 @@ export const QuestionForm: FC<QuestionFormsProps> = ({questions, setQuestions, i
 
     const [documentNameClassNames, setDocumentNameClassNames] = useState<string[]>([]);
     const [documentDescClassNames, setDocumentDescClassNames] = useState<string[]>([]);
+
+    const [headerImage, setHeaderImage] = useState('');
 
     const [isOpenLinkModel, setIsOpenLinkModal] = useState(false);
     const [elementLink, setElementLink] = useState<LinkModalModelProps | null>(null);
@@ -54,6 +58,7 @@ export const QuestionForm: FC<QuestionFormsProps> = ({questions, setQuestions, i
                     setQuestions(res.data.questions);
                     setDocumentNameClassNames(res.data.documentNameClassNames);
                     setDocumentDescClassNames(res.data.documentDescClassNames);
+                    setHeaderImage(res.data.headerImage);
                 }
             })
             .catch(err => {
@@ -62,7 +67,8 @@ export const QuestionForm: FC<QuestionFormsProps> = ({questions, setQuestions, i
         }  
 
         let initialState: StateProps = { questions: questions, doc_name: documentName, doc_desc: documentDesc, doc_name_element_style: documentNameElementStyle, 
-            doc_desc_element_style: documentDescElementStyle, doc_name_classNames: documentNameClassNames, doc_desc_classNames: documentDescClassNames}
+            doc_desc_element_style: documentDescElementStyle, doc_name_classNames: documentNameClassNames, doc_desc_classNames: documentDescClassNames, 
+            kolontitul_image: headerImage}
 
         dispatch({ type: actionTypes.SET_DOC_NAME, state: initialState});
         dispatch({ type: actionTypes.SET_DOC_DESC, state: initialState});
@@ -108,7 +114,8 @@ export const QuestionForm: FC<QuestionFormsProps> = ({questions, setQuestions, i
             doc_name_classNames: documentNameClassNames,
             doc_desc_classNames: documentDescClassNames,
             doc_name_element_style: { fontFamily: textContext.fontKolontitul, fontSize: textContext.sizeKolontitul },
-            doc_desc_element_style: { fontFamily: textContext.fontOptionText, fontSize: textContext.sizeOptionText }
+            doc_desc_element_style: { fontFamily: textContext.fontOptionText, fontSize: textContext.sizeOptionText },
+            kolontitul_image: headerImage
         };
         dispatch({ type: actionTypes.SET_DOC_NAME, state: initialState});
         dispatch({ type: actionTypes.SET_DOC_DESC, state: initialState});
@@ -117,6 +124,7 @@ export const QuestionForm: FC<QuestionFormsProps> = ({questions, setQuestions, i
         dispatch({ type: actionTypes.SET_STYLE_DOC_DESC, state: initialState});
         dispatch({ type: actionTypes.SET_DOC_NAME_CLASSNAMES, state: initialState});
         dispatch({ type: actionTypes.SET_DOC_DESC_CLASSNAMES, state: initialState});
+        dispatch({ type: actionTypes.SET_KOLONTITUL_IMAGE, state: initialState})
         console.log(initialState);
         /* let srvcApi = createAPIEndpointService('form');
         srvcApi.post({name: documentName, description: documentDesc, questions: questions})
@@ -294,6 +302,7 @@ export const QuestionForm: FC<QuestionFormsProps> = ({questions, setQuestions, i
         <>
         <div className="question_form">
             <div className="section">
+                <QuestionHeaderImage image={headerImage}/>
                 <div className="question_title_section">
                     <div className="question_form_top">
                         <div className="input_tool" onBlur={handleBlur} onClick={onAddToolsInput}>
@@ -327,6 +336,8 @@ export const QuestionForm: FC<QuestionFormsProps> = ({questions, setQuestions, i
             </div>
         </div>
         <LinkModalWindow isOpen={isOpenLinkModel} setIsOpen={setIsOpenLinkModal} linkModalModel={elementLink}/>
+        <FormToolbar isOpen={isOpenToolbar} setIsOpen={setIsOpenToolbar} questionsForm={questions} 
+            setQuestionsForm={setQuestions} setHeaderImage={setHeaderImage} headerImage={headerImage}/>
         </>
     );
 }

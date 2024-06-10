@@ -32,7 +32,8 @@ export const actionTypes: ActionTypesProps = {
     SET_STYLE_DOC_NAME: 'SET_STYLE_DOC_NAME',
     SET_STYLE_DOC_DESC: 'SET_STYLE_DOC_DESC',
     SET_DOC_NAME_CLASSNAMES: 'SET_DOC_NAME_CLASSNAMES',
-    SET_DOC_DESC_CLASSNAMES: 'SET_DOC_DESC_CLASSNAMES'
+    SET_DOC_DESC_CLASSNAMES: 'SET_DOC_DESC_CLASSNAMES',
+    SET_KOLONTITUL_IMAGE: 'SET_KOLONTITUL_IMAGE'
 }
 
 const reducer = (state: StateProps = initialState, action: initialStateProps): StateProps => {
@@ -68,6 +69,10 @@ const reducer = (state: StateProps = initialState, action: initialStateProps): S
         case actionTypes.SET_DOC_DESC_CLASSNAMES:
             return {
                 ...state, doc_desc_classNames: action.state.doc_desc_classNames
+            }
+        case actionTypes.SET_KOLONTITUL_IMAGE:
+            return {
+                ...state, kolontitul_image: action.state.kolontitul_image
             }
         default: 
             return state;

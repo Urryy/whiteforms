@@ -26,7 +26,8 @@ export interface OptionsProps{
 
 export interface ImageWrapperProps{
     width: string,
-    height: string
+    height: string,
+    position: string
 }
 
 export interface FormProps{
@@ -45,7 +46,8 @@ export interface StateProps{
     doc_name_element_style?: ElementStyleProps,
     doc_desc_element_style?: ElementStyleProps,
     doc_name_classNames?: string[],
-    doc_desc_classNames?: string[]
+    doc_desc_classNames?: string[],
+    kolontitul_image?: string
 }
 
 export interface ActionTypesProps{
@@ -56,7 +58,8 @@ export interface ActionTypesProps{
     SET_STYLE_DOC_NAME: string,
     SET_STYLE_DOC_DESC: string,
     SET_DOC_NAME_CLASSNAMES: string,
-    SET_DOC_DESC_CLASSNAMES: string
+    SET_DOC_DESC_CLASSNAMES: string,
+    SET_KOLONTITUL_IMAGE: string
 }
 
 export interface initialStateProps {

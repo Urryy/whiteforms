@@ -3,6 +3,7 @@ import React, { FC, useState } from "react";
 import { QuestionProps } from "../../../interfaces/interfaces";
 import { IconButton } from "@material-ui/core";
 import { ImageInsertModalWindow } from "../../modal/ImageInsertModalWindow";
+import { useTextContext } from "../../../contexts/TextContext";
 
 interface QuestionToolbarProps{
     question: QuestionProps;
@@ -12,13 +13,15 @@ interface QuestionToolbarProps{
 
 export const QuestionToolbar: FC<QuestionToolbarProps> = ({question, questions, setQuestions}) => {
     const [isOpenImageInsert, setIsOpenImageInsert] = useState(false);
-
+    
+    const textContext = useTextContext();
+    
     function addQuestion(){
         expandeCloseAll();
         setQuestions([...questions, 
             {questionText: 'Вопрос без заголовка', 
              questionType: 'radio', 
-             options: [{optionText: "Вариант 1", elementStyle: {fontSize: '11', fontFamily: 'Roboto, Arial, sans-serif'}}],
+             options: [{optionText: "Вариант 1", elementStyle: {fontSize: `${textContext.sizeOptionText}pt`, fontFamily: textContext.fontOptionText}}],
              answerKey: '', 
              points: 0, 
              answer: false, 
@@ -27,7 +30,7 @@ export const QuestionToolbar: FC<QuestionToolbarProps> = ({question, questions, 
              classNames: [],
              startScaleValue: 1, 
              endScaleValue: 5,
-             elementStyle: {fontSize: '12', fontFamily: 'Roboto, Arial, sans-serif'}}]);
+             elementStyle: {fontSize: `${textContext.sizeQuestionText}pt`, fontFamily: textContext.fontQuestionText}}]);
     }
 
     function addDescription(){
@@ -35,14 +38,14 @@ export const QuestionToolbar: FC<QuestionToolbarProps> = ({question, questions, 
         setQuestions([...questions,
             {questionText: 'Без названия', 
              questionType: 'description', 
-             options: [{optionText: '', elementStyle: {fontSize: '11', fontFamily: 'Roboto, Arial, sans-serif'}}], 
+             options: [{optionText: '', elementStyle: {fontSize: `${textContext.sizeOptionText}pt`, fontFamily: textContext.fontOptionText}}], 
              answerKey: '', 
              points: 0, 
              answer: false, 
              open: true, 
              required: false, 
              classNames: [], 
-             elementStyle: {fontSize: '12', fontFamily: 'Roboto, Arial, sans-serif'}}])
+             elementStyle: {fontSize: `${textContext.sizeQuestionText}pt`, fontFamily: textContext.fontQuestionText}}])
     }
 
     function addImage(value: string){
@@ -50,14 +53,14 @@ export const QuestionToolbar: FC<QuestionToolbarProps> = ({question, questions, 
         setQuestions([...questions,
             {questionText: 'Без названия', 
              questionType: 'image', 
-             options: [{optionText: value, elementStyle: {fontSize: '11', fontFamily: 'Roboto, Arial, sans-serif'}}], 
+             options: [{optionText: value, elementStyle: {fontSize: `${textContext.sizeOptionText}pt`, fontFamily: textContext.fontOptionText}}], 
              answerKey: '', 
              points: 0, 
              answer: false, 
              open: true, 
              required: false, 
              classNames: [], 
-             elementStyle: {fontSize: '12', fontFamily: 'Roboto, Arial, sans-serif'}}])
+             elementStyle: {fontSize: `${textContext.sizeQuestionText}pt`, fontFamily: textContext.fontQuestionText}}])
     }
 
     function expandeCloseAll(){

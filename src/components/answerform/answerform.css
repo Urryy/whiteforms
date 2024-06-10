@@ -22,6 +22,7 @@
 
 .submit{
     background-color:#F4F4F9;
+    height: 100%;
 }
 
 .user_form_section{
@@ -57,8 +58,13 @@
     text-align:center;
     font-size: medium;
     font-weight: 500;
+    margin-top: 40px
 }
 
 .required{
+    position: relative;
+    bottom: 3px;
     color:red;
+    padding-left: 5px;
+    font-size: 12px;
 }

@@ -67,3 +67,30 @@
     background-color: #e0e0e0;
     border-radius: 50%;
 }
+
+.image_tools_navigation{
+    position: absolute;
+    top: -15px;
+    left: -255px;
+    padding: 10px 0;
+    border-radius: 10px;
+    max-width: 330px;
+    background-color: #ffffff;
+}
+
+.tools_navigation_button{
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px 5px;
+    border-radius: 0;
+}
+
+.tools_navigation_button:hover{
+    background-color: rgb(231, 231, 231);
+}
+
+.display-none{
+    display: none;
+}

@@ -116,9 +116,9 @@
     border-bottom: 1px solid black;
 }
 
-.MuiInput-underline:after {
+/* .MuiInput-underline:after {
     border-bottom: 2.3px solid #fee421 !important;
-}
+} */
 
 .question:focus{
     border-bottom: 2.1px solid #fee421;
@@ -347,6 +347,22 @@ input[type=radio], input[type=checkbox] {
     width: 100%;
     flex: 1;
     object-fit: cover;
+}
+
+.question_title_kolontitul{
+    border-radius: 8px;
+    width: 100%;
+    margin-bottom: 15px;
+    overflow: hidden;
+} 
+
+.kolontitul_image{
+    width: 100%;
+}
+
+.kolontitul_image img{
+    width: 100%;
+    height: 200px;
 }
 
  

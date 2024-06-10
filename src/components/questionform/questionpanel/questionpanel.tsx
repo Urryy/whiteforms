@@ -64,12 +64,15 @@ export const QuestionPanel: FC<QuestionPanelProps> = ({question, index}) => {
                 </p>
             </>
             )
-        else if(question.questionType === QuestionTypeConst.IMAGE)
+        else if(question.questionType === QuestionTypeConst.IMAGE){
             return(
-            <div className="image_wrapper" style={{height: `${question.options[0].imageWrapper?.height}`, width: `${question.options[0].imageWrapper?.width}`}}>
-                <img alt="image1" src={question.options[0].optionText}/>
+            <div style={{width: '100%', display: 'flex', justifyContent: question.options[0].imageWrapper?.position}}>
+                <div className="image_wrapper" style={{height: `${question.options[0].imageWrapper?.height}`, width: `${question.options[0].imageWrapper?.width}`}}>
+                    <img alt="image1" src={question.options[0].optionText}/>
+                </div>
             </div>
             )
+        }  
         else
             return (<FormControlLabel style={{marginLeft: '5px', marginBottom: '5px'}} disabled
                 control={<input type={question.questionType} color="primary" required={question.required} style={{marginRight: '5px'}}/>}

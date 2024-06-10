@@ -9,7 +9,7 @@ enum Direction {
 }
 
 interface ResizableProps{
-    setValue: (value: ImageWrapperProps) => void
+    setValue: (height: string, width: string) => void
 }
 
 export const useResizable = ({setValue} : ResizableProps) => {
@@ -49,7 +49,7 @@ export const useResizable = ({setValue} : ResizableProps) => {
             direction === Direction.Horizontal
                 ? node.style.width = `${newWidth}px`
                 : node.style.height = `${newHeight}`;
-            setValue({ height: node.style.height, width: node.style.width });
+            setValue(node.style.height, node.style.width);
             updateCursor(direction);
         };
 
@@ -97,7 +97,7 @@ export const useResizable = ({setValue} : ResizableProps) => {
             direction === Direction.Horizontal
                 ? node.style.width = `${newWidth}px`
                 : node.style.height = `${newHeight}`;
-            setValue({ height: node.style.height, width: node.style.width });
+            setValue(node.style.height, node.style.width);
             updateCursor(direction);
         };
 

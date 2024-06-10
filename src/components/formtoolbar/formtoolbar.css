@@ -79,7 +79,11 @@
 .toolbar_item_image{
     color: #1a73e8 !important;
     font-weight: 600 !important;
+    display: flex;
+    align-items: center;
 }
+
+
 
 .toolbar_item_pallete_color{
     width: 100%;
@@ -140,4 +144,23 @@
     border-radius: 50%;
     background-color: transparent;
     cursor: pointer;
+}
+.image_download{
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.image_download_wrapper{
+    color: red;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+}
+
+.image_undownload_wrapper{
+    display: flex;
+    font-size: 12px;
+    align-items: center;
 }

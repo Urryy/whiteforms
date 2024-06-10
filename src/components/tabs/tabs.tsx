@@ -95,7 +95,6 @@ export const CenteredTabs: FC<QuestionFormsProps> = ({questions, setQuestions, i
                 </>
             </TabPanel>
         </Paper>
-        <FormToolbar isOpen={isOpenToolbar} setIsOpen={setIsOpenToolbar} questionsForm={questions} setQuestionsForm={setQuestions}/>
         </>
     )
 }
