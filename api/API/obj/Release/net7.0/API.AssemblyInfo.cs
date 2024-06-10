@@ -11,12 +11,13 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("DataAccess")]
-[assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("b82d5a72-1aa0-43b8-952e-4a8fa6842257")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("API")]
+[assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+61680f4935e3ef856434532db1e986aaa9f6a5d9")]
-[assembly: System.Reflection.AssemblyProductAttribute("DataAccess")]
-[assembly: System.Reflection.AssemblyTitleAttribute("DataAccess")]
+[assembly: System.Reflection.AssemblyProductAttribute("API")]
+[assembly: System.Reflection.AssemblyTitleAttribute("API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Создано классом WriteCodeFragment MSBuild.
