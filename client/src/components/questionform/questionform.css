@@ -7,7 +7,7 @@
 
 .section{
     margin: auto;
-    width: 50%;
+    width: 44%;
 }
 
 .question_form_top{
@@ -363,6 +363,10 @@ input[type=radio], input[type=checkbox] {
 .kolontitul_image img{
     width: 100%;
     height: 200px;
+}
+
+.skeleton_wrapper{
+    margin: 40px 0;
 }
 
  

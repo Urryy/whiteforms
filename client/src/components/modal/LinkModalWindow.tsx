@@ -7,44 +7,21 @@ import { QuestionProps } from '../../interfaces/interfaces';
 interface LinkModalWindowProps{
     isOpen: boolean,
     setIsOpen: (value: boolean) => void,
-    linkModalModel: LinkModalModelProps | null | LinkModalModelQuestionProps
+    setUri: (value: string) => void
 }
 
-export interface LinkModalModelProps{
-    element: string,
-    setElement: (value: string) => void
-}
 
-export interface LinkModalModelQuestionProps{
-    indexQuestion: number,
-    questions: QuestionProps[],
-    setQuestions: (value: QuestionProps[]) => void
-}
-
-export const LinkModalWindow: FC<LinkModalWindowProps> = ({isOpen, setIsOpen, linkModalModel}) => {
+export const LinkModalWindow: FC<LinkModalWindowProps> = ({isOpen, setIsOpen, setUri}) => {
     const [link, setLink] = React.useState('');
     const [linkText, setLinkText] = React.useState('');
 
-    function isStandardElement(value: LinkModalModelProps | LinkModalModelQuestionProps): value is LinkModalModelProps{
-        return (value as LinkModalModelProps).element !== undefined;
-    }
-
-    function addLink(){
-        if(!link || !linkText || !linkModalModel)
+    const handleOnAddAnchor = () => {
+        if(!link || !linkText){
             return;
-
-        if(isStandardElement(linkModalModel)){
-            let model = linkModalModel as LinkModalModelProps;
-            let elementWithLink = model.element + ` <a href=${link} target="_blank">${linkText}</a>`;
-            model.setElement(elementWithLink);
-            setIsOpen(false);
-        }else{
-            let model = linkModalModel as LinkModalModelQuestionProps;
-            let newQues = [...model.questions];
-            newQues[model.indexQuestion].questionText += ` <a href=${link} target="_blank">${linkText}</a>`;
-            model.setQuestions(newQues);
-            setIsOpen(false);
         }
+
+        setUri(` <a href=${link} target="_blank">${linkText}</a>`)
+        setIsOpen(!isOpen);
     }
 
     return (
@@ -64,7 +41,7 @@ export const LinkModalWindow: FC<LinkModalWindowProps> = ({isOpen, setIsOpen, li
                 <footer>
                     <div className="modal_buttons">
                         <Button onClick={() => setIsOpen(false)}>Отмена</Button>
-                        <Button style={{color: '#0c73fb'}} onClick={addLink}>ОК</Button>
+                        <Button style={{color: '#0c73fb'}} onClick={handleOnAddAnchor}>ОК</Button>
                     </div>
                 </footer>
             </Box>

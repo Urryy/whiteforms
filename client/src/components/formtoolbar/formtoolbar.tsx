@@ -39,28 +39,17 @@ export const FormToolbar: FC<FormToolbarProps> = ({isOpen, setIsOpen, questionsF
         }
 
         if(type === 'kolontitul'){
-            let kolontitul = document.querySelector('#DocumentName') as HTMLElement;
-            kolontitul.setAttribute('style', `font-family: ${event.target.value as string}`);
+            textContext.setFontKolontitul(event.target.value as string);
         }
 
         if(type === 'question_text'){
-            let questions = document.querySelectorAll('#input_question');
-            for (let index = 0; index < questions.length; index++) {
-                const element = questions[index] as HTMLElement;
-                element.setAttribute('style', `font-family: ${event.target.value as string}`);
-            }
+            textContext.setFontQuestionText(event.target.value as string);
             setQuestionStyle("fontFamily", event.target.value as string);
         }
 
         if(type === 'option_text'){
-            let options = document.querySelectorAll('#input_option');
-            let documentDesc= document.querySelector('#DocumentDescription');
-            for (let index = 0; index < options.length; index++) {
-                const element = options[index] as HTMLElement;
-                element.setAttribute('style', `font-family: ${event.target.value as string}`);
-            }
+            textContext.setFontOptionText(event.target.value as string);
             setOptionStyle("fontFamily", event.target.value as string);
-            documentDesc?.setAttribute('style', `font-family: ${event.target.value as string}`);
         }
     }
 
@@ -70,28 +59,17 @@ export const FormToolbar: FC<FormToolbarProps> = ({isOpen, setIsOpen, questionsF
         }
 
         if(type === 'kolontitul'){
-            let kolontitul = document.querySelector('#DocumentName') as HTMLElement;
-            kolontitul.setAttribute('style', `font-size: ${event.target.value as string}pt`);
+            textContext.setSizeKolontitul(`${event.target.value as string}`);
         }
 
         if(type === 'question_text'){
-            let questions = document.querySelectorAll('#input_question');
-            for (let index = 0; index < questions.length; index++) {
-                const element = questions[index] as HTMLElement;
-                element.setAttribute('style', `font-size: ${event.target.value as string}pt`);
-            }
             setQuestionStyle("fontSize", event.target.value as string);
+            textContext.setSizeQuestionText(`${event.target.value as string}`);
         }
 
         if(type === 'option_text'){
-            let options = document.querySelectorAll('#input_option');
-            let documentDesc= document.querySelector('#DocumentDescription');
-            for (let index = 0; index < options.length; index++) {
-                const element = options[index] as HTMLElement;
-                element.setAttribute('style', `font-size: ${event.target.value as string}pt`);
-            }
-            documentDesc?.setAttribute('style', `font-size: ${event.target.value as string}pt`);
             setOptionStyle('fontSize', event.target.value as string);
+            textContext.setSizeOptionText(`${event.target.value as string}`);
         }
     }
 
@@ -101,7 +79,7 @@ export const FormToolbar: FC<FormToolbarProps> = ({isOpen, setIsOpen, questionsF
             for (let index = 0; index < newQuestions.length; index++) {
                 const options = newQuestions[index].options;
                 for (let indexOpt = 0; indexOpt < options.length; indexOpt++) {
-                    options[indexOpt].elementStyle = {...options[indexOpt].elementStyle, fontSize: `${value}pt`};
+                    options[indexOpt].elementStyle = {...options[indexOpt].elementStyle, fontSize: `${value}`};
                 }
             }
         }
@@ -121,7 +99,7 @@ export const FormToolbar: FC<FormToolbarProps> = ({isOpen, setIsOpen, questionsF
         let newQuestions = [...questionsForm];
         if(type === 'fontSize'){
             for (let index = 0; index < newQuestions.length; index++) {
-                newQuestions[index].elementStyle = {...newQuestions[index].elementStyle, fontSize: `${value}pt`};
+                newQuestions[index].elementStyle = {...newQuestions[index].elementStyle, fontSize: `${value}`};
             }
         }
 

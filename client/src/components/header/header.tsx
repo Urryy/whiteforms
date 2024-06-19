@@ -14,11 +14,6 @@ export const Header = () => {
             </div>  
             <div className="header_title">Формы</div>
         </div>
-        <div className="form_header_left">
-            <IconButton>
-                <AccountBoxOutlined className="form_header_icon"/>
-            </IconButton>
-        </div>
     </div>
     );
 }

@@ -14,50 +14,7 @@ export const AnswerForm = () => {
         dispatch
     ] = useStateValue()
 
-    const [answer,setAnswer] = useState<AnswerProps[]>([])
-    const quest = [];
-
     const navigate = useNavigate();
-
-    useEffect(()=>{
-        questions!.map((q) => {
-            answer.push({ questionText: q.questionText, answer : " " })     
-        })
-
-        questions!.map((q) => {
-            quest.push({"header": q.questionText, "key": q.questionText })
-        }
-    )},[])
-
-    function select(text: string, optAnswer: string){
-        let k = answer.findIndex((ele)=>(ele.questionText === text));
-        answer[k].answer= optAnswer;
-        setAnswer(answer);
-    }
-
-    function selectinput(text: string, optAnswer: string){
-        let k =answer.findIndex((ele)=>(ele.questionText === text));
-        answer[k].answer = optAnswer;
-        setAnswer(answer);
-    }
-
-    function selectcheck(e: boolean,text: string, optAnswer: string){
-        let newAnswers: string[] =[]
-        let k =answer.findIndex((ele)=>(ele.questionText === text))
-        if(answer[k].answer){
-            newAnswers = answer[k].answer.split(",")
-        }
-
-        if(e === true){
-            newAnswers.push(optAnswer)
-        }
-        else{
-            let n = newAnswers.findIndex(el =>el === optAnswer)
-            newAnswers.splice(n,1)
-        }
-        answer[k].answer = newAnswers.join(",");
-        setAnswer(answer)
-    }
 
     function handleSubmit(){
         /* let answerData: AnswerProps[] = [];
@@ -86,27 +43,24 @@ export const AnswerForm = () => {
                     <QuestionHeaderImage image={kolontitul_image}/>
                     
                     <div className="user_title_section">
-                        <p className={"answer_form_name" + doc_name_classNames?.join(' ')} dangerouslySetInnerHTML={{__html: doc_name!}}
+                        <p className={"answer_form_name " + doc_name_classNames?.join(' ')} dangerouslySetInnerHTML={{__html: doc_name!}}
                             style={{fontSize: `${doc_name_element_style?.fontSize}pt`, fontFamily: `${doc_name_element_style?.fontFamily}` }}>
                         </p>
-                        <p className={"answer_form_desc" + doc_desc_classNames?.join(' ')} dangerouslySetInnerHTML={{__html: doc_desc!}}
+                        <p className={"answer_form_desc " + doc_desc_classNames?.join(' ')} dangerouslySetInnerHTML={{__html: doc_desc!}}
                             style={{fontSize: `${doc_desc_element_style?.fontSize}pt`, fontFamily: `${doc_desc_element_style?.fontFamily}`}}>
                         </p>
                     </div>
 
                     {questions!.map((question, qindex)=>(
                         <div className="user_form_questions">
-                            <p className={"use_form_title " + question.classNames.join(" ")}
+                            <p className={"use_form_title " + question.classNames?.join(" ")}
                                         style={{fontSize: question.elementStyle.fontSize, fontFamily: question.elementStyle.fontFamily}}
                                         dangerouslySetInnerHTML={{__html: getQuestionText(question) }}>
                             </p>
-                            <Option question={question}/>
+                            <Option question={question} index={qindex}/>
                         </div>
                     ))}         
-                    
-                    {/* <div className="user_form_submit">
-                        <Button  variant="contained" color="primary" onClick={handleSubmit} style={{fontSize:"14px"}}>Завершить</Button>
-                    </div> */}
+                
                     <div className="user_footer">
                         WHITE FORMS
                     </div>

@@ -1,15 +1,15 @@
 .mainbody{
     background-color: white;
-    margin-left: 180px;
-    margin-right: 180px;
+    padding: 0 180px
 }
 
 .mainbody_top{
-    display: flex;
-    margin-top: 15px;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    height: 95px;
+    position: absolute;
+    top: 65%;
+    left: 0%;
+    transform: rotate(0.75turn) translate(50%, 0%);
+    text-transform: uppercase;
 }
 
 .mainbody_top_right{
@@ -18,8 +18,10 @@
 }
 
 .mainbody_top_left{
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 24px;
+    color: #202124;
+    font-weight: 700;
+    font-family: Montserrat
 }
 
 .icon_mainbody{
@@ -30,7 +32,8 @@
 .icon_doc{
     font-size: 12px;
     color: white;
-    background-color: #ffee6b;
+    /* background-color: #ffc90e; */
+    background-color: gray;
     padding: 3px;
     margin-right: 3px;
     border-radius: 2px;
@@ -38,11 +41,10 @@
 
 .doc_content{
     font-size: 14px;
-    color: gray;
+    color: rgb(255, 255, 255);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-top: 5px;
 }
 
 .icon_morevert{
@@ -54,48 +56,66 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-    margin-top: 20px;
 }
 
 .doc_card{
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
-    width: 200px;
-    margin-right: 20px;
-    border: 1px solid rgb(202, 202, 202);
+    width: 240px;
+    margin-right: 40px;
+    margin-bottom: 40px;
+    cursor: pointer;
+    border-radius: 20px 20px 20px 20px;
+    box-shadow: inset 0px 0px 20px -5px rgba(128, 128, 128, 0.75);
+    border: 0.5px solid white;
+    box-shadow: inset 0px 0px 20
 }
 
 .doc_card_title{
-    overflow: ellipsis;
-    padding: 2px 5px;
-    font-size: 16px;
     font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color:black;
+    font-family: Montserrat
+}
+
+.doc_card_description{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 143%;
+    color: #979797;
+    font-family: Montserrat
 }
 
 .content_left{
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
 }
 
-.doc_card:hover{
-    border: 1px solid #ffee6b;
-}
+/* .doc_card:hover{
+    border: 0.2px solid #726f66;
+} */
 
 .doc_image{
     box-sizing: border-box;
-    height: 150px;
-    width: 198px;
+    height: 210px;
+    width: 100%;
+    border-radius: 20px;
 }
 
 .doc_card_content{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 18px;
+    padding: 15px 8px;
+    background-color: inherit;
+    border-radius: 20px;
 }
 
-.doc_content{
-
+.template{
+    height: 100%;
+    background-color: inherit;
+    transform: translateY(5px);
+    position: relative;
 }

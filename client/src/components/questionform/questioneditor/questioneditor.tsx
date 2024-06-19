@@ -5,9 +5,9 @@ import { OptionsProps, QuestionProps } from "../../../interfaces/interfaces";
 import { QuestionTypeConst } from "../../../interfaces/consts";
 import ReactDOM from "react-dom";
 import { useTextContext } from "../../../contexts/TextContext";
-import { LinkModalModelQuestionProps, LinkModalWindow } from "../../modal/LinkModalWindow";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { CustomizedInput } from "../../customizedinput/customizedinput";
 
 interface QuestionEditorProps{
     question: QuestionProps;
@@ -17,15 +17,11 @@ interface QuestionEditorProps{
 }
 
 export const QuestionEditor: FC<QuestionEditorProps> = ({question, index, setQuestions, questions}) => {
-
     const textContext = useTextContext();
 
-    const [isOpenLinkModel, setIsOpenLinkModal] = useState(false);
-    const [elementLink, setElementLink] = useState<LinkModalModelQuestionProps | null>(null);
-
-    function onChange(target: string, index: number){
+    function onChange(value: string){
         let newQues = [...questions];
-        newQues[index].questionText = target;
+        newQues[index].questionText = value;
         setQuestions(newQues);
     }
 
@@ -91,7 +87,6 @@ export const QuestionEditor: FC<QuestionEditorProps> = ({question, index, setQue
         setQuestions(ques);
     }
 
-    
     function addAnother(index: number){
         let ques = [...questions];
         if(ques[index].options.length < 5){
@@ -142,18 +137,18 @@ export const QuestionEditor: FC<QuestionEditorProps> = ({question, index, setQue
     function getInputByType(opt: OptionsProps, j: number){ 
         if(opt.isAnother){
             return <input type="text" className="text_input text_input_border" id='input_option' disabled placeholder="Другое..." value="" 
-            style={{fontFamily: textContext.fontOptionText, fontSize: `${textContext.sizeOptionText}pt`}}/>
+            style={{fontFamily: opt.elementStyle.fontFamily, fontSize: `${opt.elementStyle.fontSize}pt`}}/>
         }
 
         if(question.questionType === QuestionTypeConst.TEXT)
             return <input type="text" className="text_input text_input_border" id='input_option' disabled placeholder="Краткий ответ" value="" 
-            style={{fontFamily: textContext.fontOptionText, fontSize: `${textContext.sizeOptionText}pt`}}/>
+            style={{fontFamily: opt.elementStyle.fontFamily, fontSize: `${opt.elementStyle.fontSize}pt`}}/>
         else if(question.questionType === QuestionTypeConst.DATE){
             return <LocalizationProvider dateAdapter={AdapterDayjs}><DatePicker label="День, месяц, год" disabled /></LocalizationProvider>
         }
         else if(question.questionType === QuestionTypeConst.TEXTAREA)
             return <input type="text" className="text_input text_input_border" id='input_option' disabled placeholder="Развернутый ответ" value=""
-            style={{fontFamily: textContext.fontOptionText, fontSize: `${textContext.sizeOptionText}pt`}}/>
+            style={{fontFamily: opt.elementStyle.fontFamily, fontSize: `${opt.elementStyle.fontSize}pt`}}/>
         else if(question.questionType === QuestionTypeConst.SCALE)
             return <div>
                         <div className="scale_selects">
@@ -193,7 +188,7 @@ export const QuestionEditor: FC<QuestionEditorProps> = ({question, index, setQue
                    </div>
         else 
             return <input type="text" className="text_input text_input_border" id='input_option' value={opt.optionText}
-            onChange={(e) => changeValueOptions(e.target.value, index, j)} style={{fontFamily: textContext.fontOptionText, fontSize: `${textContext.sizeOptionText}pt`}}/>
+            onChange={(e) => changeValueOptions(e.target.value, index, j)} style={{fontFamily: opt.elementStyle.fontFamily, fontSize: `${opt.elementStyle.fontSize}pt`}}/>
     }
 
     function getPreviewInputByType(indexOpt: number){
@@ -241,107 +236,18 @@ export const QuestionEditor: FC<QuestionEditorProps> = ({question, index, setQue
         </div>) 
     }
 
-    function setLinkElement(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
-        let target = e.target as HTMLElement;
-        let parentNode = target.parentNode as HTMLElement;
-        let parentNodeTool = findParentNodeByClassName(parentNode!, "input_tool");
-        if(parentNodeTool !== null){
-            let input = parentNodeTool.firstChild as HTMLElement;
-
-            if(input.id === 'input_question'){
-                setElementLink({indexQuestion: index, questions: questions, setQuestions: setQuestions});
-            }
-        }
-    }
-
-    function getToolsForText(){
-        return (<>
-            <IconButton onClick={(e) => addModification(e, 'bold_text')} className="tool_btn"><FormatBoldOutlined className="icon_formatted"/></IconButton>
-            <IconButton onClick={(e) => addModification(e, 'underline_text')} className="tool_btn"><FormatUnderlined className="icon_formatted"/></IconButton>
-            <IconButton onClick={(e) => addModification(e, 'italic_text')} className="tool_btn"><FormatItalic className="icon_formatted"/></IconButton>
-            <IconButton onClick={(e) => { setLinkElement(e); setIsOpenLinkModal(!isOpenLinkModel); }} className="tool_btn"><Link className="icon_formatted"/></IconButton>
-        </>)
-    }
-
-    function addModification(e: React.MouseEvent<HTMLButtonElement, MouseEvent>, className: string){
-        let target = e.target as HTMLElement;
-        let parentNode = target.parentNode as HTMLElement;
-        let parentNodeTool = findParentNodeByClassName(parentNode!, "input_tool");
-        if(parentNodeTool !== null){
-            let input = parentNodeTool.firstChild as HTMLElement;
-            if(input.classList.contains(className) && question.classNames.includes(className)){
-                input.classList.remove(className);
-                let newClassNames = question.classNames.filter(item => item !== className);
-                question.classNames = newClassNames;
-            }else{
-                input.classList.add(className);
-                question.classNames.push(className);
-            }
-        }
-    }
-
-    function findParentNodeByClassName(parent: HTMLElement, className: string): HTMLElement | null{
-        if(parent.className && parent.classList.contains(className)){
-            return parent;
-        }
-        if(parent.parentNode === null || parent.parentNode === undefined){
-            return null;
-        }
-        let nextParentNode = parent.parentNode as HTMLElement;
-        return findParentNodeByClassName(nextParentNode, className)
-    }
-
-    function onAddToolsInput(e: React.MouseEvent<HTMLInputElement, MouseEvent>){
-        let target = e.target as HTMLElement;
-        if (target.role !== 'input')
-            return;
-
-        let elementTool = document.createElement('div');
-        elementTool.className = 'tools_button'
-        
-        if (target.parentNode!.children.length >= 2)
-            return;
-
-        ReactDOM.render(getToolsForText(), elementTool);
-        
-        if (target.nextSibling) {
-            target.parentNode?.insertBefore(elementTool, target.nextSibling);
-        } else {
-            target.parentNode?.appendChild(elementTool);
-        }
-    }
-
-    function handleBlur(e: React.FocusEvent<HTMLElement, Element>){
-        const currentTarget = e.currentTarget;
-
-        requestAnimationFrame(() => {
-            if (!currentTarget.contains(document.activeElement)) {
-                if (currentTarget.parentNode) {
-                    const children = currentTarget.children;
-
-                    let input = children[0] as HTMLElement;
-                    if(input.id === 'input_question'){
-                        onChange(input.innerHTML, index);
-                    }
-
-                    if (children.length > 1) {
-                        currentTarget.removeChild(children[1]);
-                    }
-                }
-            }
-        });
+    function onSetClassName(values: string[]){
+        let newQues = [...questions];
+        newQues[index].classNames = values;
+        setQuestions(newQues);
     }
 
     return (
         <>
         <AccordionDetails className="add_question">
             <div className="add_question_top">
-                <div className="input_tool" onBlur={handleBlur} onClick={onAddToolsInput}>
-                    <div role="input" id="input_question" className="question default_input" contentEditable="true" 
-                        style={{fontFamily: textContext.fontQuestionText, fontSize: `${textContext.sizeQuestionText}pt`}}
-                        dangerouslySetInnerHTML={{__html: question.questionText}}>
-                    </div>
-                </div>
+                <CustomizedInput id="input_question" standardClassName="question default_input" classNames={question.classNames} setClassNames={onSetClassName}
+                    inputText={question.questionText} setInputText={onChange} fontFamily={question.elementStyle.fontFamily} fontSize={question.elementStyle.fontSize}/>
                 <IconButton><CropOriginal style={{color: '#5f6368'}}/></IconButton>
                 <Select className="select" value={question.questionType}>
                     <MenuItem id={QuestionTypeConst.TEXT} value={QuestionTypeConst.TEXT} onClick={() => addQuestionType(QuestionTypeConst.TEXT, index)}>
@@ -429,7 +335,6 @@ export const QuestionEditor: FC<QuestionEditorProps> = ({question, index, setQue
                 </div>
             </div>
         </AccordionDetails>
-        <LinkModalWindow isOpen={isOpenLinkModel} setIsOpen={setIsOpenLinkModal} linkModalModel={elementLink}/>
         </>
     );
 }

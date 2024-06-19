@@ -9,30 +9,17 @@ import { CenteredTabs } from './components/tabs/tabs';
 import { AnswerForm } from './components/answerform/answerform';
 import { QuestionProps } from './interfaces/interfaces';
 import { TextContext } from './contexts/TextContext';
+import { HeaderSection } from './components/headersection/headersection';
+import { Footer } from './components/footer/footer';
+import { FormContext } from './contexts/FormContxet';
+import { SnackbarProvider } from 'notistack';
+import { Form } from './components/answerform/form';
 
 
 function App() {
   const [isOpenToolbar, setIsOpenToolbar] = useState(false);
-  const [questions, setQuestions] = useState<QuestionProps[]>([
-    {
-        questionText: "Вопрос без заголовка",
-        questionType: "radio",
-        options: [
-            {optionText: "Вариант 1", elementStyle: {fontSize: '11', fontFamily: 'Roboto, Arial, sans-serif'}}
-        ],
-        points: 0,
-        answerKey: '',
-        answer: false,
-        open: true,
-        required: false,
-        startScaleValue: 1,
-        descStartScaleValue: null,
-        endScaleValue: 5,
-        classNames: [],
-        descEndScaleValue: null,
-        elementStyle: {fontSize: '12', fontFamily: 'Roboto, Arial, sans-serif'}
-    }
-  ]);
+  const [questions, setQuestions] = useState<QuestionProps[]>([]);
+  const [formId, setFormId] = useState('');
 
   const [fontKolontitul, setFontKolontitul] = useState('Roboto, Arial, sans-serif');
   const [sizeKolontitul, setSizeKolontitul] = useState('24');
@@ -45,26 +32,37 @@ function App() {
 
   return (
     <div className="App">
-      <TextContext.Provider value={{fontKolontitul, setFontKolontitul, sizeKolontitul, setSizeKolontitul,
-                fontQuestionText, setFontQuestionText, sizeQuestionText, setSizeQuestionText, 
-                fontOptionText, setFontOptionText, sizeOptionText, setSizeOptionText}}>
-        <BrowserRouter>
-          <Routes>
-            <Route path='/' element={(<>
-              <Header />
-              <Template />
-              <MainBody />
-            </>)}/>
-            <Route path='/response' element={(<>
-              <AnswerForm />
-            </>)}/>
-            <Route path='form/:id' element={(<>
-              <FormHeader questions={questions} setQuestions={setQuestions} isOpenToolbar={isOpenToolbar} setIsOpenToolbar={setIsOpenToolbar}/>
-              <CenteredTabs questions={questions} setQuestions={setQuestions} isOpenToolbar={isOpenToolbar} setIsOpenToolbar={setIsOpenToolbar}/>
-            </>)}/>
-          </Routes>
-        </BrowserRouter>
-      </TextContext.Provider>
+      <SnackbarProvider>
+        <FormContext.Provider value={{formId: formId, setFormId: setFormId}}>
+          <TextContext.Provider value={{fontKolontitul, setFontKolontitul, sizeKolontitul, setSizeKolontitul,
+                    fontQuestionText, setFontQuestionText, sizeQuestionText, setSizeQuestionText, 
+                    fontOptionText, setFontOptionText, sizeOptionText, setSizeOptionText}}>
+            <BrowserRouter>
+              <Routes>
+                <Route path='/' element={(<div className='section_start'>
+                  <HeaderSection />
+                  <MainBody />
+                  <Footer />
+                </div>)}/>
+                <Route path='/response' element={(<>
+                  <AnswerForm />
+                </>)}/>
+                <Route path='/filling/form/:id' element={(<>
+                  <Form />
+                </>)}/>
+                <Route path='form/:id' element={(<div className='section_form'>
+                  <FormHeader questions={questions} setQuestions={setQuestions} isOpenToolbar={isOpenToolbar} setIsOpenToolbar={setIsOpenToolbar}/>
+                  <CenteredTabs questions={questions} setQuestions={setQuestions} isOpenToolbar={isOpenToolbar} setIsOpenToolbar={setIsOpenToolbar}/>
+                </div>)}/>
+                <Route path='form' element={(<div className='section_form'>
+                  <FormHeader questions={questions} setQuestions={setQuestions} isOpenToolbar={isOpenToolbar} setIsOpenToolbar={setIsOpenToolbar}/>
+                  <CenteredTabs questions={questions} setQuestions={setQuestions} isOpenToolbar={isOpenToolbar} setIsOpenToolbar={setIsOpenToolbar}/>
+                </div>)}/>
+              </Routes>
+            </BrowserRouter>
+          </TextContext.Provider>
+        </FormContext.Provider>
+      </SnackbarProvider>
     </div>
   );
 }

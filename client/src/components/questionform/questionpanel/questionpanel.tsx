@@ -28,12 +28,12 @@ export const QuestionPanel: FC<QuestionPanelProps> = ({question, index}) => {
             return (<FormControlLabel style={{marginLeft: '5px', marginBottom: '5px'}} disabled
                 control={<></>}
                 label={<input type="text" className="text_input text_input_border" id='input_option' disabled placeholder="Краткий ответ" value=""
-                style={{fontFamily: textContext.fontOptionText, fontSize: `${textContext.sizeOptionText}pt`}}/>}/>)
+                style={{fontFamily: opt.elementStyle.fontFamily, fontSize: `${opt.elementStyle.fontSize}pt`}}/>}/>)
         else if(question.questionType === QuestionTypeConst.TEXTAREA)
             return (<FormControlLabel style={{marginLeft: '5px', marginBottom: '5px'}} disabled
                     control={<></>}
                     label={<input type="text" className="text_input text_input_border" id='input_option' disabled placeholder="Развернутый ответ" value=""
-                    style={{fontFamily: textContext.fontOptionText, fontSize: `${textContext.sizeOptionText}pt`}}/>}/>)
+                    style={{fontFamily: opt.elementStyle.fontFamily, fontSize: `${opt.elementStyle.fontSize}pt`}}/>}/>)
         else if(question.questionType === QuestionTypeConst.DATE)
             return (<FormControlLabel style={{marginLeft: '5px', marginBottom: '5px'}} disabled
                     control={<></>}
@@ -43,7 +43,7 @@ export const QuestionPanel: FC<QuestionPanelProps> = ({question, index}) => {
             return (<FormControlLabel style={{marginLeft: '5px', marginBottom: '5px'}} disabled
                     control={<span style={{marginRight: '5px'}}>{optIndex + 1}. </span>}
                     label={<Typography className="label_formcontrolelabel" id='input_option'
-                            style={{fontFamily: textContext.fontOptionText, fontSize: `${textContext.sizeOptionText}pt`}}>
+                            style={{fontFamily: opt.elementStyle.fontFamily, fontSize: `${opt.elementStyle.fontSize}pt`}}>
                                 {opt.optionText}
                             </Typography>}/>
             )
@@ -59,7 +59,7 @@ export const QuestionPanel: FC<QuestionPanelProps> = ({question, index}) => {
         else if(question.questionType === QuestionTypeConst.DESCRIPTION)
             return(
             <>
-                <p className="description_question" style={{fontFamily: textContext.fontOptionText, fontSize: `${textContext.sizeOptionText}pt`}}>
+                <p className="description_question" style={{fontFamily: opt.elementStyle.fontFamily, fontSize: `${opt.elementStyle.fontSize}pt`}}>
                     {opt.optionText === "" ? "Описание не обязательно" : opt.optionText}
                 </p>
             </>
@@ -77,10 +77,10 @@ export const QuestionPanel: FC<QuestionPanelProps> = ({question, index}) => {
             return (<FormControlLabel style={{marginLeft: '5px', marginBottom: '5px'}} disabled
                 control={<input type={question.questionType} color="primary" required={question.required} style={{marginRight: '5px'}}/>}
                 label={opt.isAnother
-                        ? <Typography className="label_formcontrolelabel_another" style={{fontFamily: textContext.fontOptionText, fontSize: `${textContext.sizeOptionText}pt`}}>
+                        ? <Typography className="label_formcontrolelabel_another" style={{fontFamily: opt.elementStyle.fontFamily, fontSize: `${opt.elementStyle.fontSize}pt`}}>
                             Другое...
                         </Typography>
-                        : <Typography className="label_formcontrolelabel" id='input_option' style={{fontFamily: textContext.fontOptionText, fontSize: `${textContext.sizeOptionText}pt`}}>
+                        : <Typography className="label_formcontrolelabel" id='input_option' style={{fontFamily: opt.elementStyle.fontFamily, fontSize: `${opt.elementStyle.fontSize}pt`}}>
                             {opt.optionText}
                         </Typography>}/>)
     }
@@ -91,8 +91,8 @@ export const QuestionPanel: FC<QuestionPanelProps> = ({question, index}) => {
             ?  
             <AccordionSummary id="panel1a-header" style={{width: '100%'}}>
                 <div className="common_question">
-                    <p className={"saved_questions_title " + question.classNames.join(' ')} id='input_question'
-                        style={{fontFamily: textContext.fontQuestionText, fontSize: `${textContext.sizeQuestionText}pt`}} 
+                    <p className={"saved_questions_title "+ question.classNames?.join(" ")} id='input_question'
+                        style={{fontFamily: question.elementStyle.fontFamily, fontSize: `${question.elementStyle.fontSize}pt`}} 
                         dangerouslySetInnerHTML={{__html: titleQuestion}}>
                     </p>
                     {question.options.map((opt, j) => (

@@ -16,9 +16,17 @@ export interface QuestionProps{
     options: OptionsProps[]
 }
 
+export interface AxiosData<T>{
+    fullFilled?: boolean,
+    pending?: boolean,
+    error?: boolean,
+    data: T
+}
+
 export interface OptionsProps{
     id?: string,
     optionText: string,
+    classNames?: string[]
     isAnother?: boolean,
     imageWrapper?: ImageWrapperProps,
     elementStyle: ElementStyleProps
@@ -35,31 +43,31 @@ export interface FormProps{
     questions: QuestionProps[],
     name: string,
     description: string,
-    elementStyle: ElementStyleProps
+    previewImage: string
 }
 
 export interface StateProps{
     questions?: QuestionProps[],
-    questionType?: string,
     doc_name?: string,
     doc_desc?: string,
     doc_name_element_style?: ElementStyleProps,
     doc_desc_element_style?: ElementStyleProps,
     doc_name_classNames?: string[],
     doc_desc_classNames?: string[],
-    kolontitul_image?: string
+    kolontitul_image?: string,
+    preview_image?: string
 }
 
 export interface ActionTypesProps{
     SET_QUESTIONS: string,
-    CHANGE_TYPE: string,
     SET_DOC_NAME: string,
     SET_DOC_DESC: string,
     SET_STYLE_DOC_NAME: string,
     SET_STYLE_DOC_DESC: string,
     SET_DOC_NAME_CLASSNAMES: string,
     SET_DOC_DESC_CLASSNAMES: string,
-    SET_KOLONTITUL_IMAGE: string
+    SET_KOLONTITUL_IMAGE: string,
+    SET_PREVIEW_IMAGE: string
 }
 
 export interface initialStateProps {
@@ -80,4 +88,32 @@ export interface ScaleValueProps{
 export interface ElementStyleProps{
     fontSize: string,
     fontFamily: string
+}
+
+export interface FormFillProps {
+    formId: string,
+    documentName: string,
+    documentDesc: string,
+    documentNameElementStyle: ElementStyleProps,
+    documentDescElementStyle: ElementStyleProps,
+    documentNameClassNames: string[],
+    documentDescClassNames: string[],
+    headerImage: string,
+    questions: QuestionProps[]
+}
+
+export interface FormFilledProps{
+    formId: string,
+    filledQuestions: QuestionFilledProps[]
+}
+
+export interface QuestionFilledProps{
+    questionId: string,
+    sequence: number,
+    answers: AnswerOptionProps[]
+}
+
+export interface AnswerOptionProps{
+    optionId: string,
+    answerText?: string
 }

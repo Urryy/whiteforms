@@ -21,7 +21,7 @@ export const QuestionToolbar: FC<QuestionToolbarProps> = ({question, questions, 
         setQuestions([...questions, 
             {questionText: 'Вопрос без заголовка', 
              questionType: 'radio', 
-             options: [{optionText: "Вариант 1", elementStyle: {fontSize: `${textContext.sizeOptionText}pt`, fontFamily: textContext.fontOptionText}}],
+             options: [{optionText: "Вариант 1", elementStyle: {fontSize: `${textContext.sizeOptionText}`, fontFamily: textContext.fontOptionText}}],
              answerKey: '', 
              points: 0, 
              answer: false, 
@@ -30,7 +30,7 @@ export const QuestionToolbar: FC<QuestionToolbarProps> = ({question, questions, 
              classNames: [],
              startScaleValue: 1, 
              endScaleValue: 5,
-             elementStyle: {fontSize: `${textContext.sizeQuestionText}pt`, fontFamily: textContext.fontQuestionText}}]);
+             elementStyle: {fontSize: `${textContext.sizeQuestionText}`, fontFamily: textContext.fontQuestionText}}]);
     }
 
     function addDescription(){
@@ -38,14 +38,14 @@ export const QuestionToolbar: FC<QuestionToolbarProps> = ({question, questions, 
         setQuestions([...questions,
             {questionText: 'Без названия', 
              questionType: 'description', 
-             options: [{optionText: '', elementStyle: {fontSize: `${textContext.sizeOptionText}pt`, fontFamily: textContext.fontOptionText}}], 
+             options: [{optionText: '', elementStyle: {fontSize: `${textContext.sizeOptionText}`, fontFamily: textContext.fontOptionText}, classNames: []}], 
              answerKey: '', 
              points: 0, 
              answer: false, 
              open: true, 
              required: false, 
              classNames: [], 
-             elementStyle: {fontSize: `${textContext.sizeQuestionText}pt`, fontFamily: textContext.fontQuestionText}}])
+             elementStyle: {fontSize: `${textContext.sizeQuestionText}`, fontFamily: textContext.fontQuestionText}}])
     }
 
     function addImage(value: string){
@@ -53,14 +53,14 @@ export const QuestionToolbar: FC<QuestionToolbarProps> = ({question, questions, 
         setQuestions([...questions,
             {questionText: 'Без названия', 
              questionType: 'image', 
-             options: [{optionText: value, elementStyle: {fontSize: `${textContext.sizeOptionText}pt`, fontFamily: textContext.fontOptionText}}], 
+             options: [{optionText: value, elementStyle: {fontSize: `${textContext.sizeOptionText}`, fontFamily: textContext.fontOptionText}}], 
              answerKey: '', 
              points: 0, 
              answer: false, 
              open: true, 
              required: false, 
              classNames: [], 
-             elementStyle: {fontSize: `${textContext.sizeQuestionText}pt`, fontFamily: textContext.fontQuestionText}}])
+             elementStyle: {fontSize: `${textContext.sizeQuestionText}`, fontFamily: textContext.fontQuestionText}}])
     }
 
     function expandeCloseAll(){

@@ -9,8 +9,7 @@ export const Template = () => {
     const navigate = useNavigate();
 
     function createForm(){
-        let id = "b7ae1407-eca6-49df-97d8-3d05b13d7a30";
-        navigate("/form/"+id);
+        navigate("/form");
     }
 
     return (
@@ -18,15 +17,6 @@ export const Template = () => {
             <div className="template_top">
                 <div className="template_left">
                     <span className="template_left_title">Новая форма</span>
-                </div>
-                <div className="template_right">
-                    <div className="template_right_gallery_button">
-                        Галерея форм
-                        <UnfoldMore/>
-                    </div>
-                    <IconButton>
-                        <MoreVert/>
-                    </IconButton>
                 </div>
             </div>
             <div className="template_body">

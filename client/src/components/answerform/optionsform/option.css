@@ -19,3 +19,17 @@
 .css-cp2j25-MuiSlider-thumb{
     top: 60% !important;
 }
+
+.option_another{
+    display: flex;
+    align-items: center;
+}
+
+.option_another span{
+    margin-right: 10px;
+}
+
+.label_option_another .MuiFormControlLabel-label{
+    display: inline-block;
+    width: 100%;
+}

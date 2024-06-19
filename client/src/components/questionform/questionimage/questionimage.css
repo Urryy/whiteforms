@@ -82,7 +82,7 @@
     color: black;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: flex-start !important;
     padding: 10px 5px;
     border-radius: 0;
 }

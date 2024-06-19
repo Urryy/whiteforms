@@ -1,9 +1,9 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, createRef, useEffect, useState } from "react";
 import './questionform.css';
 import { Accordion, Button, IconButton, TextField } from "@material-ui/core";
-import { DragIndicator, FormatBoldOutlined, FormatItalic, FormatUnderlined, Link } from "@mui/icons-material";
+import { DragIndicator } from "@mui/icons-material";
 import { DragDropContext, Draggable, DropResult, Droppable } from "react-beautiful-dnd";
-import { ElementStyleProps, QuestionProps, StateProps } from "../../interfaces/interfaces";
+import { AxiosData, QuestionProps, StateProps } from "../../interfaces/interfaces";
 import { QuestionPanel } from "./questionpanel/questionpanel";
 import { QuestionEditor } from "./questioneditor/questioneditor";
 import { QuestionToolbar } from "./questiontoolbar/questiontoolbar";
@@ -12,70 +12,113 @@ import { createAPIEndpointService } from "../../services/ApiService";
 import { useParams } from "react-router-dom";
 import { useStateValue } from "../../reduce/stateprovider";
 import { actionTypes } from "../../reduce/reducer";
-import ReactDOM from "react-dom";
 import { QuestionFormsProps } from "../tabs/tabs";
 import { useTextContext } from "../../contexts/TextContext";
-import { LinkModalModelProps, LinkModalWindow } from "../modal/LinkModalWindow";
 import { QuestionTypeConst } from "../../interfaces/consts";
 import { QuestionDescription } from "./questiondescription/QuestionDescription";
 import { QuestionImage } from "./questionimage/questionimage";
 import { FormToolbar } from "../formtoolbar/formtoolbar";
 import { QuestionHeaderImage } from "./questionheaderimage/questionheaderimage";
-
+import * as htmlToImage from "html-to-image";
+import { CustomizedInput } from "../customizedinput/customizedinput";
+import { QuestionComponent } from "./question/question";
+import { Skeleton } from "@mui/material";
+import { useFormContext } from "../../contexts/FormContxet";
 
 export const QuestionForm: FC<QuestionFormsProps> = ({questions, setQuestions, isOpenToolbar, setIsOpenToolbar}) => {
-    const {id} = useParams();
+    const { id } = useParams();
     const [{}, dispatch] = useStateValue();
+//const axiosData = useState<AxiosData<>>
+    const [isLoading, setIsLoading] = useState(false);
 
-    const [formId, setFormId] = useState();
+    const ref = createRef<any>();
+    const textContext = useTextContext();
+    const formContext = useFormContext();
+
     const [documentName, setDocumentName] = useState<string>("Новая форма");
     const [documentDesc, setDocumentDesc] = useState<string>("Описание формы");
-
-    const [documentNameElementStyle, setDocumentNameElementStyle] = useState<ElementStyleProps>();
-    const [documentDescElementStyle, setDocumentDescElementStyle] = useState<ElementStyleProps>();
 
     const [documentNameClassNames, setDocumentNameClassNames] = useState<string[]>([]);
     const [documentDescClassNames, setDocumentDescClassNames] = useState<string[]>([]);
 
     const [headerImage, setHeaderImage] = useState('');
+    const [previewImage, setPreviewImage] = useState('');
 
-    const [isOpenLinkModel, setIsOpenLinkModal] = useState(false);
-    const [elementLink, setElementLink] = useState<LinkModalModelProps | null>(null);
+    const takeScreenShot = async (node: any) => {
+        const data = await htmlToImage.toJpeg(node);
+        return data;
+    }
 
-    const textContext = useTextContext();
+    const downloadScreenshot = () => takeScreenShot(ref.current).then(res => setPreviewImage(res));
 
     useEffect(() => {
-        if(id){
+        console.log(formContext);
+        if(formContext.formId || id){
+            setIsLoading(true);
             let srvcApi = createAPIEndpointService(`form`)
-            srvcApi.fetchById(id!)
+            srvcApi.fetchById((formContext.formId === '' || formContext.formId !== id) ? id! : formContext.formId)
             .then(res => {
-                if(res.data){
+                if(res.status === 200 && res.data){
                     setDocumentName(res.data.name);
                     setDocumentDesc(res.data.description);
-                    setDocumentNameElementStyle(res.data.documentNameElementStyle);
-                    setDocumentDescElementStyle(res.data.DocumentDescElementStyle)
-                    setFormId(res.data.id);
+                    textContext.setFontKolontitul(res.data.nameElementStyle.fontFamily);
+                    textContext.setSizeKolontitul(res.data.nameElementStyle.fontSize);
+                    textContext.setFontQuestionText(res.data.questionElementStyle.fontFamily);
+                    textContext.setSizeQuestionText(res.data.questionElementStyle.fontSize);
+                    textContext.setFontOptionText(res.data.descriptionElementStyle.fontFamily);
+                    textContext.setSizeOptionText(res.data.descriptionElementStyle.fontSize);
+                    formContext.setFormId(res.data.id);
                     setQuestions(res.data.questions);
-                    setDocumentNameClassNames(res.data.documentNameClassNames);
-                    setDocumentDescClassNames(res.data.documentDescClassNames);
-                    setHeaderImage(res.data.headerImage);
+                    setDocumentNameClassNames(res.data.nameClassNames);
+                    setDocumentDescClassNames(res.data.descriptionClassNames);
+                    setHeaderImage(res.data.kolontitulImage);
+                    setPreviewImage(res.data.previewImage);
+                    setIsLoading(false);
                 }
             })
             .catch(err => {
                 console.log(err);
             })
+        }else{
+            if(questions.length === 0){
+                setQuestions([{
+                    questionText: "Вопрос без заголовка",
+                    questionType: "radio",
+                    options: [
+                        {optionText: "Вариант 1", elementStyle: { fontFamily: textContext.fontOptionText, fontSize: textContext.sizeOptionText }}
+                    ],
+                    points: 0,
+                    answerKey: '',
+                    answer: false,
+                    open: true,
+                    required: false,
+                    startScaleValue: 1,
+                    descStartScaleValue: null,
+                    endScaleValue: 5,
+                    classNames: [],
+                    descEndScaleValue: null,
+                    elementStyle: { fontFamily: textContext.fontQuestionText, fontSize: textContext.sizeQuestionText }
+                }]);
+            }
         }  
 
-        let initialState: StateProps = { questions: questions, doc_name: documentName, doc_desc: documentDesc, doc_name_element_style: documentNameElementStyle, 
-            doc_desc_element_style: documentDescElementStyle, doc_name_classNames: documentNameClassNames, doc_desc_classNames: documentDescClassNames, 
-            kolontitul_image: headerImage}
+        let initialState: StateProps = { 
+            questions: questions, doc_name: documentName, doc_desc: documentDesc, 
+            doc_name_element_style: { fontFamily: textContext.fontKolontitul, fontSize: textContext.sizeKolontitul }, 
+            doc_desc_element_style: { fontFamily: textContext.fontOptionText, fontSize: textContext.sizeOptionText }, 
+            doc_name_classNames: documentNameClassNames, doc_desc_classNames: documentDescClassNames, 
+            kolontitul_image: headerImage, preview_image: previewImage
+        }
 
         dispatch({ type: actionTypes.SET_DOC_NAME, state: initialState});
         dispatch({ type: actionTypes.SET_DOC_DESC, state: initialState});
         dispatch({ type: actionTypes.SET_QUESTIONS, state: initialState});
         dispatch({ type: actionTypes.SET_STYLE_DOC_NAME, state: initialState});
+        dispatch({ type: actionTypes.SET_STYLE_DOC_DESC, state: initialState});
         dispatch({ type: actionTypes.SET_DOC_NAME_CLASSNAMES, state: initialState});
         dispatch({ type: actionTypes.SET_DOC_DESC_CLASSNAMES, state: initialState});
+        dispatch({ type: actionTypes.SET_KOLONTITUL_IMAGE, state: initialState})
+        dispatch({ type: actionTypes.SET_PREVIEW_IMAGE, state: initialState});
     }, [])
 
     function onDragEndResult(result: DropResult){
@@ -94,19 +137,8 @@ export const QuestionForm: FC<QuestionFormsProps> = ({questions, setQuestions, i
         return result;
     }
 
-    function handleExpand(indexQues: number){
-        let ques = [...questions];
-        for (let index = 0; index < ques.length; index++) {
-            if(indexQues === index){
-                ques[index].open = true;
-            }else{
-                ques[index].open = false;
-            }
-        }
-        setQuestions(ques);
-    }
-
     function saveForm(){
+        downloadScreenshot();
         let initialState: StateProps = { 
             questions: questions, 
             doc_name: documentName, 
@@ -115,7 +147,8 @@ export const QuestionForm: FC<QuestionFormsProps> = ({questions, setQuestions, i
             doc_desc_classNames: documentDescClassNames,
             doc_name_element_style: { fontFamily: textContext.fontKolontitul, fontSize: textContext.sizeKolontitul },
             doc_desc_element_style: { fontFamily: textContext.fontOptionText, fontSize: textContext.sizeOptionText },
-            kolontitul_image: headerImage
+            kolontitul_image: headerImage,
+            preview_image: previewImage
         };
         dispatch({ type: actionTypes.SET_DOC_NAME, state: initialState});
         dispatch({ type: actionTypes.SET_DOC_DESC, state: initialState});
@@ -125,206 +158,77 @@ export const QuestionForm: FC<QuestionFormsProps> = ({questions, setQuestions, i
         dispatch({ type: actionTypes.SET_DOC_NAME_CLASSNAMES, state: initialState});
         dispatch({ type: actionTypes.SET_DOC_DESC_CLASSNAMES, state: initialState});
         dispatch({ type: actionTypes.SET_KOLONTITUL_IMAGE, state: initialState})
-        console.log(initialState);
-        /* let srvcApi = createAPIEndpointService('form');
-        srvcApi.post({name: documentName, description: documentDesc, questions: questions})
+        dispatch({ type: actionTypes.SET_PREVIEW_IMAGE, state: initialState});
+
+        let srvcApi = createAPIEndpointService('form');
+        if(formContext.formId){
+            srvcApi.patch({
+                id: formContext.formId,
+                name: documentName, 
+                description: documentDesc, 
+                questions: questions,
+                nameClassNames: documentNameClassNames,
+                descriptionClassNames: documentDescClassNames,
+                kolontitulImage: headerImage,
+                previewImage: previewImage,
+                nameElementStyle: { fontFamily: textContext.fontKolontitul, fontSize: textContext.sizeKolontitul },
+                descriptionElementStyle: { fontFamily: textContext.fontOptionText, fontSize: textContext.sizeOptionText }
+            })
             .then(res => {
-                let initialState: StateProps = { 
-                    questions: questions, 
-                    doc_name: documentName, 
-                    doc_desc: documentDesc, 
-                    classNames: documentClassNames,
-                    elementStyle: {fontFamily: textContext.fontKolontitul, fontSize: textContext.sizeKolontitul}
-                };
-                dispatch({ type: actionTypes.SET_DOC_NAME, state: initialState});
-                dispatch({ type: actionTypes.SET_DOC_DESC, state: initialState});
-                dispatch({ type: actionTypes.SET_QUESTIONS, state: initialState});
-                dispatch({ type: actionTypes.SET_STYLE, state: initialState});
-                dispatch({ type: actionTypes.SET_CLASSNAMES, state: initialState});
+                if(res.status === 200){
+                    formContext.setFormId(res.data.formId);
+                }
             })
             .catch(err => {
                 console.log(err);
-            }); */
-    }
-
-    function showQuestions(question: QuestionProps, index: number){
-        if(question.questionType === QuestionTypeConst.DESCRIPTION){
-            return <QuestionDescription question={question} index={index} questions={questions} setQuestions={setQuestions}/>
-        }else if(question.questionType === QuestionTypeConst.IMAGE){
-            return <QuestionImage question={question} index={index} questions={questions} setQuestions={setQuestions}/>
+            });
         }else{
-            return !question.answer ?
-                (<QuestionEditor question={question} index={index} questions={questions} setQuestions={setQuestions}/>)
-                :(<QuestionAnswerKey question={question} index={index} questions={questions} setQuestions={setQuestions}/>)
-        }
-    }
-
-    function addModification(e: React.MouseEvent<HTMLButtonElement, MouseEvent>, className: string){
-        let target = e.target as HTMLElement;
-        let parentNode = target.parentNode as HTMLElement;
-        let parentNodeTool = findParentNodeByClassName(parentNode!, "input_tool");
-        if(parentNodeTool !== null){
-            let input = parentNodeTool.firstChild as HTMLElement;
-            if(input.classList.contains(className)){
-                input.classList.remove(className);
-                if(input.id === 'DocumentName'){
-                    setDocumentNameClassNames(documentNameClassNames.filter(i => i !== className));
+            srvcApi.post({
+                name: documentName, 
+                description: documentDesc, 
+                questions: questions,
+                nameClassNames: documentNameClassNames,
+                descriptionClassNames: documentDescClassNames,
+                kolontitulImage: headerImage,
+                previewImage: previewImage,
+                nameElementStyle: { fontFamily: textContext.fontKolontitul, fontSize: textContext.sizeKolontitul },
+                descriptionElementStyle: { fontFamily: textContext.fontOptionText, fontSize: textContext.sizeOptionText }
+            })
+            .then(res => {
+                if(res.status === 200){
+                    formContext.setFormId(res.data.formId);
                 }
-                if(input.id === 'DocumentDesc'){
-                    setDocumentDescClassNames(documentDescClassNames.filter(i => i !== className));
-                }
-            }else{
-                input.classList.add(className);
-                if(input.id === 'DocumentName'){
-                    setDocumentNameClassNames([...documentNameClassNames, className])
-                }
-                if(input.id === 'DocumentDesc'){
-                    setDocumentDescClassNames([...documentDescClassNames, className]);
-                }
-            }
+            })
+            .catch(err => {
+                console.log(err);
+            });
         }
-    }
-
-    function setLinkElement(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
-        let target = e.target as HTMLElement;
-        let parentNode = target.parentNode as HTMLElement;
-        let parentNodeTool = findParentNodeByClassName(parentNode!, "input_tool");
-        if(parentNodeTool !== null){
-            let input = parentNodeTool.firstChild as HTMLElement;
-
-            if(input.id === 'DocumentName'){
-                setElementLink({element: documentName, setElement: setDocumentName})
-            }
-
-            if(input.id === 'DocumentDescription'){
-                setElementLink({element: documentDesc, setElement: setDocumentDesc})
-            }
-        }
-    }
-
-    function findParentNodeByClassName(parent: HTMLElement, className: string): HTMLElement | null{
-        if(parent.className && parent.classList.contains(className)){
-            return parent;
-        }
-        if(parent.parentNode === null || parent.parentNode === undefined){
-            return null;
-        }
-        let nextParentNode = parent.parentNode as HTMLElement;
-        return findParentNodeByClassName(nextParentNode, className)
-    }
-
-    function getToolsForText(){
-        return (<>
-            <IconButton onClick={(e) => addModification(e, 'bold_text')} className="tool_btn"><FormatBoldOutlined className="icon_formatted"/></IconButton>
-            <IconButton onClick={(e) => addModification(e, 'underline_text')} className="tool_btn"><FormatUnderlined className="icon_formatted"/></IconButton>
-            <IconButton onClick={(e) => addModification(e, 'italic_text')} className="tool_btn"><FormatItalic className="icon_formatted"/></IconButton>
-            <IconButton onClick={(e) => { setLinkElement(e); setIsOpenLinkModal(!isOpenLinkModel); }} className="tool_btn"><Link className="icon_formatted"/></IconButton>
-        </>)
-    }
-
-    function onAddToolsInput(event: React.MouseEvent<HTMLElement, MouseEvent>){
-        let target = event.target as HTMLElement;
-        if (target.role !== 'input')
-            return;
-
-        let elementTool = document.createElement('div');
-        elementTool.className = 'tools_button'
-
-        ReactDOM.render(getToolsForText(), elementTool);
-        
-        if (target.parentNode!.children.length >= 2)
-            return;
-
-        if (target.nextSibling) {
-            target.parentNode?.insertBefore(elementTool, target.nextSibling);
-        } else {
-            target.parentNode?.appendChild(elementTool);
-        }
-    }
-
-    const handleBlur = (e: React.FocusEvent<HTMLElement, Element>) => {
-        const currentTarget = e.currentTarget;
-
-        requestAnimationFrame(() => {
-            if (!currentTarget.contains(document.activeElement)) {
-                if (currentTarget.parentNode) {
-                    const children = currentTarget.children;
-
-                    let input = children[0] as HTMLElement;
-                    if(input.id === 'DocumentName'){
-                        setDocumentName(input.innerHTML);
-                    }
-        
-                    if(input.id === 'DocumentDescription'){
-                        setDocumentDesc(input.innerHTML);
-                    }
-
-                    if (children.length > 1) {
-                        currentTarget.removeChild(children[1]);
-                    }
-                }
-            }
-        });
-    };
-
-    function questionUI(){
-        return questions.map((ques, i) => 
-            <Draggable key={i} draggableId={i + 'id'} index={i}>
-                {(provided, snapshot) => (
-                    <div ref={provided.innerRef} 
-                         {...provided.draggableProps}
-                         {...provided.dragHandleProps}>
-                        <div>
-                            <div style={{width: '100%', textAlign: 'center'}}>
-                                <DragIndicator className="drag_indicator" fontSize="small"/>
-                            </div>
-
-                            <div>
-                                <Accordion expanded={ques.open} onChange={() => handleExpand(i)} className={ques.open ? 'add_border' : ''}>
-                                    <QuestionPanel question={ques} index={i}/>
-                                    <div className="question_box">
-                                        {showQuestions(ques, i)}
-
-                                        {!ques.answer
-                                            ? (<QuestionToolbar question={ques} questions={questions} setQuestions={setQuestions}/>)
-                                            : ""}
-                                    </div> 
-                                </Accordion>
-                            </div>
-                        </div>
-                    </div>
-                )}
-            </Draggable>
-        );
     }
 
     return (
         <>
         <div className="question_form">
-            <div className="section">
+            <div className="section" ref={ref}>
                 <QuestionHeaderImage image={headerImage}/>
                 <div className="question_title_section">
                     <div className="question_form_top">
-                        <div className="input_tool" onBlur={handleBlur} onClick={onAddToolsInput}>
-                            <div role="input" id="DocumentName" className="question_form_top_name" contentEditable="true" 
-                                style={{fontFamily: textContext.fontKolontitul, fontSize: `${textContext.sizeKolontitul}pt`}}
-                                dangerouslySetInnerHTML={{__html: documentName}}>
-                            </div>
-                        </div>
-                        <div className="input_tool" onBlur={handleBlur} onClick={onAddToolsInput}>
-                            <div role="input" id="DocumentDescription" className="question_form_top_desc" contentEditable="true" 
-                                style={{fontFamily: textContext.fontOptionText, fontSize: `${textContext.sizeOptionText}pt`}}
-                                dangerouslySetInnerHTML={{__html: documentDesc}}>
-                            </div>
-                        </div>
+                        <CustomizedInput id="DocumentName" standardClassName="question_form_top_name" classNames={documentNameClassNames} setClassNames={setDocumentNameClassNames} 
+                            inputText={documentName} setInputText={setDocumentName} fontFamily={textContext.fontKolontitul} fontSize={textContext.sizeKolontitul}/>
+                        <CustomizedInput id="DocumentDescription" standardClassName="question_form_top_desc" classNames={documentDescClassNames} setClassNames={setDocumentDescClassNames} 
+                            inputText={documentDesc} setInputText={setDocumentDesc} fontFamily={textContext.fontOptionText} fontSize={textContext.sizeOptionText}/>
                     </div>
                 </div>
-
                 <DragDropContext onDragEnd={(e) => onDragEndResult(e)}>
                     <Droppable droppableId="droppable">
                         {(provided) => (
                             <div {...provided.droppableProps} ref={provided.innerRef}>
-                                {questionUI()}
+                                {isLoading 
+                                ? Array.from(new Array(3)).map(i => 
+                                <div className="skeleton_wrapper">
+                                    <Skeleton variant="rounded" height={50} style={{margin: '10px 0'}}/>
+                                    <Skeleton variant="rounded" height={140} style={{margin: '10px 0'}}/>
+                                </div>) 
+                                : questions.map((ques, i) => <QuestionComponent question={ques} index={i} questions={questions} setQuestions={setQuestions}/>)}
                                 {provided.placeholder}
                             </div>
                         )}
@@ -335,7 +239,6 @@ export const QuestionForm: FC<QuestionFormsProps> = ({questions, setQuestions, i
                 </div>
             </div>
         </div>
-        <LinkModalWindow isOpen={isOpenLinkModel} setIsOpen={setIsOpenLinkModal} linkModalModel={elementLink}/>
         <FormToolbar isOpen={isOpenToolbar} setIsOpen={setIsOpenToolbar} questionsForm={questions} 
             setQuestionsForm={setQuestions} setHeaderImage={setHeaderImage} headerImage={headerImage}/>
         </>

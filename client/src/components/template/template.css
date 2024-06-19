@@ -1,7 +1,9 @@
 .template_section{
-    background-color: #f4f4f9;
-    padding-bottom: 40px;
-    padding-top: 7px;
+    background-color: inherit;
+    padding-bottom: 50px;
+    padding-top: 25px;
+/*     transform: translateY(5px);
+    box-shadow: inset 0px 6px 20px 2px rgba(61, 61, 61, 0.35); */
 }
 
 .template_top{
@@ -14,13 +16,16 @@
 }
 
 .template_left_title{
-    font-size: 19px;
-    color: #202124;
+    font-size: 24px;
+    color: #fff;
+    font-weight: 500;
+    font-family: Montserrat
 }
 
 .template_right{
     font-size: 19px;
     color: #202124;
+    font-weight: 500;
     display: flex;
 
 }
@@ -42,14 +47,13 @@
 }
 
 .card{
-    margin-left: 20px;
-    margin-top: 15px;
+    margin:10px 20px
 }
 
 .card_image{
     box-sizing: border-box;
-    height: 120px;
-    width: 145px;
+    height: 140px;
+    width: 175px;
     cursor: pointer;
     border-radius: 2px;
     border: 0.2px solid #FFFDF7;
@@ -60,8 +64,9 @@
 }
 
 .card_title{
-    font-size: 16px;
+    font-size: 24px;
     margin-top: 2px;
-    color:#202124;
+    color:#fff;
     font-weight: 500;
+    font-family: Montserrat
 }
