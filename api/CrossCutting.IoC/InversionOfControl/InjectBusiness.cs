@@ -1,13 +1,24 @@
 ﻿using Business.Accessors.Implimintation;
 using Business.Accessors.Interface;
 using Business.Service.Implimintation;
+using Business.Service.Implimintation.AnswerForm;
+using Business.Service.Implimintation.AnswerOption;
+using Business.Service.Implimintation.AnswerQuestion;
+using Business.Service.Implimintation.ElementStyle;
 using Business.Service.Implimintation.Form;
+using Business.Service.Implimintation.ImageWrapper;
 using Business.Service.Implimintation.Option;
 using Business.Service.Implimintation.Question;
 using Business.Service.Interfaces;
+using Business.Service.Interfaces.AnswerForm;
+using Business.Service.Interfaces.AnswerOption;
+using Business.Service.Interfaces.AnswerQuestion;
+using Business.Service.Interfaces.ElementStyle;
 using Business.Service.Interfaces.Form;
+using Business.Service.Interfaces.ImageWrapper;
 using Business.Service.Interfaces.Option;
 using Business.Service.Interfaces.Question;
+using DataAccess.Fetch;
 using DataAccess.Fetch.Implemintation;
 using DataAccess.Fetch.Interface;
 using Microsoft.AspNetCore.Builder;
@@ -37,15 +48,22 @@ public static class InjectBusiness
         services.AddScoped(typeof(IReadServiceAsync<>), typeof(ReadServiceAsync<>));
         services.AddScoped(typeof(IGenericServiceAsync<>), typeof(GenericServiceAsync<>));
 
+        services.AddScoped<IFetchFactory, FetchFactory>();
         services.AddScoped<IFormService, FormService>();
         services.AddScoped<IQuestionService, QuestionService>();
         services.AddScoped<IOptionService, OptionService>();
+        services.AddScoped<IImageWrapperService, ImageWrapperService>();
+        services.AddScoped<IElementStyleService, ElementStyleService>();
+        services.AddScoped<IAnswerFormService, AnswerFormService>();
+        services.AddScoped<IAnswerQuestionService, AnswerQuestionService>();
+        services.AddScoped<IAnswerOptionService, AnswerOptionService>();
     }
 
     private static void InjectFetch(this IServiceCollection services)
     {
         services.AddScoped<IFetchForm, FetchForm>();
         services.AddScoped<IFetchQuestion, FetchQuestion>();
+        services.AddScoped<IFetchAnswerForm, FetchAnswerForm>();
     }
 
     private static void InjectAccessors(this IServiceCollection services)

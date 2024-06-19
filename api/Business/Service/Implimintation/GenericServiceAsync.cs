@@ -1,5 +1,6 @@
 ﻿using Business.Service.Interfaces;
 using Common.Entities;
+using Common.Enums;
 using DataAccess.Repository.Interfaces;
 
 namespace Business.Service.Implimintation;
@@ -28,4 +29,9 @@ public class GenericServiceAsync<TEntity> : ReadServiceAsync<TEntity>, IGenericS
         await _uoW.Repository<TEntity>().UpdateEntityAsync(entity);
         await _uoW.SaveChangesAsync();
     }
+
+	public async Task EstablishIndexEntity(Guid objectId, DatabaseOperationType operationType)
+	{
+		await _uoW.Repository<TEntity>().EstablishCacheEntityIndex(objectId, operationType);
+	}
 }

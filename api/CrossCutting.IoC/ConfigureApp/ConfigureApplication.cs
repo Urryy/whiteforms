@@ -21,8 +21,6 @@ public static class ConfigureApplication
         //app.UseAuthentication();
         //app.UseAuthorization();
 
-        //app.MapControllers();
-
         return app;
     }
 }

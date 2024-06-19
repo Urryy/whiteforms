@@ -39,9 +39,9 @@ public class ReadServiceAsync<TEntity> : IReadServiceAsync<TEntity>
         return await _uoW.Repository<TEntity>().GetByExpressionAsync(expression, fetch);
     }
 
-    public async Task<TEntity?> GetByIdAsync(Guid id)
+    public async Task<TEntity?> GetByIdAsync(Guid id, IFetch<TEntity> fetch = null, bool isTracked = false)
     {
-        return await _uoW.Repository<TEntity>().GetByIdFromCacheAsync(id);
+        return await _uoW.Repository<TEntity>().GetByIdFromCacheAsync(id, fetch, isTracked);
     }
 
     public TFetch GetFetch<TFetch>() where TFetch : IFetch<TEntity>

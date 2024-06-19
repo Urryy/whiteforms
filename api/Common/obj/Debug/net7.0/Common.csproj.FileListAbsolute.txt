@@ -10,3 +10,16 @@ E:\ReactExamples\Forms\api\Common\obj\Debug\net7.0\Common.dll
 E:\ReactExamples\Forms\api\Common\obj\Debug\net7.0\refint\Common.dll
 E:\ReactExamples\Forms\api\Common\obj\Debug\net7.0\Common.pdb
 E:\ReactExamples\Forms\api\Common\obj\Debug\net7.0\ref\Common.dll
+D:\repo\whiteforms\api\Common\bin\Debug\net7.0\Common.deps.json
+D:\repo\whiteforms\api\Common\bin\Debug\net7.0\Common.dll
+D:\repo\whiteforms\api\Common\bin\Debug\net7.0\Common.pdb
+D:\repo\whiteforms\api\Common\obj\Debug\net7.0\Common.csproj.AssemblyReference.cache
+D:\repo\whiteforms\api\Common\obj\Debug\net7.0\Common.GeneratedMSBuildEditorConfig.editorconfig
+D:\repo\whiteforms\api\Common\obj\Debug\net7.0\Common.AssemblyInfoInputs.cache
+D:\repo\whiteforms\api\Common\obj\Debug\net7.0\Common.AssemblyInfo.cs
+D:\repo\whiteforms\api\Common\obj\Debug\net7.0\Common.csproj.CoreCompileInputs.cache
+D:\repo\whiteforms\api\Common\obj\Debug\net7.0\Common.sourcelink.json
+D:\repo\whiteforms\api\Common\obj\Debug\net7.0\Common.dll
+D:\repo\whiteforms\api\Common\obj\Debug\net7.0\refint\Common.dll
+D:\repo\whiteforms\api\Common\obj\Debug\net7.0\Common.pdb
+D:\repo\whiteforms\api\Common\obj\Debug\net7.0\ref\Common.dll

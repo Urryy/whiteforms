@@ -7,7 +7,7 @@ namespace DataAccess.Repository.Interfaces;
 public interface IGenericRepository<T> where T : Entity<T>
 {
     Task AddAsync(T entity);
-    Task<T?> GetByIdAsync(Guid id, IFetch<T> fetch = null);
+    Task<T?> GetByIdAsync(Guid id, IFetch<T> fetch = null, bool isTracked = false);
     Task<T?> GetByExpressionAsync(Expression<Func<T, bool>> expression, IFetch<T> fetch = null);
     Task<List<T>> GetAllAsync(IFetch<T> fetch = null, bool isTracked = false);
     Task<List<T>> GetAllByExpressionAsync(Expression<Func<T, bool>> expression, IFetch<T> fetch = null, bool isTracked = false);

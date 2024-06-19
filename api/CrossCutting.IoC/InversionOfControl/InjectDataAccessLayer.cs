@@ -1,4 +1,5 @@
 ﻿using Common.Context;
+using Common.Models.AnswerForm;
 using Common.Models.Form;
 using Common.Models.Option;
 using Common.Models.Question;
@@ -49,5 +50,6 @@ public static class InjectDataAccessLayer
         services.AddScoped<IValidator<FormModel>, FormValidator>();
         services.AddScoped<IValidator<QuestionModel>, QuestionValidator>();
         services.AddScoped<IValidator<OptionModel>, OptionValiadator>();
+        services.AddScoped<IValidator<AnswerFormModel>, AnswerFormValidator>();
     }
 }

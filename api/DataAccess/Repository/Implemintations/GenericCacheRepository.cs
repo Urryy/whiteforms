@@ -1,45 +1,63 @@
 ﻿using Common.Context;
 using Common.Entities;
+using Common.Enums;
+using DataAccess.Extension;
 using DataAccess.Fetch;
 using DataAccess.Managers;
 using DataAccess.Repository.Interfaces;
 
 namespace DataAccess.Repository.Implemintations;
 
-public class GenericCacheRepository<T> : GenericRepository<T>, ICacheRepository<T> where T : Entity<T>
+public class GenericCacheRepository<TEntity> : GenericRepository<TEntity>, ICacheRepository<TEntity> where TEntity : Entity<TEntity>
 {
+    private readonly IFetchFactory _fetchFactory;
 
-    public GenericCacheRepository(DatabaseContext context) : base(context)
-    {
+    public GenericCacheRepository(DatabaseContext context, IFetchFactory fetchFactory) : base(context) => _fetchFactory = fetchFactory;
+
+    #region GET
+    public async Task<List<TEntity>> GetAllFromCacheAsync(IFetch<TEntity> fetch = null, bool isTracked = true)
+	{
+        return await CacheManager.GetOrSet(
+            CacheManagerExtension.GetAllEntityKey<TEntity>(),
+            async () => await GetAllAsync(fetch, isTracked));
     }
 
-    public async Task<List<T>> GetAllFromCacheAsync(IFetch<T> fetch = null, bool isTracked = true)
-    {
-        return await CacheManager.GetOrSet(CacheManager.KEY_ALL_ENTITIES,
-            () => GetAllAsync(fetch, isTracked));
-    }
+    public async Task<TEntity?> GetByIdFromCacheAsync(Guid id, IFetch<TEntity> fetch = null, bool isTracked = true)
+	{
+        var keyEntity = string.Format(CacheManagerExtension.KEY_ENTITY, id);
 
-    public async Task<T?> GetByIdFromCacheAsync(Guid id, IFetch<T> fetch = null)
-    {
-        return await CacheManager.GetOrSet(string.Format(CacheManager.KEY_ENTITY, id),
-            () => GetByIdAsync(id, fetch));
+		return await CacheManager.GetOrSet(
+            keyEntity,
+            async () => await GetByIdAsync(id, fetch, isTracked));
     }
+    #endregion
 
-    public async Task DeleteEntityAsync(Guid id)
-    {
-        await CacheManager.Remove<T>(string.Format(CacheManager.KEY_ENTITY, id), 
-            () => DeleteAsync(id));
-    }
+    public async Task DeleteEntityAsync(Guid id) => await DeleteAsync(id);
 
-    public async Task UpdateEntityAsync(T entity)
-    {
-        await CacheManager.Update(string.Format(CacheManager.KEY_ENTITY, entity.Id),
-            () => UpdateAsync(entity), entity);
-    }
+	public async Task UpdateEntityAsync(TEntity entity) => await UpdateAsync(entity);
 
-    public async Task CreateEntityAsync(T entity)
-    {
-        await CacheManager.Create(string.Format(CacheManager.KEY_ENTITY, entity.Id),
-            () => AddAsync(entity), entity);
-    }
+	public async Task CreateEntityAsync(TEntity entity) => await AddAsync(entity);
+
+	public async Task EstablishCacheEntityIndex(Guid id, DatabaseOperationType operationType)
+	{
+		var keyEntity = string.Format(CacheManagerExtension.KEY_ENTITY, id);
+		var entity = await GetByIdAsync(id);
+
+		if (operationType == DatabaseOperationType.Insert && entity != null)
+        {
+			var fetch = _fetchFactory.GetCreateFetch(entity);
+            await CacheManager.Create(keyEntity, async () => await GetByIdAsync(entity.Id, fetch: fetch));
+        }
+
+        if (operationType == DatabaseOperationType.Update && entity != null)
+        {
+			var fetch = _fetchFactory.GetCreateFetch(entity);
+            await CacheManager.Update(keyEntity, async () => await GetByIdAsync(entity.Id, fetch: fetch));
+		}
+
+        if (operationType == DatabaseOperationType.Delete) 
+        {
+			await CacheManager.Remove<TEntity>(keyEntity);
+        }
+	}
 }

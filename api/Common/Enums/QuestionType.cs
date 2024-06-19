@@ -2,8 +2,14 @@
 
 public enum QuestionType
 {
-    None,
-    Radio,
-    Checkbox,
-    Text
+    none,
+    radio,
+    checkbox,
+    text,
+    textArea,
+    date,
+    select,
+    scale,
+    description,
+    image
 }

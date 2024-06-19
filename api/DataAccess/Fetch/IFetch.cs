@@ -2,7 +2,8 @@
 
 namespace DataAccess.Fetch;
 
-public interface IFetch<TEntity> where TEntity : Entity<TEntity>
+public interface IFetch<TEntity> : ICreateFetch<TEntity>, IUpdateFetch<TEntity>
+	where TEntity : Entity<TEntity>
 {
     IQueryable<TEntity> AcceptQuery(IQueryable<TEntity> query);
 }

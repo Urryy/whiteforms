@@ -1,23 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "E:\\ReactExamples\\Forms\\API\\CrossCutting.IoC\\CrossCutting.IoC.csproj": {}
+    "D:\\repo\\whiteforms\\api\\CrossCutting.IoC\\CrossCutting.IoC.csproj": {}
   },
   "projects": {
-    "E:\\ReactExamples\\Forms\\API\\Business\\Business.csproj": {
+    "D:\\repo\\whiteforms\\api\\Business\\Business.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\ReactExamples\\Forms\\API\\Business\\Business.csproj",
+        "projectUniqueName": "D:\\repo\\whiteforms\\api\\Business\\Business.csproj",
         "projectName": "Business",
-        "projectPath": "E:\\ReactExamples\\Forms\\API\\Business\\Business.csproj",
-        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "E:\\ReactExamples\\Forms\\API\\Business\\obj\\",
+        "projectPath": "D:\\repo\\whiteforms\\api\\Business\\Business.csproj",
+        "packagesPath": "C:\\Users\\Yatsko_YU\\.nuget\\packages\\",
+        "outputPath": "D:\\repo\\whiteforms\\api\\Business\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Yatsko_YU\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,14 +27,19 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "D:\\KDO\\loan_service\\LoanService.Grpc.Shared\\bin\\Debug": {},
+          "D:\\KDO\\loan_service\\LoanService.Shared\\bin\\Debug": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://artifactory.st.by/artifactory/api/nuget/v3/nuget_bveb_virt": {},
+          "https://nuget.telerik.com/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "E:\\ReactExamples\\Forms\\API\\DataAccess\\DataAccess.csproj": {
-                "projectPath": "E:\\ReactExamples\\Forms\\API\\DataAccess\\DataAccess.csproj"
+              "D:\\repo\\whiteforms\\api\\DataAccess\\DataAccess.csproj": {
+                "projectPath": "D:\\repo\\whiteforms\\api\\DataAccess\\DataAccess.csproj"
               }
             }
           }
@@ -42,6 +48,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -63,24 +74,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "E:\\ReactExamples\\Forms\\API\\Common\\Common.csproj": {
+    "D:\\repo\\whiteforms\\api\\Common\\Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\ReactExamples\\Forms\\API\\Common\\Common.csproj",
+        "projectUniqueName": "D:\\repo\\whiteforms\\api\\Common\\Common.csproj",
         "projectName": "Common",
-        "projectPath": "E:\\ReactExamples\\Forms\\API\\Common\\Common.csproj",
-        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "E:\\ReactExamples\\Forms\\API\\Common\\obj\\",
+        "projectPath": "D:\\repo\\whiteforms\\api\\Common\\Common.csproj",
+        "packagesPath": "C:\\Users\\Yatsko_YU\\.nuget\\packages\\",
+        "outputPath": "D:\\repo\\whiteforms\\api\\Common\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Yatsko_YU\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -89,7 +101,12 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "D:\\KDO\\loan_service\\LoanService.Grpc.Shared\\bin\\Debug": {},
+          "D:\\KDO\\loan_service\\LoanService.Shared\\bin\\Debug": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://artifactory.st.by/artifactory/api/nuget/v3/nuget_bveb_virt": {},
+          "https://nuget.telerik.com/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
@@ -101,6 +118,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -164,24 +186,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "E:\\ReactExamples\\Forms\\API\\CrossCutting.IoC\\CrossCutting.IoC.csproj": {
+    "D:\\repo\\whiteforms\\api\\CrossCutting.IoC\\CrossCutting.IoC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\ReactExamples\\Forms\\API\\CrossCutting.IoC\\CrossCutting.IoC.csproj",
+        "projectUniqueName": "D:\\repo\\whiteforms\\api\\CrossCutting.IoC\\CrossCutting.IoC.csproj",
         "projectName": "CrossCutting.IoC",
-        "projectPath": "E:\\ReactExamples\\Forms\\API\\CrossCutting.IoC\\CrossCutting.IoC.csproj",
-        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "E:\\ReactExamples\\Forms\\API\\CrossCutting.IoC\\obj\\",
+        "projectPath": "D:\\repo\\whiteforms\\api\\CrossCutting.IoC\\CrossCutting.IoC.csproj",
+        "packagesPath": "C:\\Users\\Yatsko_YU\\.nuget\\packages\\",
+        "outputPath": "D:\\repo\\whiteforms\\api\\CrossCutting.IoC\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Yatsko_YU\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -190,14 +213,19 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "D:\\KDO\\loan_service\\LoanService.Grpc.Shared\\bin\\Debug": {},
+          "D:\\KDO\\loan_service\\LoanService.Shared\\bin\\Debug": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://artifactory.st.by/artifactory/api/nuget/v3/nuget_bveb_virt": {},
+          "https://nuget.telerik.com/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "E:\\ReactExamples\\Forms\\API\\Business\\Business.csproj": {
-                "projectPath": "E:\\ReactExamples\\Forms\\API\\Business\\Business.csproj"
+              "D:\\repo\\whiteforms\\api\\Business\\Business.csproj": {
+                "projectPath": "D:\\repo\\whiteforms\\api\\Business\\Business.csproj"
               }
             }
           }
@@ -206,6 +234,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -236,24 +269,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "E:\\ReactExamples\\Forms\\API\\DataAccess\\DataAccess.csproj": {
+    "D:\\repo\\whiteforms\\api\\DataAccess\\DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\ReactExamples\\Forms\\API\\DataAccess\\DataAccess.csproj",
+        "projectUniqueName": "D:\\repo\\whiteforms\\api\\DataAccess\\DataAccess.csproj",
         "projectName": "DataAccess",
-        "projectPath": "E:\\ReactExamples\\Forms\\API\\DataAccess\\DataAccess.csproj",
-        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "E:\\ReactExamples\\Forms\\API\\DataAccess\\obj\\",
+        "projectPath": "D:\\repo\\whiteforms\\api\\DataAccess\\DataAccess.csproj",
+        "packagesPath": "C:\\Users\\Yatsko_YU\\.nuget\\packages\\",
+        "outputPath": "D:\\repo\\whiteforms\\api\\DataAccess\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Yatsko_YU\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -262,14 +296,19 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "D:\\KDO\\loan_service\\LoanService.Grpc.Shared\\bin\\Debug": {},
+          "D:\\KDO\\loan_service\\LoanService.Shared\\bin\\Debug": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://artifactory.st.by/artifactory/api/nuget/v3/nuget_bveb_virt": {},
+          "https://nuget.telerik.com/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "E:\\ReactExamples\\Forms\\API\\Common\\Common.csproj": {
-                "projectPath": "E:\\ReactExamples\\Forms\\API\\Common\\Common.csproj"
+              "D:\\repo\\whiteforms\\api\\Common\\Common.csproj": {
+                "projectPath": "D:\\repo\\whiteforms\\api\\Common\\Common.csproj"
               }
             }
           }
@@ -278,6 +317,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -305,7 +349,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.102\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     }

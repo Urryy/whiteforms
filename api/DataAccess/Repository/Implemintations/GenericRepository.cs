@@ -29,18 +29,20 @@ public class GenericRepository<T> : IGenericRepository<T> where T : Entity<T>
         await _set.AddAsync(entity);
     }
 
-    public async Task<T?> GetByIdAsync(Guid id, IFetch<T> fetch)
+    public async Task<T?> GetByIdAsync(Guid id, IFetch<T> fetch = null, bool isTracked = false)
     {
         IQueryable<T> query = _set;
 
-        if (fetch != null)
+		if (fetch != null)
             query = fetch.AcceptQuery(query);
+		if (isTracked)
+			query = query.AsNoTracking();
 
-        var entity = await query.FirstOrDefaultAsync(i => i.Id == id);
+		var entity = await query.FirstOrDefaultAsync(i => i.Id == id);
         return entity;
     }
 
-    public async Task<List<T>> GetAllAsync(IFetch<T> fetch, bool isTracked)
+    public async Task<List<T>> GetAllAsync(IFetch<T> fetch = null, bool isTracked = false)
     {
         IQueryable<T> query = _set;
         if (isTracked)
@@ -48,10 +50,11 @@ public class GenericRepository<T> : IGenericRepository<T> where T : Entity<T>
         if (fetch != null)
             query = fetch.AcceptQuery(query);
 
-        return await query.ToListAsync();
+        var entities = await query.ToListAsync();
+        return entities;
     }
 
-    public async Task<List<T>> GetAllByExpressionAsync(Expression<Func<T, bool>> expression, IFetch<T> fetch, bool isTracked)
+    public async Task<List<T>> GetAllByExpressionAsync(Expression<Func<T, bool>> expression, IFetch<T> fetch = null, bool isTracked = false)
     {
         IQueryable<T> query = _set;
         if (isTracked)
@@ -59,7 +62,9 @@ public class GenericRepository<T> : IGenericRepository<T> where T : Entity<T>
         if (fetch != null)
             query = fetch.AcceptQuery(query);
 
-        return await query.Where(expression).ToListAsync();
+        var entities = await query.Where(expression).ToListAsync();
+
+		return entities;
     }
 
     public async Task UpdateAsync(T entity)
