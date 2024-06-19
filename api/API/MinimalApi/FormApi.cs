@@ -8,7 +8,7 @@ public static class FormApi
 {
     private const string ENDPOINT_V1 = "api/v1/form";
 
-    public static void RegsterFormApi(this WebApplication app)
+    public static void RegisterFormApi(this WebApplication app)
     {
         app.MapPost($"{ENDPOINT_V1}", FormHandler.CreateForm)
             .AddEndpointFilter<ValidationAttribute<FormModel>>();

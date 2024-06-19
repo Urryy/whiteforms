@@ -6,7 +6,8 @@ public static class EndpointsExtension
 {
     public static WebApplication RegisterEndpoints(this WebApplication app)
     {
-        app.RegsterFormApi();
+        app.RegisterFormApi();
+        app.RegistereAnswerFormApi();
         return app;
     }
 }
