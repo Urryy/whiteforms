@@ -1,10 +1,8 @@
-﻿using Business.Service.Interfaces.AnswerForm;
+﻿using Business.Accessors.Interface;
 using Business.Service.Interfaces.Form;
-using Common.DataTranserObjects.Form;
+using Business.Service.Interfaces.User;
 using Common.Enums;
-using Common.Models.AnswerForm;
 using Common.Models.Form;
-using DataAccess.Fetch.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Handlers;
@@ -17,21 +15,16 @@ public class FormHandler
         return Results.Json(new { FormId = uuidForm });
     }
 
-    public static async Task<IResult> GetForms(IFormService srvcForm)
+    public static async Task<IResult> GetForms(IFormService srvcForm, ICurrentUserAccessor accessor, IUserJoinRoleService srvcRole)
     {
-        var forms = await srvcForm.GetAllAsync(srvcForm.GetFetch<IFetchForm>());
+        var forms = await srvcForm.GetForms();
         return Results.Json(forms);
     }
 
     public static async Task<IResult> GetFormById([FromRoute] Guid objectId, IFormService srvcForm)
     {
-        var form = await srvcForm.GetByIdAsync(objectId, srvcForm.GetFetch<IFetchForm>());
-        if(form == null)
-        {
-            return Results.BadRequest("Данной формы не существует");
-        }
-        var dto = FormDto.EntityToDto(form);
-        return Results.Json(dto);
+        var form = await srvcForm.GetForm(objectId);
+        return Results.Json(form);
     }
 
     public static async Task<IResult> DeleteForm([FromRoute] Guid objectId, IFormService srvcForm)
@@ -46,4 +39,10 @@ public class FormHandler
 		var uuidForm = await srvcForm.UpdateForm(model);
 		return Results.Json(new { FormId = uuidForm });
 	}
+
+	public static async Task<IResult> ChangeStateAccept([FromRoute] Guid objectId, [FromQuery] bool state, IFormService srvcForm)
+    {
+        await srvcForm.UpdateState(objectId, state);
+        return Results.Ok();
+    }
 }

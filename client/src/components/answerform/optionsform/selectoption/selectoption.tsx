@@ -34,7 +34,10 @@ export const SelectOption: FC<SelectOptionProps> = ({question, filledQuestions, 
 
     return <FormControl sx={{ minWidth: 180 }}>
                 <InputLabel id="select_option">Выбрать</InputLabel>
-                <Select labelId="select_option" id="select_option" label="Выбрать" onChange={onChangeAnswer}>
+                <Select labelId="select_option" 
+                        id="select_option" 
+                        label="Выбрать" 
+                        onChange={onChangeAnswer}>
                         <MenuItem value=""><em>Выбрать</em></MenuItem>
                         {question.options.map((item) => 
                             <MenuItem value={item.optionText} 

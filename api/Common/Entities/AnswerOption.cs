@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ namespace Common.Entities;
 
 public class AnswerOption : Entity<AnswerOption>
 {
+	[Key]
 	public override Guid Id { get; protected set; } =  Guid.NewGuid();
 	public Guid AnswerQuestionId { get; set; }
 	public Guid OptionId { get; set; }
@@ -18,7 +20,7 @@ public class AnswerOption : Entity<AnswerOption>
 	protected AnswerOption()
 	{}
 
-	public AnswerOption(Guid answerQuestionId, Guid optionId, string answer)
+	public AnswerOption(Guid answerQuestionId, Guid optionId, string answer) : this()
 	{
 		AnswerQuestionId = answerQuestionId;
 		OptionId = optionId;

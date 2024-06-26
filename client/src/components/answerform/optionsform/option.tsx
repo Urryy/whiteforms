@@ -36,10 +36,11 @@ export const Option: FC<OptionProps> = ({question, index, filledQuestions, setFi
             )
         }else if(question.questionType === QuestionTypeConst.IMAGE){
             return question.options.map((item) =>
-                <div className="image_wrapper" style={{height: `${item.imageWrapper?.height}`, width: `${item.imageWrapper?.width}`}}>
-                    <img alt="image1" src={item.optionText}/>
-                </div>
-            )
+                <div className="image_box" style={{justifyContent: `${item.imageWrapper?.position}`}}>
+                    <div className="image_wrapper" style={{ height: `${item.imageWrapper?.height}`, width: `${item.imageWrapper?.width}` }}>
+                        <img alt="image1" src={item.optionText}/>
+                    </div>
+                </div>)
         }else if(question.questionType === QuestionTypeConst.SCALE){
             return <ScaleOption index={index} question={question} filledQuestions={filledQuestions} setFilledQuestions={setFilledQuestions}/>
         }else if(question.questionType === QuestionTypeConst.TEXT){

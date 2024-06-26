@@ -9,6 +9,7 @@ public class Question : Entity<Question>
     public override Guid Id { get; protected set; } = Guid.NewGuid();
     public Guid FormId { get; set; }
     public Guid QuestionElementStyleId { get; set; }
+	public Guid? ImageWrapperId { get; set; }
 
 	public string QuestionText { get; set; }
     public QuestionType QuestionType { get; set; }
@@ -22,10 +23,14 @@ public class Question : Entity<Question>
     public int? EndScaleValue { get; set; } = default!;
     public string? DescEndScaleValue { get; set; } = default!;
     public string? QuestionClassNames { get; set; } = default!;
-	public Form Form { get; set; }
+    public string? QuestionImage { get; set; } = default!;
+	public int Sequence { get; set; }
+
+	public WhiteForm Form { get; set; }
     public ElementStyle QuestionElementStyle { get; set; }
+    public ImageWrapper? ImageWrapper { get; set; }
     public ICollection<Option> Options { get; set; }
-    public int Sequence { get; set; }
+    
 
     protected Question()
     { }

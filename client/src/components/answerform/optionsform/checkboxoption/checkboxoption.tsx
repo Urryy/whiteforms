@@ -19,6 +19,13 @@ export const CheckboxOption: FC<CheckboxOptionProps> = ({question, filledQuestio
         </div>
     }
 
+    const getImageOptionPreview = (option: OptionsProps) => {
+        return option.optionImage && 
+        <div className="image_wrapper_option">
+                <img alt="image1" src={option.optionImage}/>
+        </div>
+    }
+
     const onChangeAnswerCheckbox = (optionId: string | undefined, value: string | undefined, checked: boolean, isAnother: boolean) => {
         if(!filledQuestions || !setFilledQuestions){
             return;
@@ -69,16 +76,24 @@ export const CheckboxOption: FC<CheckboxOptionProps> = ({question, filledQuestio
         }
     }
     
-    return <FormGroup>
+    return <>
+        <FormGroup>
             {question.options.map((item) => 
                 item.isAnother
-                ? <FormControlLabel className="label_option_another" 
-                    control={<Checkbox onChange={(e) => onChangeAnswerCheckbox(item.id, item.optionText, e.target.checked, true)}/>}
-                    required={question.required}
-                    label={getAnotherOption(item)}/>
-                : <FormControlLabel required={question.required}
-                    control={<Checkbox onChange={(e) => onChangeAnswerCheckbox(item.id, item.optionText, e.target.checked, false)}/>} 
-                    label={<span style={{fontFamily: item.elementStyle.fontFamily, fontSize: `${item.elementStyle.fontSize}pt`}}>{item.optionText}</span>} />
+                ? <>
+                    <FormControlLabel 
+                        className="label_option_another" 
+                        control={<Checkbox onChange={(e) => onChangeAnswerCheckbox(item.id, item.optionText, e.target.checked, true)}/>}
+                        label={getAnotherOption(item)}/>
+                    {getImageOptionPreview(item)}
+                </>
+                : <>
+                    <FormControlLabel 
+                        control={<Checkbox onChange={(e) => onChangeAnswerCheckbox(item.id, item.optionText, e.target.checked, false)}/>} 
+                        label={<span style={{fontFamily: item.elementStyle.fontFamily, fontSize: `${item.elementStyle.fontSize}pt`}}>{item.optionText}</span>} />
+                    {getImageOptionPreview(item)}
+                </>
             )}
             </FormGroup>
+    </>
 }

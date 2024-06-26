@@ -16,8 +16,8 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         #region Form
-        CreateMap<Form, FormDto>().ReverseMap();
-        CreateMap<Form, FormModel>().ReverseMap();
+        CreateMap<WhiteForm, FormDto>().ReverseMap();
+        CreateMap<WhiteForm, FormModel>().ReverseMap();
         #endregion
 
         #region Question

@@ -33,3 +33,7 @@
     display: inline-block;
     width: 100%;
 }
+
+.image_box{
+    display: flex;
+}

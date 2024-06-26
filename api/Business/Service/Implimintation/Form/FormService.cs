@@ -4,18 +4,23 @@ using Business.Service.Interfaces.Form;
 using Business.Service.Interfaces.ImageWrapper;
 using Business.Service.Interfaces.Option;
 using Business.Service.Interfaces.Question;
+using Business.Utils.Interfaces;
+using Common.DataTranserObjects.Form;
 using Common.Enums;
 using Common.Models.Form;
 using DataAccess.Extension;
 using DataAccess.Fetch.Interface;
 using DataAccess.Repository.Interfaces;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Business.Service.Implimintation.Form;
 
-using Form = Common.Entities.Form;
+using WhiteForm = Common.Entities.WhiteForm;
 using ElementStyle = Common.Entities.ElementStyle;
 
-public class FormService : GenericServiceAsync<Form>, IFormService
+public class FormService : GenericServiceAsync<WhiteForm>, IFormService
 {
     private readonly IQuestionService _srvcQuestion;
     private readonly IOptionService _srvcOption;
@@ -27,10 +32,13 @@ public class FormService : GenericServiceAsync<Form>, IFormService
                        IQuestionService srvcQuestion,
                        IOptionService srvcOption, 
                        IMapper mapper,
-                       IServiceProvider srvcProvder, 
+                       IServiceProvider srvcProvider, 
                        IElementStyleService srvcElementStyle,
-                       IImageWrapperService srvcImageWrapper) : base(uoW, srvcProvder)
-    {
+                       IImageWrapperService srvcImageWrapper,
+		               IUserUtil userUtil, 
+                       IHttpContextAccessor context, 
+                       IServiceScopeFactory scopeFactory) : base(uoW, srvcProvider, userUtil, context, scopeFactory)
+	{
         _srvcQuestion = srvcQuestion;
         _srvcOption = srvcOption;
         _mapper = mapper;
@@ -46,7 +54,8 @@ public class FormService : GenericServiceAsync<Form>, IFormService
 		await _srvcElementStyle.AddAsync(elementStyleName);
 		await _srvcElementStyle.AddAsync(elementStyleDesc);
 
-		var form = new Form(model.Name, model.Description, model.PreviewImage, elementStyleName.Id, elementStyleDesc.Id);
+        var resource = UserUtil.GetCurrentUser(Context.HttpContext).GetAuthorizedResource();
+		var form = new WhiteForm(model.Name, model.Description, model.PreviewImage, elementStyleName.Id, elementStyleDesc.Id, resource.Id);
 
         if (model.PreviewImage != null) 
             form.KolontitulImage = model.KolontitulImage;
@@ -63,7 +72,7 @@ public class FormService : GenericServiceAsync<Form>, IFormService
 		await _srvcQuestion.AddQuestionsFromForm(model.Questions, form.Id);
 
         //Индексирование
-        await EstablishIndexEntity(form.Id, DatabaseOperationType.Insert);
+        await EstablishIndexEntity(form.Id, DatabaseOperationType.Insert, true);
 		return form.Id;
     }
 
@@ -88,8 +97,39 @@ public class FormService : GenericServiceAsync<Form>, IFormService
 		await _srvcQuestion.AddQuestionsFromForm(model.Questions, form.Id);
 
 		//Индексирование
-		await EstablishIndexEntity(form.Id, DatabaseOperationType.Update);
+		await EstablishIndexEntity(form.Id, DatabaseOperationType.Update, true);
 
 		return form.Id;
 	}
+
+    public async Task<List<WhiteForm>> GetForms()
+    {
+		var resource = UserUtil.GetCurrentUser(Context.HttpContext).GetAuthorizedResource();
+        var forms = await GetAllAsync(GetFetch<IFetchForm>());
+        var formsByResourceId = forms.Where(f => f.ResourceId == resource.Id).ToList();
+        return formsByResourceId;
+	}
+
+    public async Task<FormDto> GetForm(Guid objectId)
+    {
+		var resource = UserUtil.GetCurrentUser(Context.HttpContext).GetAuthorizedResource();
+
+		var form = await GetByIdAsync(objectId, GetFetch<IFetchForm>());
+		if (form == null || form.ResourceId != resource.Id)
+		{
+			throw new ArgumentException("Данной формы не существует");
+		}
+		var dto = FormDto.EntityToDto(form);
+        return dto;
+	}
+
+    public async Task UpdateState(Guid objectId, bool state)
+    {
+        var form = await GetByIdAsync(objectId);
+        if (form == null) throw new NullReferenceException("Form not exist");
+		form.Accept = state;
+
+		await UpdateAsync(form);
+        await EstablishIndexEntity(form.Id, DatabaseOperationType.Update, true);
+    }
 }

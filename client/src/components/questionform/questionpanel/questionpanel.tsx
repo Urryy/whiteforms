@@ -23,6 +23,20 @@ export const QuestionPanel: FC<QuestionPanelProps> = ({question, index}) => {
         return marks;
     }
 
+    const getQuestionImagePreview = () => {
+        return question.questionImage && <div style={{width: '100%', display: 'flex', justifyContent: question.imageWrapper?.position}}>
+                <div className="image_wrapper image_wrapper_question" style={{height: `${question.imageWrapper?.height}`, width: `${question.imageWrapper?.width}`}}>
+                    <img alt="image1" src={question.questionImage}/>
+                </div>
+            </div>
+    }
+
+    const getOptionImagePreview = (option: OptionsProps) => {
+        return option.optionImage && <div className="image_wrapper_option">
+            <img alt="image1" src={option.optionImage}/>
+        </div>
+    }
+
     const getOption = (opt: OptionsProps, optIndex: number) => {
         if(question.questionType === QuestionTypeConst.TEXT)
             return (<FormControlLabel style={{marginLeft: '5px', marginBottom: '5px'}} disabled
@@ -95,12 +109,14 @@ export const QuestionPanel: FC<QuestionPanelProps> = ({question, index}) => {
                         style={{fontFamily: question.elementStyle.fontFamily, fontSize: `${question.elementStyle.fontSize}pt`}} 
                         dangerouslySetInnerHTML={{__html: titleQuestion}}>
                     </p>
+                    {getQuestionImagePreview()}
                     {question.options.map((opt, j) => (
-                        <div key={j}>
-                            <div style={{display:"flex", paddingRight: '35px'}}>
-                                {getOption(opt, j)}
-                            </div>
+                    <div key={j}>
+                        <div style={{display:"flex", paddingRight: '35px'}}>
+                            {getOption(opt, j)}
                         </div>
+                        {getOptionImagePreview(opt)}
+                    </div>
                     ))}
                 </div>
             </AccordionSummary>

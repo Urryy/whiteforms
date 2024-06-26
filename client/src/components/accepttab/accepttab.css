@@ -1,0 +1,21 @@
+.accept_wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accepts{
+    font-size: 18px;
+    letter-spacing: .1px;
+    line-height: 24px;
+    padding-bottom: 8px;
+    text-decoration: none;
+}
+
+.switch_accept{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    text-transform: none;
+}

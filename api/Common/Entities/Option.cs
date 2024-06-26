@@ -8,13 +8,15 @@ public class Option : Entity<Option>
     public override Guid Id { get; protected set; } = Guid.NewGuid();
     public Guid QuestionId { get; set; }
     public Guid OptionElementStyleId { get; set; }
+    public Guid? ImageWrapperId { get; set; }
 	public string OptionText { get; set; } = default!;
 	public bool? IsAnother { get; set; } = default!;
     public string? ClassNames { get; set; } = default!;
     public int Sequence { get; set; }
+    public string? OptionImage { get; set; } = default!;
 	public Question Question { get; set; } = default!;
 	public ElementStyle OptionElementStyle { get; set; } = default!;
-	public ImageWrapper ImageWrapper { get; set; } = default!;
+	public ImageWrapper? ImageWrapper { get; set; } = default!;
 
     protected Option()
     { }

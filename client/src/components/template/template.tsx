@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useRef } from "react";
 import './template.css';
 import { MoreVert, UnfoldLess, UnfoldMore } from "@mui/icons-material";
 import { IconButton } from "@material-ui/core";
 import BaseTemplateCardIcon from "../../assets/form-add-blank.png";
 import {useNavigate} from 'react-router-dom';
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 export const Template = () => {
     const navigate = useNavigate();
+
+    useGSAP(() => {
+        gsap.to('.template_section', { opacity: 1, delay: 2 })
+    }, [])
 
     function createForm(){
         navigate("/form");

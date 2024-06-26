@@ -13,6 +13,7 @@ public class OptionDto
     public Guid Id { get; set; }
     public Guid QuestionId { get; set; }
 	public string OptionText { get; set; } = default!;
+	public string? OptionImage { get; set; } = default!;
 	public bool? IsAnother { get; set; } = default!;
 	public ImageWrapperDto? ImageWrapper { get; set; } = default!;
 	public ElementStyleDto ElementStyle { get; set; } = default!;
@@ -26,6 +27,7 @@ public class OptionDto
 			OptionText = entity.OptionText,
 			IsAnother = entity.IsAnother,
 			ImageWrapper = entity.ImageWrapper != null ? ImageWrapperDto.EntityToDto(entity.ImageWrapper) : null,
+			OptionImage =  entity.OptionImage,
 			ElementStyle = ElementStyleDto.EntityToDto(entity.OptionElementStyle)
 		};
 		return dto;

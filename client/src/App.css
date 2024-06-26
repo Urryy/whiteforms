@@ -12,6 +12,10 @@ body{
   height: 100%;
   display: flex;
   flex-direction: column;
+  /* background-image: url('./assets/BG.svg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100%; */
 }
 
 .section_start{

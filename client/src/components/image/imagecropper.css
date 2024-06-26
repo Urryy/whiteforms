@@ -1,0 +1,96 @@
+.add_image_right{
+    margin-top: 12px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: 15px;
+}
+
+.add_image{
+    background-color: white;
+    border-radius: 8px;
+    padding: 25px 22px;
+    text-transform: capitalize;
+    display: flex;
+    flex-direction: column;
+    padding-top: 0px;
+    width: 95%;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-right: 30px !important;
+}
+
+.add_image_top{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.add_image_body{
+    display: flex;
+    align-items: flex-start; /* Поменял на flex-start, было center. */
+    justify-content: space-between;
+    margin-top:10px;
+}
+
+.body_image{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
+    height: 100%;
+}
+
+.image_input{
+    width: 100%;
+}
+
+.input_image_wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.input_image_wrapper img{
+    height: 100%;
+    width: 100%;
+    flex: 1;
+    object-fit: cover;
+}
+
+.image_tools{
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+}
+
+.image_tools_navigation{
+    position: absolute;
+    top: -15px;
+    left: -255px;
+    padding: 10px 0;
+    border-radius: 10px;
+    max-width: 330px;
+    background-color: #ffffff;
+}
+
+.tools_navigation_button{
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start !important;
+    padding: 10px 5px;
+    border-radius: 0;
+}
+
+.tools_navigation_button:hover{
+    background-color: rgb(231, 231, 231);
+}
+
+.display-none{
+    display: none;
+}

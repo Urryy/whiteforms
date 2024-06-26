@@ -18,6 +18,13 @@ export const RadioOption: FC<RadioOptionProps> = ({question, filledQuestions, se
                 InputProps={{style: {fontSize: `${item.elementStyle.fontSize}pt`}}}/>
         </div>
     }
+
+    const getImageOptionPreview = (option: OptionsProps) => {
+        return option.optionImage && 
+        <div className="image_wrapper_option">
+                <img alt="image1" src={option.optionImage}/>
+        </div>
+    }
     
     const onChangeAnswer = (optionId: string | undefined, value: string, isAnother: boolean | undefined) => {
         if(!filledQuestions || !setFilledQuestions){
@@ -57,20 +64,26 @@ export const RadioOption: FC<RadioOptionProps> = ({question, filledQuestions, se
         }
     }
 
-    return <RadioGroup name="radio_option">
+    return <>
+        <RadioGroup name="radio_option">
             {question.options.map((item) => 
                 item.isAnother 
-                ? <FormControlLabel 
-                    required={question.required}
-                    className="label_option_another" 
-                    value={item.optionText} 
-                    control={<Radio onChange={() => onChangeAnswer(item.id, item.optionText, item.isAnother)}/>} 
-                    label={getAnotherOption(item)}/>
-                : <FormControlLabel 
-                    value={item.optionText} 
-                    control={<Radio onChange={() => onChangeAnswer(item.id, item.optionText, item.isAnother)}/>} 
-                    required={question.required}
-                    label={<span style={{fontFamily: item.elementStyle.fontFamily, fontSize: `${item.elementStyle.fontSize}pt`}}>{item.optionText}</span>}/>
+                ?   <>
+                        <FormControlLabel 
+                            className="label_option_another" 
+                            value={item.optionText} 
+                            control={<Radio onChange={() => onChangeAnswer(item.id, item.optionText, item.isAnother)}/>} 
+                            label={getAnotherOption(item)}/>
+                        {getImageOptionPreview(item)}
+                    </>
+                :   <>
+                        <FormControlLabel 
+                            value={item.optionText} 
+                            control={<Radio onChange={() => onChangeAnswer(item.id, item.optionText, item.isAnother)}/>} 
+                            label={<span style={{fontFamily: item.elementStyle.fontFamily, fontSize: `${item.elementStyle.fontSize}pt`}}>{item.optionText}</span>}/>
+                        {getImageOptionPreview(item)}  
+                    </>
             )}
         </RadioGroup>
+    </>
 }

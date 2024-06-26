@@ -1,4 +1,8 @@
 ﻿using Business.Accessors.Interface;
+using Business.Service.Interfaces.User;
+using Business.Utils.Interfaces;
+using Common.Entities;
+using DataAccess.Fetch.Interface;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 
@@ -7,17 +11,21 @@ namespace Business.Accessors.Implimintation;
 public class CurrentUserAccessor : ICurrentUserAccessor
 {
     private readonly IHttpContextAccessor _accessor;
+    private readonly IUserUtil _userUtil;
 
-    public CurrentUserAccessor(IHttpContextAccessor accessor)
+    public CurrentUserAccessor(IHttpContextAccessor accessor, IUserUtil userUtil)
     {
         _accessor = accessor;
+		_userUtil = userUtil;
     }
 
-    public Guid GetCurrentUserId()
+    public User GetCurrentUser()
     {
-        var userId = _accessor.HttpContext?.User?.Claims?.FirstOrDefault(user => user.Type == ClaimTypes.NameIdentifier)?.Value;
-        if (Guid.TryParse(userId, out var id))
-            return id;
-        throw new ArgumentException("user doesn't exist");
+        if(_accessor.HttpContext == null)
+        {
+            throw new ArgumentException("Context not exist");
+        }
+
+        return _userUtil.GetCurrentUser(_accessor.HttpContext);
     }
 }

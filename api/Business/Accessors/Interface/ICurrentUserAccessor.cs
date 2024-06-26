@@ -1,6 +1,8 @@
-﻿namespace Business.Accessors.Interface;
+﻿using Common.Entities;
+
+namespace Business.Accessors.Interface;
 
 public interface ICurrentUserAccessor
 {
-    Guid GetCurrentUserId();
+	User GetCurrentUser();
 }

@@ -9,5 +9,5 @@ public interface IGenericServiceAsync<TEntity> : IReadServiceAsync<TEntity>
     Task AddAsync(TEntity entity);
     Task UpdateAsync(TEntity entity);
     Task DeleteAsync(Guid id);
-    Task EstablishIndexEntity(Guid objectId, DatabaseOperationType operationType);
+    Task EstablishIndexEntity(Guid objectId, DatabaseOperationType operationType, bool isThreadMethod = false);
 }

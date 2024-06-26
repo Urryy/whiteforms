@@ -151,3 +151,5 @@ D:\repo\whiteforms\api\API\obj\Debug\net7.0\refint\API.dll
 D:\repo\whiteforms\api\API\obj\Debug\net7.0\API.pdb
 D:\repo\whiteforms\api\API\obj\Debug\net7.0\API.genruntimeconfig.cache
 D:\repo\whiteforms\api\API\obj\Debug\net7.0\ref\API.dll
+D:\repo\whiteforms\api\API\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.OpenIdConnect.dll
+D:\repo\whiteforms\api\API\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

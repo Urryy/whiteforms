@@ -24,11 +24,12 @@ import { CustomizedInput } from "../customizedinput/customizedinput";
 import { QuestionComponent } from "./question/question";
 import { Skeleton } from "@mui/material";
 import { useFormContext } from "../../contexts/FormContxet";
+import { useSnackbar } from "notistack";
 
 export const QuestionForm: FC<QuestionFormsProps> = ({questions, setQuestions, isOpenToolbar, setIsOpenToolbar}) => {
     const { id } = useParams();
     const [{}, dispatch] = useStateValue();
-//const axiosData = useState<AxiosData<>>
+    const { enqueueSnackbar } = useSnackbar();
     const [isLoading, setIsLoading] = useState(false);
 
     const ref = createRef<any>();
@@ -44,15 +45,15 @@ export const QuestionForm: FC<QuestionFormsProps> = ({questions, setQuestions, i
     const [headerImage, setHeaderImage] = useState('');
     const [previewImage, setPreviewImage] = useState('');
 
+    const [isSavedForm, setIsSavedForm] = useState(true);
+
     const takeScreenShot = async (node: any) => {
         const data = await htmlToImage.toJpeg(node);
+        setPreviewImage(data);
         return data;
     }
 
-    const downloadScreenshot = () => takeScreenShot(ref.current).then(res => setPreviewImage(res));
-
     useEffect(() => {
-        console.log(formContext);
         if(formContext.formId || id){
             setIsLoading(true);
             let srvcApi = createAPIEndpointService(`form`)
@@ -137,8 +138,12 @@ export const QuestionForm: FC<QuestionFormsProps> = ({questions, setQuestions, i
         return result;
     }
 
-    function saveForm(){
-        downloadScreenshot();
+    async function saveForm(){
+        if(!isSavedForm){
+            return;
+        }
+        setIsSavedForm(false);
+        let preview = await takeScreenShot(ref.current);
         let initialState: StateProps = { 
             questions: questions, 
             doc_name: documentName, 
@@ -148,7 +153,7 @@ export const QuestionForm: FC<QuestionFormsProps> = ({questions, setQuestions, i
             doc_name_element_style: { fontFamily: textContext.fontKolontitul, fontSize: textContext.sizeKolontitul },
             doc_desc_element_style: { fontFamily: textContext.fontOptionText, fontSize: textContext.sizeOptionText },
             kolontitul_image: headerImage,
-            preview_image: previewImage
+            preview_image: preview
         };
         dispatch({ type: actionTypes.SET_DOC_NAME, state: initialState});
         dispatch({ type: actionTypes.SET_DOC_DESC, state: initialState});
@@ -170,17 +175,18 @@ export const QuestionForm: FC<QuestionFormsProps> = ({questions, setQuestions, i
                 nameClassNames: documentNameClassNames,
                 descriptionClassNames: documentDescClassNames,
                 kolontitulImage: headerImage,
-                previewImage: previewImage,
+                previewImage: preview,
                 nameElementStyle: { fontFamily: textContext.fontKolontitul, fontSize: textContext.sizeKolontitul },
                 descriptionElementStyle: { fontFamily: textContext.fontOptionText, fontSize: textContext.sizeOptionText }
             })
             .then(res => {
                 if(res.status === 200){
                     formContext.setFormId(res.data.formId);
+                    enqueueSnackbar('Форма успешно сохранена', {variant: 'success'});
                 }
             })
             .catch(err => {
-                console.log(err);
+                enqueueSnackbar('При сохранении формы что-то пошло не так', {variant: 'error'});
             });
         }else{
             srvcApi.post({
@@ -190,19 +196,21 @@ export const QuestionForm: FC<QuestionFormsProps> = ({questions, setQuestions, i
                 nameClassNames: documentNameClassNames,
                 descriptionClassNames: documentDescClassNames,
                 kolontitulImage: headerImage,
-                previewImage: previewImage,
+                previewImage: preview,
                 nameElementStyle: { fontFamily: textContext.fontKolontitul, fontSize: textContext.sizeKolontitul },
                 descriptionElementStyle: { fontFamily: textContext.fontOptionText, fontSize: textContext.sizeOptionText }
             })
             .then(res => {
                 if(res.status === 200){
                     formContext.setFormId(res.data.formId);
+                    enqueueSnackbar('Форма успешно сохранена', {variant: 'success'});
                 }
             })
             .catch(err => {
-                console.log(err);
+                enqueueSnackbar('При сохранении формы что-то пошло не так', {variant: 'error'});
             });
         }
+        setIsSavedForm(true);
     }
 
     return (

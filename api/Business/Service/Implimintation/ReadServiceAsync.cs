@@ -1,7 +1,9 @@
 ﻿using Business.Service.Interfaces;
+using Business.Utils.Interfaces;
 using Common.Entities;
 using DataAccess.Fetch;
 using DataAccess.Repository.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq.Expressions;
 
@@ -12,10 +14,16 @@ public class ReadServiceAsync<TEntity> : IReadServiceAsync<TEntity>
 {
     protected readonly IUnitOfWork _uoW;
     protected IServiceProvider _srvcProvider;
-    public ReadServiceAsync(IUnitOfWork uoW, IServiceProvider srvcProvider)
+    protected IServiceScopeFactory _scopeFactory;
+    protected readonly IHttpContextAccessor Context;
+    protected readonly IUserUtil UserUtil;
+    public ReadServiceAsync(IUnitOfWork uoW, IServiceProvider srvcProvider, IUserUtil userUtil, IHttpContextAccessor context, IServiceScopeFactory scopeFactory)
     {
         _uoW = uoW;
+        UserUtil = userUtil;
+        Context = context;
         _srvcProvider = srvcProvider;
+        _scopeFactory = scopeFactory;
     }
 
     public async Task<int> CountAsync()

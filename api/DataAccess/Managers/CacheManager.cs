@@ -11,7 +11,7 @@ public static class CacheManager
 
     private static readonly object _lockObject = new object();
 
-    private static DateTimeOffset EXPIRES_CACHE = DateTimeOffset.UtcNow.AddDays(1);
+    private static DateTimeOffset EXPIRES_CACHE = DateTimeOffset.UtcNow.AddDays(5);
 
     private static void UpdateAllEntities<T>(T? previousEntity, T? currentEntity) where T : Entity<T>
     {
@@ -110,50 +110,4 @@ public static class CacheManager
 			UpdateAllEntities(default(T), entity);
 		}
 	}
-
-
-	#region OLD LOGIC INDEX
-	public static async Task Remove<T>(string key, Func<Task> removeItemCallback) where T : Entity<T>
-	{
-		await removeItemCallback();
-		if (_cache.Contains(key))
-		{
-			UpdateAllEntities<T>((T)_cache.Get(key), default(T));
-			_cache.Remove(key);
-		}
-	}
-
-	public static async Task Update<T>(string key, Func<Task> updateItemCallback, Func<Task<T?>> getItemCallback) where T : Entity<T>
-	{
-		await updateItemCallback();
-
-		T previousEntity = default;
-		var entity = await getItemCallback();
-
-		if (_cache.Contains(key))
-		{
-			previousEntity = (T)_cache.Get(key);
-			_cache.Remove(key);
-		}
-
-		if (entity != null)
-		{
-			_cache.Set(key, entity, EXPIRES_CACHE);
-			UpdateAllEntities<T>(previousEntity, entity);
-		}
-	}
-
-	public static async Task Create<T>(string key, Func<Task> createItemCallback, Func<Task<T?>> getItemCallback) where T : Entity<T>
-	{
-		await createItemCallback();
-		var entity = await getItemCallback();
-
-		if (entity != null)
-		{
-			_cache.Set(key, entity, EXPIRES_CACHE);
-			UpdateAllEntities<T>(default(T), entity);
-		}
-	}
-
-	#endregion
 }

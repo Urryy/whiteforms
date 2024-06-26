@@ -7,6 +7,8 @@ export interface QuestionProps{
     points: number,
     answerKey: string,
     answer: boolean,
+    questionImage?: string,
+    imageWrapper?: ImageWrapperProps,
     startScaleValue?: number | null,
     descStartScaleValue?: string | null,
     endScaleValue?: number | null,
@@ -28,6 +30,7 @@ export interface OptionsProps{
     optionText: string,
     classNames?: string[]
     isAnother?: boolean,
+    optionImage?: string,
     imageWrapper?: ImageWrapperProps,
     elementStyle: ElementStyleProps
 }

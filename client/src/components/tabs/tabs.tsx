@@ -5,6 +5,7 @@ import { MoreVertOutlined } from "@mui/icons-material";
 import '../answerform/answerform.css';
 import { QuestionProps } from "../../interfaces/interfaces";
 import { FormToolbar } from "../formtoolbar/formtoolbar";
+import { AcceptTab } from "../accepttab/accepttab";
 
 interface TabProps{
     children : ReactNode,
@@ -67,32 +68,7 @@ export const CenteredTabs: FC<QuestionFormsProps> = ({questions, setQuestions, i
             </TabPanel>
 
             <TabPanel value={value} index={1}>
-                <>
-                <div className="submit" style={{height: '76vh'}}>
-                    <div className="user_form">
-                        <div className="user_form_section">
-                            <div className="user_form_questions" style={{display: 'flex', flexDirection: 'column', marginBottom: '20px'}}>
-                                <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                                    <Typography style={{fontSize: '15px', letterSpacing: '.1px', lineHeight: '24px', paddingBottom: '8px'}}>3 Responses</Typography>
-                                </div>
-                                <div>
-                                    <IconButton>
-                                        <MoreVertOutlined className="form_header_name"/>
-                                    </IconButton>
-                                </div><br /><br/>
-                                <div style={{marginBottom: '5px'}}>
-                                    <div style={{display: 'flex', fontSize: '12px', justifyContent:'flex-end'}}>
-                                        Accepting responses <Switch color="primary" size="small"/>
-                                    </div>
-                                </div>
-                                <div className="user_footer">
-                                    WHITE FORMS
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </>
+                <AcceptTab />
             </TabPanel>
         </Paper>
         </>

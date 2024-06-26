@@ -36,7 +36,13 @@ export const TextOption: FC<TextOptionProps> = ({id, variant, question, filledQu
         }
     }
     
-    return <TextField id={id} label="Мой ответ" multiline rows={rows} variant={variant} fullWidth
+    return <>
+        <TextField id={id} label="Мой ответ" multiline rows={rows} variant={variant} fullWidth
                 InputLabelProps={{style: {fontFamily: getStyle('fontFamily'), fontSize: getStyle('fontSize')}}} 
                 onChange={(e) => onChangeAnswer(question.options[0].id, e.target.value)}/>
+        {question.options[0].optionImage && 
+        <div className="image_wrapper_option">
+                <img alt="image1" src={question.options[0].optionImage}/>
+        </div>}
+    </>
 }

@@ -18,8 +18,8 @@ public static class ConfigureApplication
         app.UseHttpsRedirection();
         app.UseRouting();
 
-        //app.UseAuthentication();
-        //app.UseAuthorization();
+        app.UseAuthentication();
+        app.UseAuthorization();
 
         return app;
     }

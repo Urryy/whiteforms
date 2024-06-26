@@ -2,6 +2,6 @@
 
 namespace DataAccess.Fetch.Interface;
 
-public interface IFetchForm : IFetch<Form>
+public interface IFetchForm : IFetch<WhiteForm>
 {
 }

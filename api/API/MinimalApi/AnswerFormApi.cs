@@ -10,8 +10,13 @@ public static class AnswerFormApi
 	public static void RegistereAnswerFormApi(this WebApplication app)
 	{
 		app.MapPost($"{ENDPOINT_V1}", AnswerFormHandler.CreateAnswerForm)
-			.AddEndpointFilter<ValidationAttribute<AnswerFormModel>>();
+			.AddEndpointFilter<ValidationAttribute<AnswerFormModel>>()
+			.RequireAuthorization();
 
-		//app.MapGet($"{ENDPOINT_V1}/{{objectId}}", AnswerFormHandler.);
+		app.MapGet($"{ENDPOINT_V1}/{{objectId}}", AnswerFormHandler.GetAnswersByFormId)
+			.RequireAuthorization();
+
+		app.MapGet($"{ENDPOINT_V1}/response/count/{{objectId}}", AnswerFormHandler.GetCountResponse)
+			.RequireAuthorization();
 	}
 }

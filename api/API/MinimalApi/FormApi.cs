@@ -11,14 +11,22 @@ public static class FormApi
     public static void RegisterFormApi(this WebApplication app)
     {
         app.MapPost($"{ENDPOINT_V1}", FormHandler.CreateForm)
-            .AddEndpointFilter<ValidationAttribute<FormModel>>();
+            .AddEndpointFilter<ValidationAttribute<FormModel>>()
+			.RequireAuthorization();
 
-        app.MapGet($"{ENDPOINT_V1}", FormHandler.GetForms);
+        app.MapGet($"{ENDPOINT_V1}", FormHandler.GetForms)
+			.RequireAuthorization();
 
-        app.MapGet($"{ENDPOINT_V1}/{{objectId:Guid}}", FormHandler.GetFormById);
+        app.MapGet($"{ENDPOINT_V1}/{{objectId:Guid}}", FormHandler.GetFormById)
+            .RequireAuthorization();
 
-        app.MapDelete($"{ENDPOINT_V1}/{{objectId:Guid}}", FormHandler.DeleteForm);
+        app.MapDelete($"{ENDPOINT_V1}/{{objectId:Guid}}", FormHandler.DeleteForm)
+			.RequireAuthorization();
 
-        app.MapPatch($"{ENDPOINT_V1}", FormHandler.UpdateForm);
+        app.MapPatch($"{ENDPOINT_V1}", FormHandler.UpdateForm)
+            .RequireAuthorization();
+
+        app.MapGet($"{ENDPOINT_V1}/{{objectId:Guid}}/state/accept", FormHandler.ChangeStateAccept)
+            .RequireAuthorization();
     }
 }

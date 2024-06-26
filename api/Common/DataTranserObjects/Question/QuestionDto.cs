@@ -1,5 +1,6 @@
 ﻿using Common.DataTranserObjects.ElementStyle;
 using Common.DataTranserObjects.Form;
+using Common.DataTranserObjects.ImageWrapper;
 using Common.DataTranserObjects.Option;
 using Common.Models.ElementStyle;
 using Common.Models.Option;
@@ -23,7 +24,9 @@ public class QuestionDto
 	public string? DescStartScaleValue { get; set; } = default!;
 	public int? EndScaleValue { get; set; } = default!;
 	public string? DescEndScaleValue { get; set; } = default!;
+	public string? QuestionImage { get; set; } = default!;
 	public List<string> ClassNames { get; set; } = default!;
+	public ImageWrapperDto? ImageWrapper { get; set; } = default!;
 	public ElementStyleDto ElementStyle { get; set; } = default!;
 	public List<OptionDto> Options { get; set; } = default!;
 
@@ -45,6 +48,8 @@ public class QuestionDto
 			EndScaleValue = entity.EndScaleValue,
 			DescEndScaleValue = entity.DescEndScaleValue,
 			ClassNames = entity.QuestionClassNames != null ? entity.QuestionClassNames.Split(" ").ToList() : new List<string>(),
+			ImageWrapper = entity.ImageWrapper != null ? ImageWrapperDto.EntityToDto(entity.ImageWrapper) : null,
+			QuestionImage = entity.QuestionImage,
 			ElementStyle = ElementStyleDto.EntityToDto(entity.QuestionElementStyle),
 			Options = entity.Options.OrderBy(i => i.Sequence).Select(OptionDto.EntityToDto).ToList(),
 		};

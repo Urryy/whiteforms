@@ -6,6 +6,7 @@ import { QuestionHeaderImage } from "../questionform/questionheaderimage/questio
 import { Option } from "./optionsform/option";
 import { Button, Skeleton } from "@mui/material";
 import { ArchiveOutlined } from "@mui/icons-material";
+import { useSnackbar } from "notistack";
 
 export const Form = () => {
     const { id } = useParams();
@@ -14,6 +15,7 @@ export const Form = () => {
     const [answerForm, setAnswerForm] = useState<FormFilledProps | null>(null);
     const [filledQuestions, setFilledQuestions] = useState<QuestionFilledProps[]>([]);
     const [isLoading, setIsLoading] = useState(false);
+    const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => {
         setIsLoading(true);
@@ -49,8 +51,28 @@ export const Form = () => {
         return question.questionText + req
     }
 
+    function validateSubmitFields(){
+        let questions = form!.questions;
+        for (let index = 0; index < questions.length; index++) {
+            const element = questions[index];
+            if(element.required){
+                let filledQuestion = filledQuestions.find(value => value.questionId === element.id);
+                if(!filledQuestion || filledQuestion.answers.length === 0) 
+                    return false;
+                for (let j = 0; j < filledQuestion.answers.length; j++) {
+                    const opt = filledQuestion.answers[j];
+                    if(!opt.answerText || opt.answerText === '')
+                        return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
     function onSaveForm(){
         if(!answerForm) return;
+        if(!validateSubmitFields()) enqueueSnackbar('Не все обязательные поля были заполнены', {variant: 'warning'});
 
         let model: FormFilledProps = {formId: answerForm.formId, filledQuestions: filledQuestions} 
         let srvcApi = createAPIEndpointService(`answerform`)
@@ -91,14 +113,19 @@ export const Form = () => {
                                         style={{fontSize: `${question.elementStyle.fontSize}pt`, fontFamily: question.elementStyle.fontFamily}}
                                         dangerouslySetInnerHTML={{__html: getQuestionText(question) }}>
                             </p>
+                            {question.questionImage && <div style={{width: '100%', display: 'flex', justifyContent: question.imageWrapper?.position}}>
+                                <div className="image_wrapper image_wrapper_question" style={{height: `${question.imageWrapper?.height}`, width: `${question.imageWrapper?.width}`}}>
+                                    <img alt="image1" src={question.questionImage}/>
+                                </div>
+                            </div>}
                             <Option question={question} filledQuestions={filledQuestions} setFilledQuestions={setFilledQuestions} index={qindex}/>
                         </div>
                     ))}         
                     <div className="user_form_submit">
-                        <Button className="submit_btn" onClick={onSaveForm}><span>Сохранить</span> <ArchiveOutlined className="archive_icon"/></Button>
+                        <Button className="submit_btn" onClick={onSaveForm}><span>Отправить</span> <ArchiveOutlined className="archive_icon"/></Button>
                     </div>
                     <div className="user_footer">
-                        WHITE FORMS
+                    FORMS
                     </div>
                 </div>
             </div>

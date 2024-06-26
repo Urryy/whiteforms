@@ -5,7 +5,7 @@ using Common.Models.Question;
 
 namespace Common.DataTranserObjects.Form;
 
-using Form = Entities.Form;
+using WhiteForm = Entities.WhiteForm;
 
 public class FormDto
 {
@@ -21,7 +21,7 @@ public class FormDto
 	public ElementStyleDto DescriptionElementStyle { get; set; } = default!;
 	public ElementStyleDto QuestionElementStyle { get; set; } = default!;
 
-	public static FormDto EntityToDto(Form entity)
+	public static FormDto EntityToDto(WhiteForm entity)
 	{
 		var dto = new FormDto()
 		{
@@ -31,7 +31,7 @@ public class FormDto
 			Questions = entity.Questions.OrderBy(i => i.Sequence).Select(QuestionDto.EntityToDto).ToList(),
 			NameClassNames = entity.NameClassNames != null ? entity.NameClassNames.Split(" ").ToList() : new List<string>(),
 			DescriptionClassNames = entity.DescriptionClassNames != null ? entity.DescriptionClassNames.Split(" ").ToList() : new List<string>(),
-			KolontitulImage = entity.KolontitulImage,
+			KolontitulImage = entity.KolontitulImage ?? "",
 			PreviewImage = entity.PreviewImage,
 			NameElementStyle = ElementStyleDto.EntityToDto(entity.NameElementStyle),
 			DescriptionElementStyle = ElementStyleDto.EntityToDto(entity.DescriptionElementStyle),

@@ -66,10 +66,13 @@
     margin-right: 40px;
     margin-bottom: 40px;
     cursor: pointer;
-    border-radius: 20px 20px 20px 20px;
-    box-shadow: inset 0px 0px 20px -5px rgba(128, 128, 128, 0.75);
-    border: 0.5px solid white;
-    box-shadow: inset 0px 0px 20
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.21);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.7);
 }
 
 .doc_card_title{

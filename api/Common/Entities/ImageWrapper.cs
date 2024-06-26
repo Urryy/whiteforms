@@ -11,23 +11,20 @@ public class ImageWrapper : Entity<ImageWrapper>
 {
 	[Key]
 	public override Guid Id { get; protected set; } = Guid.NewGuid();
-	public Guid OptionId { get; set; }
 	public string Width { get; set; }
 	public string Height { get; set; }
 	public string Position { get; set; }
-	public Option Option { get; set; }
 
 	protected ImageWrapper()
 	{
 			
 	}
 
-	public ImageWrapper(string width, string height, string position, Guid optionid) : this()
+	public ImageWrapper(string width, string height, string position) : this()
 	{
 		Width = width;
 		Height = height;
 		Position = position;
-		OptionId = optionid;
 	}
 
 	public override ImageWrapper SetEntityId(Guid id)

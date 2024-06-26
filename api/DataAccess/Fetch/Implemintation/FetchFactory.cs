@@ -21,7 +21,7 @@ public class FetchFactory : IFetchFactory
 
 	private IFetch<TEntity>? GetFetch<TEntity>(TEntity entity) where TEntity : Entity<TEntity>
 	{
-		if (entity is Form)
+		if (entity is WhiteForm)
 		{
 			return (IFetch<TEntity>?)_srvcProvider.GetRequiredService<IFetchForm>();
 		}
